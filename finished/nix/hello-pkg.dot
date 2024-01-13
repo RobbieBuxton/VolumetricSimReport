@@ -1,0 +1,14 @@
+digraph G {
+  node [shape=box, style=rounded];
+  
+  "sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1" [label="hello-2.12.1"];
+  "qn3ggz5sf3hkjs2c797xf7nan3amdxmp-glibc-2.38-27" [label="glibc-2.38-27"];
+  "08n25j4vxyjidjf93fyc15icxwrxm2p8-libidn2-2.3.4" [label="libidn2-2.3.4"];
+  "lmidwx4id2q87f4z9aj79xwb03gsmq5j-xgcc-12.3.0-libgcc" [label="xgcc-12.3.0-libgcc"];
+  "s2f1sqfsdi4pmh23nfnrh42v17zsvi5y-libunistring-1.1" [label="libunistring-1.1"];
+
+  "qn3ggz5sf3hkjs2c797xf7nan3amdxmp-glibc-2.38-27" -> "sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1" [color="black"];
+  "08n25j4vxyjidjf93fyc15icxwrxm2p8-libidn2-2.3.4" -> "qn3ggz5sf3hkjs2c797xf7nan3amdxmp-glibc-2.38-27" [color="black"];
+  "lmidwx4id2q87f4z9aj79xwb03gsmq5j-xgcc-12.3.0-libgcc" -> "qn3ggz5sf3hkjs2c797xf7nan3amdxmp-glibc-2.38-27" [color="black"];
+  "s2f1sqfsdi4pmh23nfnrh42v17zsvi5y-libunistring-1.1" -> "08n25j4vxyjidjf93fyc15icxwrxm2p8-libidn2-2.3.4" [color="black"];
+}
