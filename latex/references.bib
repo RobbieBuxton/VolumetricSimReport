@@ -1,0 +1,130 @@
+@inproceedings{10.1145/1411204.1411255,
+author = {Dolstra, Eelco and L\"{o}h, Andres},
+title = {NixOS: A Purely Functional Linux Distribution},
+year = {2008},
+isbn = {9781595939197},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1411204.1411255},
+doi = {10.1145/1411204.1411255},
+abstract = {Existing package and system configuration management tools suffer from an imperative model, where system administration actions such as upgrading packages or changes to system configuration files are stateful: they destructively update the state of the system. This leads to many problems, such as the inability to roll back changes easily, to run multiple versions of a package side-by-side, to reproduce a configuration deterministically on another machine, or to reliably upgrade a system. In this paper we show that we can overcome these problems by moving to a purely functional system configuration model. This means that all static parts of a system (such as software packages, configuration files and system startup scripts) are built by pure functions and are immutable, stored in a way analogously to a heap in a purely function language. We have implemented this model in NixOS, a non-trivial Linux distribution that uses the Nix package manager to build the entire system configuration from a purely functional specification.},
+booktitle = {Proceedings of the 13th ACM SIGPLAN International Conference on Functional Programming},
+pages = {367–378},
+numpages = {12},
+keywords = {package management, nix, purely functional language, purely functional deployment model, software deployment, NixOS, system configuration management},
+location = {Victoria, BC, Canada},
+series = {ICFP '08}
+}
+
+@article{10.1145/1411203.1411255,
+author = {Dolstra, Eelco and L\"{o}h, Andres},
+title = {NixOS: A Purely Functional Linux Distribution},
+year = {2008},
+issue_date = {September 2008},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {43},
+number = {9},
+issn = {0362-1340},
+url = {https://doi.org/10.1145/1411203.1411255},
+doi = {10.1145/1411203.1411255},
+abstract = {Existing package and system configuration management tools suffer from an imperative model, where system administration actions such as upgrading packages or changes to system configuration files are stateful: they destructively update the state of the system. This leads to many problems, such as the inability to roll back changes easily, to run multiple versions of a package side-by-side, to reproduce a configuration deterministically on another machine, or to reliably upgrade a system. In this paper we show that we can overcome these problems by moving to a purely functional system configuration model. This means that all static parts of a system (such as software packages, configuration files and system startup scripts) are built by pure functions and are immutable, stored in a way analogously to a heap in a purely function language. We have implemented this model in NixOS, a non-trivial Linux distribution that uses the Nix package manager to build the entire system configuration from a purely functional specification.},
+journal = {SIGPLAN Not.},
+month = {sep},
+pages = {367–378},
+numpages = {12},
+keywords = {purely functional deployment model, software deployment, package management, purely functional language, nix, system configuration management, NixOS}
+}
+@inproceedings{dolstra2004nix,
+  title={Nix: A Safe and Policy-Free System for Software Deployment.},
+  author={Dolstra, Eelco and De Jonge, Merijn and Visser, Eelco and others},
+  booktitle={LISA},
+  volume={4},
+  pages={79--92},
+  year={2004}
+}
+
+@book{dolstra2006purely,
+  title={The purely functional software deployment model},
+  author={Dolstra, Eelco},
+  year={2006},
+  publisher={Utrecht University}
+}
+
+@misc{Marakasov_2024, 
+  url={https://repology.org/repositories/graphs}, 
+  journal={Graphs - Repology}, 
+  author={ Marakasov, Dmitry}, year={2024}, month={01},
+  urldate = {2024-01-09}
+} 
+
+@online{nixcon-sandboxs,
+    title = {About Nix sandboxes and breakpoints (NixCon 2018)},
+    year = {2018},
+    organization = {Youtube},
+    author = {Jörg Thalheim},
+    url = {https://www.youtube.com/watch?v=ULqoCjANK-I},
+    urldate = {2024-01-09}
+}
+
+@article{LHCbNix,
+	author = {{Burr, Chris} and {Clemencic, Marco} and {Couturier, Ben}},
+	title = {Software packaging and distribution for LHCb using Nix},
+	DOI= "10.1051/epjconf/201921405005",
+	url= "https://doi.org/10.1051/epjconf/201921405005",
+	journal = {EPJ Web Conf.},
+	year = 2019,
+	volume = 214,
+	pages = "05005",
+}
+
+@inproceedings{10.1145/3152493.3152556,
+author = {Bzeznik, Bruno and Henriot, Oliver and Reis, Valentin and Richard, Olivier and Tavard, Laure},
+title = {Nix as HPC Package Management System},
+year = {2017},
+isbn = {9781450351300},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3152493.3152556},
+doi = {10.1145/3152493.3152556},
+abstract = {Modern High Performance Computing systems are becoming larger and more heterogeneous. The proper management of software for the users of such systems poses a significant challenge. These users run very diverse applications that may be compiled with proprietary tools for specialized hardware. Moreover, the application life-cycle of these software may exceed the lifetime of the HPC systems themselves. These difficulties motivate the use of specialized package management systems. In this paper, we outline an approach to HPC package development, deployment, management, sharing, and reuse based on the Nix functional package manager. We report our experience with this approach inside the GRICAD HPC center[GRICAD 2017a] in Grenoble over a 12 month period and compare it to other existing approaches.},
+booktitle = {Proceedings of the Fourth International Workshop on HPC User Support Tools},
+articleno = {4},
+numpages = {6},
+keywords = {Nix, Package Management System, High Performance Computing},
+location = {Denver, CO, USA},
+series = {HUST'17}
+}
+
+@article{https://doi.org/10.1002/qua.26872,
+author = {Kowalewski, Markus and Seeber, Phillip},
+title = {Sustainable packaging of quantum chemistry software with the Nix package manager},
+journal = {International Journal of Quantum Chemistry},
+volume = {122},
+number = {9},
+pages = {e26872},
+keywords = {high-performance computing, quantum chemistry, reproducible environments, Nix package manager, software development},
+doi = {https://doi.org/10.1002/qua.26872},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/qua.26872},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1002/qua.26872},
+abstract = {Abstract The installation of quantum chemistry software packages is commonly done manually and can be a time-consuming and complicated process. An update of the underlying Linux system requires a reinstallation in many cases and can quietly break software installed on the system. In this paper, we present an approach that allows for an easy installation of quantum chemistry software packages, which is also independent of operating system updates. The use of the Nix package manager allows building software in a reproducible manner, which allows for a reconstruction of the software for later reproduction of scientific results. The build recipes that are provided can be readily used by anyone to avoid complex installation procedures.},
+year = {2022}
+}
+
+@misc{NixCommunityNixOSWiki, 
+    url={https://nixos.wiki/wiki/Nix_Community}, 
+    journal={Nix Community - NixOS Wiki},
+    urldate = {2024-01-09}
+} 
+
+@misc{NixPkgs,
+    url={https://github.com/NixOS/nixpkgs},
+    journal={Nixpkgs, a collection of over 80,000 software package},
+    urldate = {2024-01-09},
+    author = {NixOS Foundation}
+}
+@article{kooima2009generalized,
+  title={Generalized perspective projection},
+  author={Kooima, Robert},
+  year={2009}
+}
