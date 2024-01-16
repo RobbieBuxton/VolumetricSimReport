@@ -71,8 +71,8 @@ pkgs.stdenvNoCC.mkDerivation rec {
 
   buildPhase = ''
   runHook preBuild
-
-  SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH}" latexmk ${toString flags}
+  cd ./latex/
+  SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH}" latexmk ${toString flags} document.tex
 
   runHook postBuild
   '';
