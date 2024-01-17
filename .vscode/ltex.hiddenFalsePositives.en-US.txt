@@ -1,0 +1,1 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QBy emitting light from each voxel, they can provide the correct \"physical\" characteristic for a virtual 3D object, providing accurate focal depth, motion parallax and vergence (the rotation of a viewers eye to fix on the same point they are focusing on).\\E$"}
