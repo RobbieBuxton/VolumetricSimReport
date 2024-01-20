@@ -11,9 +11,9 @@
 
 \lstdefinestyle{tree}{
 literate=
-{├}{{\smash{\raisebox{-1ex}{\rule{1pt}{\baselineskip}}}\raisebox{0.5ex}{\rule{1ex}{1pt}}}}1 
-{─}{{\raisebox{0.5ex}{\rule{1.5ex}{1pt}}}}1 
-{└}{{\smash{\raisebox{0.5ex}{\rule{1pt}{\dimexpr\baselineskip-1.5ex}}}\raisebox{0.5ex}{\rule{1ex}{1pt}}}}1 
+  {├}{{\smash{\raisebox{-1ex}{\rule{1pt}{\baselineskip}}}\raisebox{0.5ex}{\rule{1ex}{1pt}}}}1
+{─}{{\raisebox{0.5ex}{\rule{1.5ex}{1pt}}}}1
+{└}{{\smash{\raisebox{0.5ex}{\rule{1pt}{\dimexpr\baselineskip-1.5ex}}}\raisebox{0.5ex}{\rule{1ex}{1pt}}}}1
 }
 
 \newcommand{\nixstore}[2][1]{\textcolor{Purple}{\texttt{/nix/store/}}\textcolor{RoyalBlue}{\texttt{#1}-}\textcolor{Orange}{\texttt{#2}}}
@@ -25,16 +25,16 @@ literate=
 
 %Programming Languages
 \mynewminted{nix}{nix}{
-    breaklines,
-    frame=none}
-    
+  breaklines,
+  frame=none}
+
 \mynewminted{cpp}{cpp}{
-    breaklines,
-    frame=none}
+  breaklines,
+  frame=none}
 
 \mynewminted{shell}{shell}{
-    breaklines,
-    frame=none}
+  breaklines,
+  frame=none}
 
 \newtcblisting[auto counter,number within=section,list inside=mypyg]{codeBox}[3][]{%
   listing only,
@@ -44,7 +44,7 @@ literate=
   colframe = Apricot!25,
   colback  = Apricot!10,
   coltitle = Apricot!20!black,
-  drop fuzzy shadow, 
+  drop fuzzy shadow,
   myminted/#2,
   #1}
 
@@ -54,7 +54,7 @@ literate=
   enhanced,
   colframe = Apricot!25,
   colback  = Apricot!10,
-  coltitle = Apricot!20!black,  
+  coltitle = Apricot!20!black,
   drop fuzzy shadow,
   title    = {{\color{Black} \textbf{Figure \thetcbcounter:}} #2},
   #1,

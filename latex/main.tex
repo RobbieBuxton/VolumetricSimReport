@@ -15,7 +15,7 @@
 
 % load title page
 \begin{document}
-\input{inputs/titlepage}
+\include{title/titlepage}
 
 
 % page numbering etc.
@@ -26,7 +26,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-Your abstract.
+    Your abstract.
 \end{abstract}
 
 \cleardoublepage
@@ -39,7 +39,7 @@ Comment this out if not needed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- table of contents
 \fancyhead[RE,LO]{\sffamily {Table of Contents}}
-\tableofcontents 
+\tableofcontents
 
 
 \clearpage{\pagestyle{empty}\cleardoublepage}
@@ -50,34 +50,24 @@ Comment this out if not needed.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
-
-\begin{figure}[tb]
-\centering
-\includegraphics[width = 0.4\hsize]{./figures/imperial}
-\caption{Imperial College Logo. It's nice blue, and the font is quite stylish. But you can choose a different one if you don't like it.}
-\label{fig:logo}
-\end{figure}
-
-Figure~\ref{fig:logo} is an example of a figure. 
+\include{introduction/introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Background}
-\newpage
-
 \include{background/nix}
 \include{background/projection}
 \include{background/3d}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Contribution}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Experimental Results}
-
+\chapter{Project Plan}
+\include{project plan/project plan}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Conclusion}
+\chapter{Evaluation Plan}
+\include{evaluation plan/evaluation plan}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Ethical Issues}
+\include{ethical issues/ethical issues}
 %% bibliography
 \printbibliography
 \end{document}
