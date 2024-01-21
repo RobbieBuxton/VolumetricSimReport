@@ -39,53 +39,11 @@ To create a package Nix evaluates a \textbf{derivation} which is a specification
   \end{enumerate}
 \end{figureBox}
 
+\todo Add numbering
+\codeBoxFile[label = {fig:nix-flake}]{nix}{./background/code/hello.nix}{flake.nix}
 
-\begin{codeBox}[label = {fig:nix-flake}]{nix}{flake.nix}
-  {
-  description = "A flake for building Hello World";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+\codeBoxFile[label = {fig:nix-terminal}]{shell}{./background/code/hello-nix.sh}{Terminal}
 
-  outputs = { self, nixpkgs }: {
-  defaultPackage.x86_64-linux =
-  let
-  pkgs = nixpkgs.legacyPackages.x86_64-linux;
-  in
-  pkgs.stdenv.mkDerivation {
-  name = "hello-2.12.1";
-  src = self;
-  # Not strictly necessary as stdenv will add gcc
-  buildInputs = [ pkgs.gcc ];
-  configurePhase = "echo 'int main() { printf(\"Hello World!\"); }' > hello.c";
-  buildPhase = "gcc -o hello ./hello.c";
-  installPhase = "mkdir -p $out/bin; install -t $out/bin hello";
-  };
-  };
-  }
-\end{codeBox}
-
-\begin{codeBox}[label = {fig:nix-terminal}]{shell}{Terminal}
-  [shell:~]$ ls
-    flake.lock  flake.nix
-
-      [shell:~]$ nix flake show
-  └──defaultPackage
-  └──x86\_64-linux: package 'hello-2.12.1'
-
-  [shell:~]$ nix run .
-    Hello, world!
-
-    [shell:~]$ tree $(nix path-info .)
-    "\nix\store\sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1"
-    └──bin
-    └──hello
-
-    [shell:~]$ TODO get nix depencies
-  /nix/store/s2f1sqfsdi4pmh23nfnrh42v17zsvi5y-libunistring-1.1
-  /nix/store/08n25j4vxyjidjf93fyc15icxwrxm2p8-libidn2-2.3.4
-  /nix/store/lmidwx4id2q87f4z9aj79xwb03gsmq5j-xgcc-12.3.0-libgcc
-  /nix/store/qn3ggz5sf3hkjs2c797xf7nan3amdxmp-glibc-2.38-27
-  /nix/store/sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1
-\end{codeBox}
 
 \begin{figureBox}{Dependency graph}
   \includegraphics[width=0.5\linewidth]{./background/figures/nix/hello-pkg.pdf}

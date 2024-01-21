@@ -8,6 +8,7 @@
 % \newcommand{\mat}[1]{{\boldsymbol{{#1}}}} % matrix
 
 \newcommand{\tocite}{{\color{red} \small ToCite }} % placeholder for later citation
+\newcommand{\todo}{{\color{red} \small TODO }} % placeholder for later citation
 
 \lstdefinestyle{tree}{
 literate=
@@ -35,6 +36,20 @@ literate=
 \mynewminted{shell}{shell}{
   breaklines,
   frame=none}
+
+
+\newtcbinputlisting[auto counter,number within=section,list inside=mypyg]{\codeBoxFile}[4][]{%
+  listing only,
+  title={{\color{Black} \textbf{Listing \thetcbcounter:}} #4},
+  % list entry={\protect\numberline{\thetcbcounter}#3},
+  listing file={#3},
+  enhanced,
+  colframe = Apricot!25,
+  colback  = Apricot!10,
+  coltitle = Apricot!20!black,
+  drop fuzzy shadow,
+  myminted/#2,
+  #1}
 
 \newtcblisting[auto counter,number within=section,list inside=mypyg]{codeBox}[3][]{%
   listing only,
