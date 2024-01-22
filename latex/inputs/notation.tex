@@ -27,53 +27,73 @@ literate=
 %Programming Languages
 \mynewminted{nix}{nix}{
   breaklines,
+  linenos,
+  autogobble,
+  numbersep=2mm,
+  fontsize=\footnotesize,
   frame=none}
 
 \mynewminted{cpp}{cpp}{
   breaklines,
+  linenos,
+  autogobble,
+  numbersep=2mm,
+  fontsize=\footnotesize,
   frame=none}
 
 \mynewminted{shell}{shell}{
   breaklines,
+  autogobble,
+  fontsize=\footnotesize,
   frame=none}
 
 
 \newtcbinputlisting[auto counter,number within=section,list inside=mypyg]{\codeBoxFile}[4][]{%
+  center,
+  listing engine=minted,
   listing only,
   title={{\color{Black} \textbf{Listing \thetcbcounter:}} #4},
   % list entry={\protect\numberline{\thetcbcounter}#3},
   listing file={#3},
-  enhanced,
+  enhanced jigsaw,
+  breakable,
   colframe = Apricot!25,
   colback  = Apricot!10,
   coltitle = Apricot!20!black,
   drop fuzzy shadow,
-  myminted/#2,
-  #1}
-
-\newtcblisting[auto counter,number within=section,list inside=mypyg]{codeBox}[3][]{%
-  listing only,
-  title={{\color{Black} \textbf{Listing \thetcbcounter:}} #3},
-  % list entry={\protect\numberline{\thetcbcounter}#3},
-  enhanced,
-  colframe = Apricot!25,
-  colback  = Apricot!10,
-  coltitle = Apricot!20!black,
-  drop fuzzy shadow,
+  before skip = 20pt,
+  after skip = 20pt,
   myminted/#2,
   #1}
 
 %Boxes
 \newtcolorbox[auto counter,number within=section]{figureBox}[2][]
 {
-  enhanced,
+  center,
+  enhanced jigsaw,
+  breakable,
   colframe = Apricot!25,
   colback  = Apricot!10,
   coltitle = Apricot!20!black,
   drop fuzzy shadow,
   title    = {{\color{Black} \textbf{Figure \thetcbcounter:}} #2},
-  #1,
   before skip = 20pt,
   after skip = 20pt,
   before upper={\centering \color{Gray!20!black}},
+  #1,
 }
+
+\newtcbox[auto counter,number within=section]{\pictureBox}[2][]
+{
+  enhanced jigsaw,
+  breakable,
+  colframe = Apricot!25,
+  colback  = Apricot!10,
+  coltitle = Apricot!20!black,
+  drop fuzzy shadow,
+  title    = {{\color{Black} \textbf{Figure \thetcbcounter:}} #2},
+  before skip = 20pt,
+  after skip = 20pt,
+  #1,
+}
+
