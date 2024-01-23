@@ -31,7 +31,7 @@
 
     \item \textbf{December 15th:} A Kinect Class was created, and basic frame reading functionality was implemented, paving the way for further exploration into eye tracking using OpenCV.
 
-    \item \textbf{December 16th:} I drew inspiration from a source \tocite and devised a plan for obtaining eye position using a series of steps, including acquiring a raw RGB image from the Kinect, employing OpenCV for eye tracking, projecting onto depth data, and scaling for use as the viewer's position.
+    \item \textbf{December 16th:} I drew inspiration from a student at cambridges masters thesis \cite{Zabarauskas2012} and devised a plan for obtaining eye position using a series of steps, including acquiring a raw RGB image from the Kinect, employing OpenCV for eye tracking, projecting onto depth data, and scaling for use as the viewer's position.
 
     \item \textbf{December 17th:} I achieved basic eye tracking using OpenCV and dlib, albeit with reduced speed due to CPU utilization. Further refinement and refactoring were required, drawing from insights gleaned from a relevant paper.
 
@@ -74,7 +74,9 @@ At the time of writing the interim report, I have achieved a working prototype t
     \end{minipage}
 \end{figureBox}
 
-The repository is publically available at \url{https://github.com/RobbieBuxton/VolumetricSim} and is slightly over 1500 lines of C++ and nix code. The repository should (but not tested) be able to be run from any x86-intel machine with a nvidia gpu and azure kinect. All you need to do is install the nix package manager which I recommend downloading from here \url{https://zero-to-nix.com/concepts/nix-installer} and run \texttt{sudo nix run github:RobbieBuxton/VolumetricSim}. Nix will download and configure all dependencies, it will probably take a while on first run because we use CUDA and the nix community currently doesn't publically cache unfree software. \\
+The repository is publically available at \url{https://github.com/RobbieBuxton/VolumetricSim} and is slightly over 1500 lines of C++ and nix code. The repository should (but not tested) be able to be run from any x86-intel machine with a nvidia gpu and azure kinect. All you need to do is install the nix package manager which I recommend downloading from here \url{https://zero-to-nix.com/concepts/nix-installer} and run 
+\[\texttt{[shell:~]\$ sudo nix run github:RobbieBuxton/VolumetricSim}\]
+ Nix will download and configure all dependencies, it will probably take a while on first run because we use CUDA and the nix community currently doesn't publically cache unfree software. \\
 
 As a side effect of this project I have also created a repository of a package that will automatically build and run the Azure Kinect SDK on Nix. This is available at \url{https://github.com/RobbieBuxton/k4a-nix}. \\
 

@@ -1,6 +1,6 @@
 \section{Motivations}
 
-Volumetric Displays are a new and exciting technology that has the potential to revolutionize the way we interact with computers. They are a type of 3D display that can be viewed from any angle without the need for special glasses by multiple people simultaneously. \tocite These displays differ from a virtual reality experience in that they are not immersive, but rather they are a window into a virtual world (See Fig~\ref{fig:volumetric-display-examples}). There is a not a consensus what the best way to build a volumetric display is and as we cover in the background section there are many approaches being attempted by research groups both academic and industrial.
+Volumetric Displays are a new and exciting technology that has the potential to revolutionize the way we interact with computers. They are a type of 3D display that can be viewed from any angle without the need for special glasses by multiple people simultaneously. \cite{1492264} These displays differ from a virtual reality experience in that they are not immersive, but rather they are a window into a virtual world (See Fig~\ref{fig:volumetric-display-examples}). There is a not a consensus what the best way to build a volumetric display is and as we cover in the background section there are many approaches being attempted by research groups both academic and industrial.
 
 % \begin{figureBox}[label={fig:volumetric-display-examples}]{Two different volumetric displays}
 %   \begin{minipage}[c]{0.48\textwidth}
@@ -34,8 +34,8 @@ We plan to create a platform for simulating volumetric displays that is:
 
   \item \textbf{Simple}: We have designed our software to be as simple as possible by taking advantage of the nix package manager to handle all the dependencies and by depending on external libraries like \texttt{dlib} \cite{10.5555/1577069.1755843} to handle more complicated tasks like face detection. This makes it easy to replicate and modify.
 
-  \item \textbf{Reproducible:} By building with nix we can guarantee that any experiments conducted using the simulator will be completely reproducible.
+  \item \textbf{Reproducible:} By building with nix we can guarantee that any experiments conducted using the simulator will be completely reproducible. (See background)
 \end{itemize}
 
 \subsection{User experiment}
-We plan to conduct an HCI user study to demonstrate the utility of our volumetric simulation platform. We will conduct a user study to compare the effectiveness of using hand tracking to interact directly with an ethereal/incorporeal volumetric display compared to a via tele-operation with a corporeal/tangible display. We go into more details about this study in the evaluation section.
+We plan to conduct an HCI user study to demonstrate the utility of our volumetric simulation platform. We will conduct a user study to compare the effectiveness of using hand tracking to interact directly with an ethereal/incorporeal volumetric display compared to a via tele-operation with a corporeal/tangible display (See evaluation).

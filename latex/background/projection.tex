@@ -10,7 +10,7 @@ To represent 3D objects on a 2D surface (our screen) OpenGL support two type of 
     \includegraphics[width = 0.5\linewidth]{./background/figures/projection/persp-projection.pdf}
 \end{figureBox}
 
-OpenGL provides the \texttt{frustum} function as seen in Fig~\ref{fig:persp-projection} which can be used to construct a perspective matrix Fig~\ref{fig:perspective-matrix} that maps a specified viewing frustum  screen-space (with intermediate steps handelled by OpenGL) \tocite. The viewing frustum, is specified by six parameters: $f$, $l$, $r$, $b$, $t$, $n$ which represent left, right, bottom, top, near, and far. These parameters define the sides of the near clipping plane, highlighted in red, relative to the origin of the coordinate system. These parameters do not represent distances or magnitudes in a traditional sense but rather define the vectors from the center of the near clipping plane to its edges. \\
+OpenGL provides the \texttt{frustum} function as seen in Fig~\ref{fig:persp-projection} which can be used to construct a perspective matrix Fig~\ref{fig:perspective-matrix} that maps a specified viewing frustum  screen-space (with intermediate steps handelled by OpenGL) \cite{hearn2004computer}. The viewing frustum, is specified by six parameters: $f$, $l$, $r$, $b$, $t$, $n$ which represent left, right, bottom, top, near, and far. These parameters define the sides of the near clipping plane, highlighted in red, relative to the origin of the coordinate system. These parameters do not represent distances or magnitudes in a traditional sense but rather define the vectors from the center of the near clipping plane to its edges. \\
 
 \begin{figure}[H]
     \[
@@ -64,7 +64,7 @@ We can now generate a projection matrix by calling \texttt{frustum} using $d$ as
     \includegraphics[width = 0.8\linewidth]{./background/figures/projection/realignment.pdf}
 \end{figureBox}
 
-The second problem we have is that we want our projection matrix to move around with the viewers eye however the mathematics of perspective projection disallow this, with the camera forever trapped at the origin. To translate our viewing frustum to our eye position we must instead translate our eye position (and the whole world) to the apex/origin of our frustum. This can be done with a translation matrix $T$ as seen in Fig~\ref{fig:frust-translation}. $T$ $T$ can be generated with the OpenGL function \texttt{translate} where we want to offset it by the vector from our Origin to the viewers eye $p_e$. T is defined as follows:
+The second problem we have is that we want our projection matrix to move around with the viewers eye however the mathematics of perspective projection disallow this, with the camera forever trapped at the origin. To translate our viewing frustum to our eye position we must instead translate our eye position (and the whole world) to the apex/origin of our frustum. This can be done with a translation matrix $T$ as seen in Fig~\ref{fig:frust-translation}. $T$ can be generated with the OpenGL function \texttt{translate} where we want to offset it by the vector from our Origin to the viewers eye $p_e$. T is defined as follows:
 \[
     \begin{bmatrix}
         1 & 0 & 0 & -p_{ex} \\
@@ -89,7 +89,6 @@ So our final viewing frustum takes in frustum extents $t_n$, $b_n$ $l_n$ and $r_
     \includegraphics[width = 0.5\linewidth]{./background/figures/projection/extending-near.pdf}
 \end{figureBox}
 
-
-Below we have attached some sample code of a function implementing the process we just described.
+Following these steps we can create an accurate projective providing the perspective we would expect to see if there was a scene in front and behind of our screen. Below we have attached some sample code of a function implementing the process we just described which is self-explanatory.
 
 \codeBoxFile{cpp}{./background/code/projection.cpp}{projection.cpp, Sample code for creating the 3D illusion projection}
