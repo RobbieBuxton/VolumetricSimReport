@@ -7,6 +7,9 @@
     "latex-workshop.latex.autoBuild.run": "never",
     "latex-workshop.message.badbox.show": false,
     "latex-workshop.linting.run": "onSave",
+    "grammarly.files.include": ["**/*.tex"],
+    "grammarly.config.documentDialect": "british",
+    "grammarly.config.documentDomain": "academic",
     "latex-workshop.latex.tools": [
         {
             "name": "lualatexmk",
