@@ -63,20 +63,24 @@
 \section{Current Status}
 At the time of writing the interim report, I have achieved a working prototype that can display virtual 3D scenes to the viewer. The viewer can move their head around and see the scene from different perspectives. The render has been written from the ground up in OpenGL and is capable of rendering models loaded from OBJ files using the TinyObjLoader library. The viewer's eye position is tracked using a Microsoft Azure Kinect. The render takes the live colour image stream from the Kinect compresses it about 4 times on the GPU then uses a CNN in \texttt{dlib} to detect a face. With that face, a 5-point facial landmark detector is run which gives up two points (the left and right side of the eye) we can use to get an approximation for the position of the pupil. We then use the Kinect to map this point in camera space to the depth camera to get the 3D coordinates of the viewer's eye. We then render the appropriate scene as can be seen in Fig~\ref{fig:prototype}.
 
-\begin{figureBox}[label={fig:prototype}]{Current Working Prototype displaying a chessboard slightly extended out of the screen plane}
-    \begin{minipage}[t]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{./project plan/figures/view_left.jpg}
-        \small {a) View from the left.}
-    \end{minipage}\hfill
-    \begin{minipage}[t]{0.48\textwidth}
-        \includegraphics[width=\textwidth]{./project plan/figures/view_right.jpg}
-        \small {b) View from the right.}
-    \end{minipage}
-\end{figureBox}
+\begin{invisBox}
+    \pictureBox[label={fig:prototype-left}]{View from the left}{
+        \adjustbox{height=5.75cm, keepaspectratio}{
+            \includegraphics{./project plan/figures/view_left.jpg}
+        }
+    }
+    \hfill
+    \pictureBox[label={fig:prototype-right}]{ View from the right}{
+        \adjustbox{height=5.75cm, keepaspectratio}{
+            \includegraphics{./project plan/figures/view_right.jpg}
+        }
+    }
+\end{invisBox}
 
-The repository is publically available at \url{https://github.com/RobbieBuxton/VolumetricSim} and is slightly over 1500 lines of C++ and nix code. The repository should (but not be tested) be able to be run from any x86-intel machine with an Nvidia GPU and an Azure Kinect. All you need to do is install the nix package manager which I recommend downloading from here \url{https://zero-to-nix.com/concepts/nix-installer} and run 
-\[\texttt{[shell:~]\$ sudo nix run github:RobbieBuxton/VolumetricSim}\]
- Nix will download and configure all dependencies, it will probably take a while on the first run because we use CUDA and the Nix community currently doesn't publically cache unfree software. \\
+The repository is publically available at \url{https://github.com/RobbieBuxton/VolumetricSim} and is slightly over 1500 lines of C++ and nix code. The repository should (but not be tested) be able to be run from any x86-intel machine with an Nvidia GPU and an Azure Kinect. All you need to do is install the nix package manager which I recommend downloading from here \url{https://zero-to-nix.com/concepts/nix-installer} and run the shell command from Listing~\ref{list:nix-run}.
+
+\codeBoxFile[label = {list:nix-run},  width=0.75\linewidth]{shell}{./project plan/code/nix-run.sh}{Terminal}
+Nix will download and configure all dependencies, it will probably take a while on the first run because we use CUDA and the Nix community currently doesn't publically cache unfree software. (I also haven't tested this on another machine yet, so there is a high chance this doesn't work yet) \\
 
 As a side effect of this project, I have also created a repository of a package that will automatically build and run the Azure Kinect SDK on Nix. This is available at \url{https://github.com/RobbieBuxton/k4a-nix}. \\
 
@@ -92,21 +96,21 @@ This is a key milestone as represents the baseline functionality required to sta
     \item \textbf{Shadows:} Shadows are a key part of giving the illusion of depth. I plan to implement shadows using ray tracing or shadow mapping. I have implemented ray tracing before in a previous project it worked well. However, I am not sure if it will be fast enough to run in real time. I will need to do some research into shadow mapping to see if it is a better option. I predict this task will take a week or less.
 
     \item \textbf{Calibration mode:} Currently the device is difficult to debug because the only method you have is if it looks correct. I am still not sure if it is correctly calibrated, i.e. if the screen is defined correctly based on the camera and the offset is correctly measured. I plan mode to verify if the simulator is calibrated correctly. Furthermore, I still need to research to figure out the best way to do this. I predict this task will take a week or less.
-    
+
     \item \textbf{Run User Study:} The final milestone is to run a user study to evaluate the device. I plan to run a user study with 10-20 participants. I will ask them to complete a questionnaire about their experience with the device and ask them to complete the interactive challenge. Furthermore, I predict this task will take a week or less. This will require ethics approval which I need to apply for after this interim report deadline.
 \end{itemize}
 
 \subsection{Optional milestones}
 \begin{itemize}
     \item \textbf{Adapt to be compliant with OpenXR:} OpenXR is an open standard for virtual reality and augmented reality. It is supported by all the major players in the industry including Microsoft, Valve, Oculus, Google, and many more. It would be a good idea to adapt the project to be compliant with this standard, so it can load into any OpenXR compatible application. I am currently not sure how difficult this is or if it is even feasible.
- 
+
     \item \textbf{Run on a Nvidia Jetson:} The Nvidia Jetson is a small embedded computer with a GPU. It would be interesting to see if the project could be adapted to run on this device. This would allow all the GPU-heavy tasks to be on the device, and you could plug the device into a monitor and have a portable volumetric display. The Nvidia jetson is already packaged in Nix, so it would function as fixing bugs from the new hardware and optimizing the code to run on a smaller GPU than my desktop which is am currently testing on. This would probably take a week or two. I already own an Nvidia jetson.
 
     \item \textbf{Anaglyph 3D:} Anaglyph 3D is a method of displaying 3D images using filters typically red and green color filters and does not require special hardware. The 3D effect currently requires 1 eye to be closed so adding 3D support would make it a more immersive experience. I predict this task will take a day or two.
-    
+
     \item \textbf{Realtime light detection:} Taking inspiration from what I have learned from advanced graphics this term it might be interesting to add another camera, a fish eye lens and use that to generate a real-time light map. This would allow the virtual scene to be lit by real-world lighting. I have already talked to Prof Abhijeet Ghosh about this idea, and he thinks it is feasible. However, this is going in a slightly different direction with the project. I predict this task will take a week or two.
-    
+
     \item \textbf{Improve compatibility:} Currently the project only works on Nvidia GPUs. It would be good to improve compatibility to work on AMD GPUs and Intel GPUs and also run without a GPU. It was also good to support different depth cameras other than the Kinect as this has been discontinued by Microsoft. This would require a lot of refactorings and would probably take a week or two.
-    
+
     \item \textbf{Tracker Logging:} It would be good to log the tracker data to a file so that it can be replayed later. This would allow experiments to be reproduced without having to use the device and would allow people to externally verify experiments. This would require a lot of refactorings and would probably take a week or two.
 \end{itemize}

@@ -3,18 +3,22 @@
 Volumetric displays \cite{1492264} are a promising technology that offers a captivating three-dimensional viewing experience. By emitting light for each voxel, or volume element, in a 3D space, these displays transcend the limitations of traditional 2D planes, providing a truly immersive 3D effect. This innovative approach enables the accurate representation of virtual 3D objects, including focal depth, motion parallax, and vergence, which refers to the rotation of a viewer's eye to fixate on the same point they are focusing on. Moreover, volumetric displays allow multiple users to view the same display from different angles, providing unique perspectives of the same object.
 
 \subsection{Swept Volume Displays}
-Swept volume displays represent one category of volumetric displays. They employ a moving 2D display to create a 3D image. This is achieved by moving the 2D display through a 3D space and emitting light from the display at each point. Common techniques for achieving this include using a rotating mirror \cite{10.1117/12.480930}, emitting screen typically an LED \cite{Gately:11}, or transparent projector screen \cite{keane_volumetric_2016}. There currently exist commercial products that implement this as can be seen in Fig~\ref{fig:swept-volume-displays}.
+Swept volume displays represent one category of volumetric displays. They employ a moving 2D display to create a 3D image. This is achieved by moving the 2D display through a 3D space and emitting light from the display at each point. Common techniques for achieving this include using a rotating mirror \cite{10.1117/12.480930}, emitting screen typically an LED \cite{Gately:11}, or transparent projector screen \cite{keane_volumetric_2016}. There currently exist commercial products that implement this as can be seen in Fig~\ref{fig:voxon} and Fig~\ref{fig:brightbox}.
 
-\begin{figureBox}[label={fig:swept-volume-displays}]{Two different types of swept volume display}
-  \begin{minipage}[t]{0.48\textwidth}
-    \includegraphics[width=\textwidth]{./background/figures/3d/voxon.jpg}
-    \small {a) The VXR4612 3D Volumetric Display, a projector-based persistence of vision display produced by Voxon Photonics. \cite{voxon2}}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.48\textwidth}
-    \includegraphics[width=\textwidth]{./background/figures/3d/brightvox.png}
-    \small {b) A Volumetric Display / Holographic Signage, an LED-based persistence of vision display produced by Brightvox Inc. \cite{brightvox_2023}}
-  \end{minipage}
-\end{figureBox}
+\begin{invisBox}
+  
+  \pictureBox[label={fig:voxon}]{The VXR4612 3D Volumetric Display, a projector-based persistence of vision display produced by Voxon Photonics. \cite{voxon2}}{
+    \adjustbox{height=4cm, keepaspectratio}{
+      \includegraphics{./background/figures/3d/voxon.jpg}
+    }
+  }
+  \hfill
+  \pictureBox[label={fig:brightbox}]{A Volumetric Display / Holographic Signage, an LED-based persistence of vision display produced by Brightvox Inc. \cite{brightvox_2023}}{
+  \adjustbox{height=4.5cm, keepaspectratio}{
+    \includegraphics{./background/figures/3d/brightvox.png}
+    }
+  }
+\end{invisBox}
 
 \subsection{Static Volume Displays}
 Static volume displays are another category of volumetric displays. They employ a static 3D display to create a 3D image. This is achieved by emitting light from the display at each point in a 3D space. Techniques for achieving this range from using a 3D array of LEDs \cite{10.1145/2341931.2341937}, lasers and phosphorus gas \cite{https://doi.org/10.1002/anie.202003160}, or a transparent laser-induced damaged medium that can be projected into \cite{10.1145/1179849.1179982}. There has also been some research into quantum dot-based displays \cite{Hirayama2015}.
