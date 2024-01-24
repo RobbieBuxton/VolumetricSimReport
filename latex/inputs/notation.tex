@@ -86,14 +86,33 @@ literate=
 \newtcbox[auto counter,number within=section]{\pictureBox}[2][]
 {
   enhanced jigsaw,
-  breakable,
+  nobeforeafter,
   colframe = Apricot!25,
-  colback  = Apricot!10,
+  colback= Apricot!25,
   coltitle = Apricot!20!black,
   drop fuzzy shadow,
+  left=0pt,
+  right=0pt,
+  top=0pt,
+  bottom=0pt,
   title    = {{\color{Black} \textbf{Figure \thetcbcounter:}} #2},
-  before skip = 20pt,
-  after skip = 20pt,
   #1,
 }
 
+%Invisible box
+
+\newtcolorbox{invisBox}{
+  center,
+  enhanced jigsaw,
+  breakable,
+  before skip=20pt,
+  after skip=20pt,
+  left=0pt,
+  right=0pt,
+  top=0pt,
+  bottom=0pt,
+  colframe=white, % Frame color
+  colback=white,  % Background color
+  opacityframe=0, % Frame opacity
+  opacityback=0   % Background opacity
+}

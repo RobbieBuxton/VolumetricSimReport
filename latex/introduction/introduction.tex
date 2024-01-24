@@ -1,22 +1,20 @@
 \section{Motivations}
 
-Volumetric Displays are a new and exciting technology that has the potential to revolutionize the way we interact with computers. They are a type of 3D display that can be viewed from any angle without the need for special glasses by multiple people simultaneously. \cite{1492264} These displays differ from a virtual reality experience in that they are not immersive, but rather they are a window into a virtual world (See Fig~\ref{fig:volumetric-display-examples}). There is no consensus on what the best way to build a volumetric display is and as we cover in the background section many approaches are being attempted by research groups both academic and industrial.
+Volumetric Displays are a new and exciting technology that has the potential to revolutionize the way we interact with computers. They are a type of 3D display that can be viewed from any angle without the need for special glasses by multiple people simultaneously. \cite{1492264} These displays differ from a virtual reality experience in that they are not immersive, but rather they are a window into a virtual world (See Fig~\ref{fig:passive-optical} and Fig~\ref{fig:acoustic}). There is no consensus on what the best way to build a volumetric display is and as we cover in the background section many approaches are being attempted by research groups both academic and industrial.
 
-% \begin{figureBox}[label={fig:volumetric-display-examples}]{Two different volumetric displays}
-%   \begin{minipage}[c]{0.48\textwidth}
-%     \includegraphics[width = \linewidth, keepaspectratio]{./introduction/figures/passive optical scatterers.png} \\
-%     \small {a) A volumetric display created at Columbia University using passive optical scattering \cite{10.1145/1179849.1179982}.}
-%   \end{minipage}\hfill
-%   \begin{minipage}[c]{0.48\textwidth}
-%     \includegraphics[width = \linewidth, keepaspectratio]{./introduction/figures/acoustophoretic display.jpg} \\
-%     \small {b) A volumetric display created at Bristol University using acoustic trapping \cite{10.1063/1.5113467}}
-%   \end{minipage}
-% \end{figureBox}
-\begin{tcbraster}[raster columns=2,raster equal height=rows]
-\pictureBox{a) A volumetric display created at Columbia University using passive optical scattering \cite{10.1145/1179849.1179982}}{\includegraphics[width = \linewidth, keepaspectratio]{./introduction/figures/passive optical scatterers.png}}
+\begin{invisBox}
+\pictureBox[label={fig:passive-optical}]{a) A volumetric display created at Columbia University using passive optical scattering \cite{10.1145/1179849.1179982}}{
+  \adjustbox{height=5cm, keepaspectratio}{
+    \includegraphics{./introduction/figures/passive optical scatterers.png}
+  }
+}
 \hfill
-\pictureBox{b) A volumetric display created at Bristol University using acoustic trapping \cite{10.1063/1.5113467}}{\includegraphics[width = \linewidth, keepaspectratio]{./introduction/figures/acoustophoretic display.jpg}}
-\end{tcbraster}
+\pictureBox[label={fig:acoustic}]{b) A volumetric display created at Bristol University using acoustic trapping \cite{10.1063/1.5113467}}{
+\adjustbox{height=6cm, keepaspectratio}{
+  \includegraphics{./introduction/figures/acoustophoretic display.jpg}
+  }
+}
+\end{invisBox}
 
 It is difficult to conduct human-computer interaction (HCI) research into volumetric displays because these devices are not widely available, expensive to manufacture, and have high bandwidth requirements. This makes it difficult to conduct user studies and experiments. People have created virtual simulations of volumetric displays to try and solve this problem (see background), but these solutions are often complicated and expensive to replicate.
 
