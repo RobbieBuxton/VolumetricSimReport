@@ -61,7 +61,7 @@ We can now generate a projection matrix by calling \texttt{frustum} using $d$ as
     \includegraphics[width = 0.8\linewidth]{./background/figures/projection/realignment.pdf}
 \end{figureBox}
 
-The second problem we have is that we want our projection matrix to move around with the viewer's eye however the mathematics of perspective projection disallow this, with the camera forever trapped at the origin. To translate our viewing frustum to our eye position we must instead translate our eye position (and the whole world) to the apex/origin of our frustum. This can be done with a translation matrix $T$ as seen in Fig~\ref{fig:frust-translation}. $T$ can be generated with the OpenGL function \texttt{translate} where we want to offset it by the vector from our Origin to the viewer's eye $p_e$. T is defined as follows:
+The second problem we have is that we want our projection matrix to move around with the viewer's eye however the mathematics of perspective projection disallow this, with the camera assumed to be at the origin. To translate our viewing frustum to our eye position we must instead translate our eye position (and the whole world) to the origin of our frustum. This can be done with a translation matrix $T$ as seen in Fig~\ref{fig:frust-translation}. $T$ can be generated with the OpenGL function \texttt{translate} where we want to offset it by the vector from our Origin to the viewer's eye $p_e$. T is defined as follows:
 \[
     \begin{bmatrix}
         1 & 0 & 0 & -p_{ex} \\
