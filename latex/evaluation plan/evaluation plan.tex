@@ -2,6 +2,9 @@
 \subsection{Eye Tracker}
 One of the key components of our volumetric display simulator is the eye tracker. It is responsible for tracking the position and orientation of the user's head. This is used to render the volumetric display from the correct perspective. To properly evaluate our simulator we must first evaluate the quality of the eye tracker. The key metrics to track would be at different camera input resolutions (we can vary the resolution by pyramiding down) and the frame rate the tracker can run (bounded by Azure Kinect's maximum fps of 30). What percentage of the time can it detect an eye during an example input, and what are the maximum orientations of a face that it can detect an eye? We can also compare the accuracy of the eye tracker to other eye trackers.
 
+\subsection{3D Position accuracy}
+Once we have evaluated the eye tracker we can then evaluate the accuracy of the eye position. We can do this by comparing the predicted eye position by the tracker camera to the actual measured eye position at the origin of our tracker space. This is more a measurement of calibration than the eye tracker itself as we assume the tracker is already functioning correctly.
+
 \subsection{Renderer}
 The render is responsible for rendering the volumetric display from the correct perspective. To properly evaluate our simulator we prove that the rendered scene is accurate. We can do this by comparing the rendered scene to the real scene we are trying to simulate. We can do this by scanning a real scene with a depth camera and then rendering the same scene with our simulator and comparing the two from the same perspective. There are currently no open-source volumetric display simulators to which we can compare our simulator.
 

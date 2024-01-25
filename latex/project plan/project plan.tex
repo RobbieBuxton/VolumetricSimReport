@@ -11,7 +11,7 @@
 
     \item \textbf{October 23rd:} I upgraded to a more recent version of OpenGL and eliminated hardcoded asset paths to ensure compatibility across various systems.
 
-    \item \textbf{October 30th:} I decided I would attempt to try and package Azure-Kinect-SDK in nix giving myself a 1-week cut-off, if I could not get it working by then I would switch to a different solution or ditch the idea of using nix altogether.
+    \item \textbf{October 30th:} I decided I would attempt to try and package Azure-Kinect-SDK in Nix giving myself a 1-week cut-off, if I could not get it working by then I would switch to a different solution or ditch the idea of using Nix altogether.
 
     \item \textbf{November 01st:} Progress continued as I managed to hack together an initial version of the Azure-Kinect-SDK on NixOS. However, reliability in the build process remained a concern. I had to fork the Azure-Kinect-SDK repository because it has officially been dropped by Microsoft and there are CMAKE build bugs on Linux.
 
@@ -77,7 +77,7 @@ At the time of writing the interim report, I have achieved a working prototype t
     }
 \end{invisBox}
 
-The repository is publically available at \url{https://github.com/RobbieBuxton/VolumetricSim} and is slightly over 1500 lines of C++ and nix code. The repository should (but not be tested) be able to be run from any x86-intel machine with an Nvidia GPU and an Azure Kinect. All you need to do is install the nix package manager which I recommend downloading from here \url{https://zero-to-nix.com/concepts/nix-installer} and run the shell command from Listing~\ref{list:nix-run}.
+The repository is publically available at \url{https://github.com/RobbieBuxton/VolumetricSim} and is slightly over 1500 lines of C++ and Nix code. The repository should (but not be tested) be able to be run from any x86-intel machine with an Nvidia GPU and an Azure Kinect. All you need to do is install the Nix package manager which I recommend downloading from here \url{https://zero-to-nix.com/concepts/nix-installer} and run the shell command from Listing~\ref{list:nix-run}.
 
 \codeBoxFile[label = {list:nix-run},  width=0.75\linewidth]{shell}{./project plan/code/nix-run.sh}{Terminal}
 Nix will download and configure all dependencies, it will probably take a while on the first run because we use CUDA and the Nix community currently doesn't publically cache unfree software. (I also haven't tested this on another machine yet, so there is a high chance this doesn't work yet) \\

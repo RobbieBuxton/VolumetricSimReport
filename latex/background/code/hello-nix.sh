@@ -9,7 +9,7 @@ flake.lock  flake.nix
 Hello, world!
 
 [shell:~]$ nix path-info .
-\nix\store\sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1
+"\nix\store\sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1"
 
 [shell:~]$ tree $(nix path-info .)
 "\nix\store\sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1"
