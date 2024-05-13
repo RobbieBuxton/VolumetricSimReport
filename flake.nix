@@ -35,6 +35,7 @@
           texlab
           zathura
           wmctrl
+          imagemagick
         ];
       in
       rec {
