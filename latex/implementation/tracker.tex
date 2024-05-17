@@ -1,7 +1,138 @@
 \section{Tracking System}
-\begin{enumerate}
-	\item OpenCV for overall framework
-	\item Dlib for face Tracking 
-	\item Hand Tracking using MediaPipe
-	\item Point cloud with tracked points.
+
+\subsection{Introduction}
+
+\begin{enumerate}[itemsep=-0.25em]
+	\item Explain what the tracking system is.
+	\item Explain why we need a tracking system.
+	\item Explain what the tracking system is used for.
+	\item Requirements (i.e needs to be high-resolution, low latency, high framerate, etc.)
+\end{enumerate}
+
+To be able to accurately produce a virtual volumetric screen, we need to be able to track the user's face and hands. This is so we can render the correct perspective of the screen to the user. Our tracking system had to fit the following requirements:
+\begin{itemize}[itemsep=-0.25em]
+	\item \textbf{High resolution:} To be able to accurately track the user's face and hands smoothly.
+	\item \textbf{High framerate:} To be able to track the user's face and hands smoothly.
+	\item \textbf{Low latency:} To be able to track the user's face and hands in near real-time.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Hardware}
+
+\begin{figureBox}[label={fig:kinect}, width=0.5\linewidth]{Azure Kinect}
+    \includegraphics[width = 0.8\linewidth]{./implementation/figures/kinect.pdf}
+\end{figureBox}
+\textcolor{red}{Get Image from here https://deviestore.com/product/microsoft-azure-kinect/ source microsoft for the image.} \\
+
+For this project we used a Microsoft Azure Kinect camera \tocite Fig~\ref{fig:kinect}. The Azure Kinect camera has two sensors, a depth sensor (IR Sensor) and a colour sensor. For this project we have configured the camera to capture images at its widest field of view $90^{\circ} \times 74.3^{\circ} $, with the exposure time 12.8 ms and it's highest framerate 30fps. To be able to use these settings we had to compromise on the resolution of the images running the RGB camera at $2048 \times 1536$ rather than it's maximum resolution of $4096 \times 3072$ and the depth camera at $2\times2$ binned with a resolution of $512 \times 512$ rather than it's maximum unbinned resolution of $1024 \times 1024$. Because we use the depth camera in wide field of view mode $120^{\circ} \times 120^{\circ} $ rather than $75^{\circ} \times 65^{\circ} $ we compromised on the maximum operating range of the camera only being able to track hands up to 2.88m away rather than 5.46m. \\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Core Libaries}  
+\begin{figureBox}[label={fig:core-libs}, width=0.8\linewidth]{Core Libraries used for tracking}
+    \includegraphics[width = 1.0\linewidth]{./implementation/figures/libs.png}
+\end{figureBox}
+
+\textcolor{red}{Cite libraries for the images}
+
+\subsubsection{Azure Kinect SDK (K4A)}
+
+We use the Azure Kinect SDK (K4A) library to retrieve Captures from the Kinect and the handle the "space" transformations you need to calculate the positions of points in 3D.
+
+\begin{figureBox}[label={fig:diff-spaces}, width=0.8\linewidth]{Different spaces changing Depth and Colour Images}
+    \includegraphics[width = 1.0\linewidth]{./implementation/figures/different spaces.png}
+\end{figureBox}
+
+
+The camera when polled with K4A returns a "Capture" which is a struct containing a colour image, depth image and an IR image. We don't use the IR image in our project so we ignore it. It is worth noting that the depth image is in a different space to the colour image as can be seen in Fig~\ref{fig:diff-spaces}. The depth image is in the "depth space" and the colour image is in the "colour space". To use the two images in conjunction we have to convert them into the same space. \\
+
+Using a "calibration" that is generated at the start of the program k4a lets you convert between the 4 difference "spaces", "Depth 2D", "Depth 3D", "Colour 2D", "Colour 3D". There are interesting performance implications of using different spaces for different tasks. For example going from "Depth 2D" to "Depth 3D" is significantly faster than going from "Colour 2D" to "Colour 3D". \\
+
+Another interesting side effect of converting between spaces if because the IR and colour cameras are physically offset and diffract differently you get "depth shadows" \tocite as can be seen in the Bottom Left image in Fig~\ref{fig:diff-spaces}. Which can make it difficult when trying to track thin objects like fingers as you have a high probability of getting an invalid depth.
+
+\subsubsection{OpenCV}
+
+We use OpenCV to handle the images we get from the Azure Kinect SDK. OpenCV is a library that provides a comprehensive set of functions for image processing and computer vision. We use OpenCV to convert the images we get from the Azure Kinect SDK into a format that can be more easily used by Dlib and MediaPipe. We make use of OpenCV's GPU accelerated functions like to down scaling. To increase the performance of our tracking system. We also use OpenCV for debugging to render the images to the screen.
+
+\subsubsection{Dlib}
+
+We use Dlib to track the user's face. Dlib is a modern C++ toolkit containing machine learning algorithms and tools for creating complex software in C++ to solve real-world problems. We use Dlib's face tracking model \tocite to track the user's face. Dlib's face tracking model is a deep learning model that can track the user's face in real-time. We use Dlib's GPU accelerated functions to increase the performance of our tracking system. We initially used Dlib's CPU face tracking functionality but found that it was bottlenecking our system. We then switched to Dlib's GPU functions and found that it significantly increased the performance of our tracking system. \textcolor{red}{Fill out more}
+
+\subsubsection{MediaPipe}
+
+We use MediaPipe to track the user's hands. MediaPipe is a cross-platform framework for building multi-modal applied machine learning pipelines. We use MediaPipe's hand tracking model \tocite on colour images to track the user's hands. MediaPipe's hand tracking model is a deep learning model that can track the user's hands in real-time. \textcolor{red}{Fill out more}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Overall Tracking System Design}
+
+\begin{enumerate}[itemsep=-0.25em]
+	\item Diagram of how the system works.
+	\item Picture diagram of capture to tracking frame.
+	\item Mention how we track the hands and face seperately so two capture frames.  
+\end{enumerate}
+
+The purpose of the tracking system in brief strokes is to convert the Captures provided by the Kinect Camera into 3D point representing useful information from the render like the position of the users eye and fingers. The current system just returns the position of the left eye and index and thumb tip on the closest hand to the camera. The system runs as the same speed of as camera (30fps) and feels smooth. \\
+
+There were a number of different approaches we could have taken but in the end we decided to use a system that tracked the position of the users face and hands separately in 2D which we then converted into 3D. The main other approach we could have taken was to track the face and hands in 3D directly. In the end the main reason we decided against this approach was because although the rendering system was a key part of this project it was not the main focus. The main focus was the user study and the tracking system was just a means to an end. The ecosystem for tracking in 2D is much more mature (thanks in part to mobile phones) than in 3D and we were able to leverage a lot of existing work (Such as the previously described libraries Dlib, MediaPipe, and OpenCV). Another reason was that we were concerned about the performance of tracking in 3D. We were worried that tracking in 3D would be too slow to be able to track the users face and hands in real-time, however is suspect this probably would have been fine. There are a number of downsides that arise from tracking in 2D. For example, as we will talk about a bit more in the evaluation section, it is difficult to find the accurate positions of objects in 3D space that are occluded for example fingers behind other fingers. \\
+
+\textcolor{red}{update image to have two tracking frames and track hand and eye separately and show what happens in tracking fails}
+
+\begin{figureBox}[label={fig:tracker-overview}, width=0.8\linewidth]{Tracker overview}
+    \includegraphics[width = 1.0\linewidth]{./implementation/figures/tracker.pdf}
+\end{figureBox}
+
+As can be seen in Fig~\ref{fig:tracker-overview} the basic flow of the tracking system is as follows.
+\begin{enumerate}[itemsep=-0.25em]
+	\item Retrieve the Capture from the Kinect Camera.
+	\item Run hand and head tracking on the colour image.
+	\item Extract the key 2D points from the hands (thumb and index tip) and face (left eye).
+	\item Use the depth image to convert the 2D points into 3D points and put these in a "tracking frame" to be sent to the rendered.
+\end{enumerate}
+
+While it might seem strange at first as can be seen in the Tracking Frame in Fig~\ref{fig:tracker-overview} we actually keep a separate instance for the left eye and the thumb and index tips. This is because there is no guarantee that the tracker will be able to detect both the face and hands at the same time. For example if the user is holding their hand in front of their face the tracker will only be able to detect the hand. If this happens our system will just reuse the last known position which is a good approximation of faces position. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Multithreading}
+
+\begin{enumerate}[itemsep=-0.25em]
+	\item Seperate thread for tracking capturing and rendering
+	\item Increased framerate but did not change latency.
+	\item More wasteful in terms of resources but there is there are more than enough resources.
+	\item Talk about polling architecture and how we cache frames so we don't do redundant work.
+\end{enumerate}
+
+\begin{figureBox}[label={fig:mult-threaded-des}, width=0.8\linewidth]{Multi-threaded design}
+    \includegraphics[width = 0.8\linewidth]{./implementation/figures/multi-thread-design.pdf}
+\end{figureBox}
+
+One of the more challenging aspects of this project was to make our tracking system run fast enough that it felt smooth. To achieve this we had to make use of multi-threaded design as can be seen in Fig~\ref{fig:mult-threaded-des}. We used a separate thread for tracking, capturing, and rendering. This is a slightly wasteful use of resources as we effectively waste a thread waiting for captures however as the whole simulation is surprisingly light on resources this was not a problem it was worth it for the framerate gain it provided.
+
+The purpose of this design choice is to make sure there is always a threading running the tracking models as these are by far the computationally most expensive part of the system. Using a multithreaded design does not reduce the latency (which we talk about more in evaluation) of the system but rather increases the throughput which in our case is the framerate of the application. As we are using a camera that runs at 30fps we need to be able to process an image every $\frac{100\text{ms}}{30\text{ms}} = 33 \text{ms} $.   \\
+
+TO DO ADD KEY
+\begin{figureBox}[label={fig:single-vs-multi}, width=0.8\linewidth]{Single vs Multi threaded design}
+    \includegraphics[width = 0.8\linewidth]{./implementation/figures/single-vs-multi.pdf}
+\end{figureBox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{GPU Acceleration}
+\begin{figureBox}[label={fig:system-des}, width=0.8\linewidth]{Overall Tracking System Design}
+    \includegraphics[width = 0.8\linewidth]{./implementation/figures/system.pdf}
+\end{figureBox}
+
+\begin{enumerate}[itemsep=-0.25em]
+	\item Dlib and MediaPipe both support GPU acceleration. Only did it in DLIB. Get benchmarks from Mediapipe and DLIB
+	\item downscaling to increase performance has the downside of reducing precision/resolution but it was negligible.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Camera Positioning}
+\begin{enumerate}[itemsep=-0.25em]
+	\item Camera is measured in 3D space and orientation is recorded.
+	\item Screen is measured in 3D space. 
 \end{enumerate}
