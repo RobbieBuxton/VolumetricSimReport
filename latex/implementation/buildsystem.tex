@@ -1,7 +1,56 @@
-\section{Build System}
+\section{Overall System}
+
+\subsection{Introduction}
+\begin{itemize}
+	\item The build system is responsible for compiling the simulator and the rendering system, as well as running the user study.
+	\item Complex build system that requires the compilation of C++, CUDA, and Python code.
+	\item Needs to download and manage large ML models and object files to render.
+	\item Needs to be easily portable to allow for the user study to be conducted on a variety of systems.
+	\item From prior experience, we know that the build system can be a significant bottleneck in the development process.
+	\item Chose to use nix as the build system as it is a declarative build system that allows for the easy management of dependencies.
+	\item Allows overlays to modify packages globally.
+\end{itemize}
+
+\subsection{Overview}
 \begin{enumerate}
-	\item CUDA support
-	\item Model loading support
-	\item Easily Portable
-	\item Having to package connect and mediapipe.
+	\item Draw a diagram of the build system
+	\item The build system is split into two parts: the simulator, and the user study.
+	\item Show how the simulator is compiled as a shared library and called from the user study.
+	\item Show how models and object files are downloaded and managed.
+\end{enumerate}
+
+\subsection{Dev Environments}
+\begin{enumerate}
+	\item Use nix-shell to create a development environment that contains all the dependencies required to build the system.
+	\item Dev shell for building and coding the simulator
+	\item Dev shell for building and coding the user study
+	\item Dev shell for launching and managing local mongodb database
+\end{enumerate}
+
+\subsection{Extra work}
+\begin{enumerate}
+	\item If something is not already packaged in nixpkgs, you have to package it yourself.
+\end{enumerate}
+
+\subsubsection{Azure Kinect Package}
+\begin{enumerate}
+	\item The Azure Kinect SDK is not packaged in nixpkgs.
+	\item Microsoft provides an out of date Ubuntu package.
+	\item We had to port this package to nix. 
+	\item Was a pain.
+\end{enumerate}
+
+\subsubsection{Dlib package}
+\begin{enumerate}
+	\item Dlib was packaged in nixpkgs but cuda support had been added wrong.
+	\item Was able to fix this locally (explain nice overlays for nix). 
+	\item Decided to be a good citizen and submit a PR to nixpkgs, to fix it for everyone. This took much longer than expected as ended up having to fix a lot of other things in the package that weren't a problem for me but were for everyone else.
+\end{enumerate}
+
+\subsubsection{MediaPipe}
+\begin{enumerate}
+	\item MediaPipe was not packaged in nixpkgs.
+	\item MediaPipe is built with Bazel which is supported in nixpkgs but is annoying to work with.
+	\item To use MediaPipe in the system, we had to package it in nixpkgs and convert it to being a shared library by wrapping it in a c interface.
+	\item This was a pain.
 \end{enumerate}

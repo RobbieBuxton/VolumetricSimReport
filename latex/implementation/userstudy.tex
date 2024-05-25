@@ -1,5 +1,87 @@
 \section{User Study}
+\subsection{Introduction}
 \begin{enumerate}
-	\item Use Image from plan.
-	\item Horizontal Monitor on side. 
+	\item The user study was conducted to evaluate the effectiveness of the system in improving the spatial reasoning skills of the participants.
+\end{enumerate}
+
+To validate the usefulness of our system we decided to conduct a Within-Subjects User Study. The user study was designed to show the capacity of the system for being used in research. The study was designed to test the effectiveness of users using volumetric displays under different conditions.
+
+\subsection{Experimental Variables}
+\begin{enumerate}
+	\item Independent Variables:
+	\begin{enumerate}
+		\item 3D Perspective (On/Off)
+		\item Interaction Offset (On/Off)
+		\item So 4 conditions
+	\end{enumerate}
+	\item Dependent Variables:
+	\begin{enumerate}
+		\item Time taken to complete task
+		\item Number of subtasks completed
+		\item Eye and hand positions
+	\end{enumerate}
+	\item Control Variables:
+	\begin{enumerate}
+		\item The five tasks are the same in each condition.
+		\item Position of participant
+		\item Position of the tracking camera
+		\item Position of the zone of interaction
+		\item Size of the display. 
+	\end{enumerate}
+	\item Confounding Variables:
+	\begin{enumerate}
+		\item The participants may have different levels of experience with VR/Volumetric.
+		\item Left-handed vs right-handed might make a difference for the tasks.
+		\item Wearing glasses might make a difference for head tracking.
+	\end{enumerate}
+	\item 
+\end{enumerate}
+
+For this study we wanted to evaluate the difference in performance of participants in interacting with volumetric screens with their hands. 
+
+Our two independent variables were: 
+\begin{itemize}[itemsep=-0.25em]
+	\item \textbf{3D Perspective}: (On/Off). This controls if the system is able to use the eye tracking system to create the illusion of a 3D volumetric display as can be seen in Fig~\todo.
+	\item \textbf{Interaction Offset}: (On/Off). This controls if display is directly in front of the participant or if it is offset by a fixed amount as can be seen in Fig~\todo.
+\end{itemize}
+Giving us a total of 4 conditions to test.
+
+
+The first condition we wanted to test was if there was any noticeable drop in performance when using the system in 2D (i.e with eye tracking disabled but still using hand tracking). The second condition was if there was a performance difference if participants "teleoperated" (controlled it with a fixed offset) the simulator vs using their hands directly. Combining these two conditions gives us the four conditions we tested as can be seen in Fig~\ref{fig:study-conditions}. 
+
+\subsection{Tasks}
+\begin{enumerate}
+	\item Trace out points like a buzzwire game. 
+	\item Draw Diagram of how the task works
+	\item Draw Isometric view of the tasks
+	\item Tasks are designed to be annoying if not in 3D.
+	\item Timeout of 1 minute.
+\end{enumerate}
+
+In each of the 4 conditions the participant must complete the same 5 tasks. The tasks are designed to be simple but more difficult to complete if not in 3D. To complete a task a participant must trace the path between the points with their index and middle finger in the order the simulator presents to them. A green point is completed and an orange point represents the next point ot be completed as can be seen in Fig~\todo. \\ 
+
+The participants have a timeout of 1 minute to complete the task. If they do not complete the task in the time limit, the task is marked as incomplete. The time each point is completed is recorded as well as the position of the hand and eye throughout the minute. The 5 different tasks are shown in Fig~\todo.
+
+\subsection{Study Implementation}
+\begin{enumerate}
+	\item We run the study from a python based CLI (Click).
+	\item We compile the simulator as a shared library and call it from the python CLI using a C-FFI.
+	\item We receive the results and logs from python in json format and store them in a mongoDB database.
+	\item This data is then used to generate the results.
+\end{enumerate}
+
+\subsection{Participants}
+\begin{enumerate}
+	\item We record age, gender, if they are left or right handed, and if they have any experience with VR, and if they wear glasses.
+	\item The participants were given a random order of the four conditions.
+	\item They complete the 5 tasks in each
+	\item Fill out survey about each condition.
+	\item Fill out survey about the system as a whole at the end.
+	\item Ran the study in Huxley building.
+\end{enumerate}
+
+\subsection{Study Results}
+\begin{enumerate}
+	\item Use ANOVA test?
+	\item ????
 \end{enumerate}

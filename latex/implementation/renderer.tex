@@ -1,8 +1,27 @@
 \section{Rendering System}
+\subsection{Introduction}
 \begin{enumerate}
-	\item OpenGL
-	\item Object loading support
-	\item GLM for matrix manipulation
-	\item All primitives are rendered as a combination of spheres, cylinders, and cubes being warped. 
-	\item Debugging images?
+	\item Rendering system is responsible for rendering the 3D models and the environment.
+\end{enumerate}
+\subsection{OpenGL}
+\begin{enumerate}
+	\item OpenGL is a cross-platform graphics API that is used to render 2D and 3D graphics
+	\item Used GLM mathematical library for matrix manipulation and projects.
+\end{enumerate}
+
+\subsection{Object Loading}
+\begin{enumerate}
+	\item Object loading support was added to the rendering system to allow for the rendering of complex 3D models.
+	\item We construct our challenge by warping spheres, cylinders, and cubes.
+	\item Used tinyobjloader to load .obj files
+\end{enumerate}
+
+\subsection{Lighting}
+\begin{enumerate}
+	\item We are using a simple lighting model (Blinn-Phong) that uses ambient, diffuse, and specular lighting.
+\end{enumerate}
+
+\subsection{Perspective}
+\begin{enumerate}
+	\item Take eye position from the tracker and render the scene from that perspective.
 \end{enumerate}

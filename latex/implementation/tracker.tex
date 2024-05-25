@@ -75,7 +75,7 @@ We use MediaPipe to track the user's hands. MediaPipe is a cross-platform framew
 
 The purpose of the tracking system in brief strokes is to convert the Captures provided by the Kinect Camera into 3D point representing useful information from the render like the position of the users eye and fingers. The current system just returns the position of the left eye and index and thumb tip on the closest hand to the camera. The system runs as the same speed of as camera (30fps) and feels smooth. \\
 
-There were a number of different approaches we could have taken but in the end we decided to use a system that tracked the position of the users face and hands separately in 2D which we then converted into 3D. The main other approach we could have taken was to track the face and hands in 3D directly. In the end the main reason we decided against this approach was because although the rendering system was a key part of this project it was not the main focus. The main focus was the user study and the tracking system was just a means to an end. The ecosystem for tracking in 2D is much more mature (thanks in part to mobile phones) than in 3D and we were able to leverage a lot of existing work (Such as the previously described libraries Dlib, MediaPipe, and OpenCV). Another reason was that we were concerned about the performance of tracking in 3D. We were worried that tracking in 3D would be too slow to be able to track the users face and hands in real-time, however is suspect this probably would have been fine. There are a number of downsides that arise from tracking in 2D. For example, as we will talk about a bit more in the evaluation section, it is difficult to find the accurate positions of objects in 3D space that are occluded for example fingers behind other fingers. \\
+There were a number of different approaches we could have taken but in the end we decided to use a system that tracked the position of the users face and hands separately in 2D which we then converted into 3D. The main other approach we could have taken was to track the face and hands in 3D directly. In the end the main reason we decided against this approach was because although the rendering system was a key part of this project it was not the main focus. The main focus was the user study and the tracking system was just a means to an end. The ecosystem for tracking in 2D is much more mature (thanks in part to mobile phones) than in 3D and we were able to leverage a lot of existing work (Such as the previously described libraries Dlib, MediaPipe, and OpenCV). Another reason was that we were concerned about the performance of tracking in 3D. We were worried that tracking in 3D would be too slow to be able to track the users face and hands in real-time, however is suspect this probably would have been fine. There are a number of downsides that arise from tracking in 2D. For example, as we will talk about a bit more in the evaluation section, it is difficult to find the accurate positions of objects in 3D space that are occluded for example fingers behind other fingers. Because fingers are fairly small objects we also have to sample a vague area where we think it is and pick the closet point as if you only sample the predicted point you can miss the finger.\\
 
 \textcolor{red}{update image to have two tracking frames and track hand and eye separately and show what happens in tracking fails}
 
@@ -93,6 +93,18 @@ As can be seen in Fig~\ref{fig:tracker-overview} the basic flow of the tracking 
 
 While it might seem strange at first as can be seen in the Tracking Frame in Fig~\ref{fig:tracker-overview} we actually keep a separate instance for the left eye and the thumb and index tips. This is because there is no guarantee that the tracker will be able to detect both the face and hands at the same time. For example if the user is holding their hand in front of their face the tracker will only be able to detect the hand. If this happens our system will just reuse the last known position which is a good approximation of faces position. 
 
+\subsection{Tracking Models}
+\begin{enumerate}
+	\item Dlib and MediaPipe are used to track the face and hands respectively.
+	\item Dlib is used to track the face. 5 point model with a cnn. cite correctly.
+	\item MediaPipe is used to track the hands. 21 point model with a cnn. cite correctly.
+	\item mention running on downscaled images to increase performance.
+	\item mention switching to tracking middle finger and index and more stable when camera looking down.
+	\item Mention model only finds position of surface of finger
+\end{enumerate}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Multithreading}
@@ -108,11 +120,11 @@ While it might seem strange at first as can be seen in the Tracking Frame in Fig
     \includegraphics[width = 0.8\linewidth]{./implementation/figures/multi-thread-design.pdf}
 \end{figureBox}
 
-One of the more challenging aspects of this project was to make our tracking system run fast enough that it felt smooth. To achieve this we had to make use of multi-threaded design as can be seen in Fig~\ref{fig:mult-threaded-des}. We used a separate thread for tracking, capturing, and rendering. This is a slightly wasteful use of resources as we effectively waste a thread waiting for captures however as the whole simulation is surprisingly light on resources this was not a problem it was worth it for the framerate gain it provided.
+One of the more challenging aspects of this project was to make our tracking system run fast enough that it felt smooth. To achieve this we had to make use of multi-threaded design as can be seen in Fig~\ref{fig:mult-threaded-des}. We used a separate thread for tracking, capturing, and rendering. This is a slightly wasteful use of resources as we effectively waste a thread waiting for captures however as the whole simulation is surprisingly light on resources this was not a problem it was worth it for the framerate gain it provided. \\
 
-The purpose of this design choice is to make sure there is always a threading running the tracking models as these are by far the computationally most expensive part of the system. Using a multithreaded design does not reduce the latency (which we talk about more in evaluation) of the system but rather increases the throughput which in our case is the framerate of the application. As we are using a camera that runs at 30fps we need to be able to process an image every $\frac{100\text{ms}}{30\text{ms}} = 33 \text{ms} $.   \\
+The purpose of this design choice is to make sure there is always a threading running the tracking models as these are by far the computationally most expensive part of the system. Using a multithreaded design does not reduce the latency (which we talk about more in evaluation) of the system but rather increases the throughput which in our case is the framerate of the application. As we are using a camera that runs at 30fps we need to be able to process an image every $\frac{100\text{ms}}{30\text{ms}} = 33 \text{ms} $. As can be seen in Fig~\ref{fig:single-vs-multi} by switching to a multi-threaded design we can increase the framerate of our whole tracking system to be the same as time required to run our tracking modules on our already retrieved captures. This also gives us the advantage of being able to run the simulation at an independent framerate to the tracker. \\
 
-TO DO ADD KEY
+\textcolor{red}{TO DO ADD KEY, also show how long each individual part takes. Also show that rendering happens multiple times a second}
 \begin{figureBox}[label={fig:single-vs-multi}, width=0.8\linewidth]{Single vs Multi threaded design}
     \includegraphics[width = 0.8\linewidth]{./implementation/figures/single-vs-multi.pdf}
 \end{figureBox}
@@ -120,6 +132,10 @@ TO DO ADD KEY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{GPU Acceleration}
+
+Another method we use to increase the performance of our tracking system is to use GPU acceleration. Both Dlib and MediaPipe support GPU acceleration. We only used GPU acceleration in Dlib as we found that it significantly increased the performance of our tracking system. \textcolor{red}{get actual stats for dlib gpu stats}. We did not use GPU acceleration in MediaPipe as the CPU speed was already sufficient and the purported speedup of 12.27ms with GPU acceleration vs 17.12ms \textcolor{red}{to cite https://ai.google.dev/edge/mediapipe/solutions/vision/hand\_landmarker} with cpu only didn't seem worth the effort of enabling CUDA in mediapipe after it already provided difficult to use (See build systems for more information) . We did not test the performance of MediaPipe with GPU acceleration as we did not have the time.  \\
+
+As you can see in Fig~\ref{fig:system-des} we only used GPU acceleration for 3 parts of our tracking system. We down scale our colour images using OpenCV's GPU accelerated pyramid down function as this is a highly parallel task and benefits from the acceleration. We also run the dlib cnn for detecting the face on the GPU. Lastly we run our rendering system on the GPU.
 \begin{figureBox}[label={fig:system-des}, width=0.8\linewidth]{Overall Tracking System Design}
     \includegraphics[width = 0.8\linewidth]{./implementation/figures/system.pdf}
 \end{figureBox}
@@ -135,4 +151,6 @@ TO DO ADD KEY
 \begin{enumerate}[itemsep=-0.25em]
 	\item Camera is measured in 3D space and orientation is recorded.
 	\item Screen is measured in 3D space. 
+	\item Camera starts off orientedby 30 degrees down????? need to double check (this is false)
+	\item Iterative process of guessing where screen is adjusting
 \end{enumerate}
