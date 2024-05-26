@@ -2,13 +2,6 @@
 
 \subsection{Introduction}
 
-\begin{enumerate}[itemsep=-0.25em]
-	\item Explain what the tracking system is.
-	\item Explain why we need a tracking system.
-	\item Explain what the tracking system is used for.
-	\item Requirements (i.e needs to be high-resolution, low latency, high framerate, etc.)
-\end{enumerate}
-
 To be able to accurately produce a virtual volumetric screen, we need to be able to track the user's face and hands. This is so we can render the correct perspective of the screen to the user. Our tracking system had to fit the following requirements:
 \begin{itemize}[itemsep=-0.25em]
 	\item \textbf{High resolution:} To be able to accurately track the user's face and hands smoothly.
@@ -152,5 +145,5 @@ As you can see in Fig~\ref{fig:system-des} we only used GPU acceleration for 3 p
 	\item Camera is measured in 3D space and orientation is recorded.
 	\item Screen is measured in 3D space. 
 	\item Camera starts off orientedby 30 degrees down????? need to double check (this is false)
-	\item Iterative process of guessing where screen is adjusting
+	\item Iterative process of guessing where screen is adjusting (calibration include picture for this?)
 \end{enumerate}

@@ -1,87 +1,69 @@
 \section{User Study}
 \subsection{Introduction}
-\begin{enumerate}
-	\item The user study was conducted to evaluate the effectiveness of the system in improving the spatial reasoning skills of the participants.
-\end{enumerate}
 
 To validate the usefulness of our system we decided to conduct a Within-Subjects User Study. The user study was designed to show the capacity of the system for being used in research. The study was designed to test the effectiveness of users using volumetric displays under different conditions.
 
 \subsection{Experimental Variables}
-\begin{enumerate}
-	\item Independent Variables:
-	\begin{enumerate}
-		\item 3D Perspective (On/Off)
-		\item Interaction Offset (On/Off)
-		\item So 4 conditions
-	\end{enumerate}
-	\item Dependent Variables:
-	\begin{enumerate}
-		\item Time taken to complete task
-		\item Number of subtasks completed
-		\item Eye and hand positions
-	\end{enumerate}
-	\item Control Variables:
-	\begin{enumerate}
-		\item The five tasks are the same in each condition.
-		\item Position of participant
-		\item Position of the tracking camera
-		\item Position of the zone of interaction
-		\item Size of the display. 
-	\end{enumerate}
-	\item Confounding Variables:
-	\begin{enumerate}
-		\item The participants may have different levels of experience with VR/Volumetric.
-		\item Left-handed vs right-handed might make a difference for the tasks.
-		\item Wearing glasses might make a difference for head tracking.
-	\end{enumerate}
-	\item 
-\end{enumerate}
 
-For this study we wanted to evaluate the difference in performance of participants in interacting with volumetric screens with their hands. 
+For this study we wanted to evaluate the difference in performance of participants in interacting with volumetric screens directly with their hands vs via teleoperation. 
 
-Our two independent variables were: 
+Our two independent variables which we varied over the study were: 
 \begin{itemize}[itemsep=-0.25em]
-	\item \textbf{3D Perspective}: (On/Off). This controls if the system is able to use the eye tracking system to create the illusion of a 3D volumetric display as can be seen in Fig~\todo.
-	\item \textbf{Interaction Offset}: (On/Off). This controls if display is directly in front of the participant or if it is offset by a fixed amount as can be seen in Fig~\todo.
+	\item \textbf{3D Perspective}: (On/Off). This controls if the system is able to use the eye tracking system to create the illusion of a 3D volumetric display as opposed to a fixed perspective on a standard monitor as can be seen in Fig~\ref{fig:direct-vs-offset}.
+	\begin{figureBox}[label={fig:direct-vs-offset}, width=0.8\linewidth]{Direct \& Offset Interaction}
+		\includegraphics[width = 0.8\linewidth]{./implementation/figures/direct-vs-offset.pdf}
+	\end{figureBox}
+	\item \textbf{Interaction Offset}: (On/Off). This controls if display is directly in front of the participant or if it is offset by a fixed amount as can be seen in Fig~\ref{fig:2D-vs-3D}.
+	\begin{figureBox}[label={fig:2D-vs-3D}, width=0.8\linewidth]{2D \& 3D}
+		\includegraphics[width = 0.8\linewidth]{./implementation/figures/2D-vs-3D.pdf}
+	\end{figureBox}
+	
 \end{itemize}
-Giving us a total of 4 conditions to test.
 
+We made sure to control for the following variables: We made sure that the five tasks were the same in each condition. We also made sure that the position of the participant, the tracking camera, and the zone of interaction were the same in each condition as can be seen in Fig~\ref{fig:test-setup}. 
 
-The first condition we wanted to test was if there was any noticeable drop in performance when using the system in 2D (i.e with eye tracking disabled but still using hand tracking). The second condition was if there was a performance difference if participants "teleoperated" (controlled it with a fixed offset) the simulator vs using their hands directly. Combining these two conditions gives us the four conditions we tested as can be seen in Fig~\ref{fig:study-conditions}. 
+\begin{figureBox}[label={fig:test-setup}, width=0.8\linewidth]{Test Setup}
+    \includegraphics[width = 0.8\linewidth]{./implementation/figures/test-setup.pdf}
+\end{figureBox}
 
 \subsection{Tasks}
-\begin{enumerate}
-	\item Trace out points like a buzzwire game. 
-	\item Draw Diagram of how the task works
-	\item Draw Isometric view of the tasks
-	\item Tasks are designed to be annoying if not in 3D.
-	\item Timeout of 1 minute.
-\end{enumerate}
+In each of the 4 conditions the participant must complete the same 5 tasks. The tasks are designed to be simple but more difficult to complete if not in 3D. To complete a task a participant must trace the path between the points with their index and middle finger in the order the simulator presents to them. A green point is completed segment, an orange point represents the next point to be completed and a red point in the current position of the participants hand as can be seen in Fig~\ref{fig:test-setup}. \\ 
 
-In each of the 4 conditions the participant must complete the same 5 tasks. The tasks are designed to be simple but more difficult to complete if not in 3D. To complete a task a participant must trace the path between the points with their index and middle finger in the order the simulator presents to them. A green point is completed and an orange point represents the next point ot be completed as can be seen in Fig~\todo. \\ 
+\begin{figureBox}[label={fig:task-example}, width=0.8\linewidth]{Completing a task}
+    \includegraphics[width = 0.8\linewidth]{./implementation/figures/task-example.pdf}
+\end{figureBox}
 
-The participants have a timeout of 1 minute to complete the task. If they do not complete the task in the time limit, the task is marked as incomplete. The time each point is completed is recorded as well as the position of the hand and eye throughout the minute. The 5 different tasks are shown in Fig~\todo.
+The participants have a timeout of 1 minute to complete the task. If they do not complete the task in the time limit, the task is marked as incomplete. The time each point is completed is recorded as well as the position of the hand and eye throughout the minute. The 5 different tasks are shown in Fig~\ref{fig:tasks} The participants are also given two demo tasks to get used to the system. \\
 
-\subsection{Study Implementation}
-\begin{enumerate}
-	\item We run the study from a python based CLI (Click).
-	\item We compile the simulator as a shared library and call it from the python CLI using a C-FFI.
-	\item We receive the results and logs from python in json format and store them in a mongoDB database.
-	\item This data is then used to generate the results.
-\end{enumerate}
+\begin{figureBox}[label={fig:tasks}, width=1.0\linewidth]{The 5 tasks}
+    \includegraphics[width = 0.8\linewidth]{./implementation/figures/tasks.pdf}
+\end{figureBox}
+
+\subsection{Evaluation Metrics}
+The evaluation metrics we used to evaluate the system were primarily the time taken to complete the task and the number of subtasks completed. We also recorded the eye and hand positions of the participants throughout the task.
+
 
 \subsection{Participants}
-\begin{enumerate}
-	\item We record age, gender, if they are left or right handed, and if they have any experience with VR, and if they wear glasses.
-	\item The participants were given a random order of the four conditions.
-	\item They complete the 5 tasks in each
-	\item Fill out survey about each condition.
-	\item Fill out survey about the system as a whole at the end.
-	\item Ran the study in Huxley building.
-\end{enumerate}
+We invited participant to take part in the study via email and text using a standardized script. On arrival the participants were asked to fill out a consent form and a questionnaire about themselves to find out information that might affect the results, such as their age, handedness and previous experience with VR/AR. \\   
+
+They were next given a brief overview of the system and allowed to run through two demo tasks in different configurations to get used to the system. When they were comfortable with the system they were entered into our system and were automatically assigned a random order of the four conditions that can be seen in Fig~\ref{fig:study-conditions}. 
+
+\begin{figureBox}[label={fig:study-conditions}, width=0.8\linewidth]{Study Conditions}
+    \includegraphics[width = 0.8\linewidth]{./implementation/figures/study-conditions.pdf}
+\end{figureBox}
+
+Each condition consisted of the 5, 1 minute tasks that the participants had to complete in order. The participants were allowed to take breaks between conditions. After each condition they were asked to fill out a survey about the condition. At the end of the study they were asked to fill out a survey about the system as a whole. The study was run in the Huxley building in Room 218 at Imperial College London.
+
+\subsection{Study Implementation}
+
+The study was run from a python based CLI using the Click library. The simulator was compiled as a shared library and called from the python CLI using a C-FFI. The results and logs were received from python in json format and stored in a mongoDB database. We then used this data to generate the results.
+
+\textcolor{red}{if have time include code CLI snippet}
 
 \subsection{Study Results}
 \begin{enumerate}
 	\item Use ANOVA test?
 	\item ????
 \end{enumerate}
+
+\textcolor{red}{Do this once I've completed the study}

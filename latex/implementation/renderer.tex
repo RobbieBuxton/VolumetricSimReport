@@ -1,27 +1,25 @@
 \section{Rendering System}
 \subsection{Introduction}
-\begin{enumerate}
-	\item Rendering system is responsible for rendering the 3D models and the environment.
-\end{enumerate}
+The rendering system is responsible for rendering the 3D models and the environment. It is a crucial part of the system as it is the interface between the user and the system. It needs to be fast and responsive to preserve the illusion of 3D.
+
+% Add image of rendering system something here. 
+
 \subsection{OpenGL}
-\begin{enumerate}
-	\item OpenGL is a cross-platform graphics API that is used to render 2D and 3D graphics
-	\item Used GLM mathematical library for matrix manipulation and projects.
-\end{enumerate}
+
+Because of requirements of our project we needed to implement a rendering system that could render 3D models in real-time at a low latency to preserve the illusion of 3D. We decided to use OpenGL \tocite because of its low-level control over the rendering pipeline and its cross-platform compatibility. We considered briefly using Unity or Unreal Engine but decided against it because of the large overhead and the lack of control over the rendering pipeline. We also used the GLM \tocite mathematical library for matrix manipulation and projections as it was sufficiently fast and integrated well with OpenGL.
 
 \subsection{Object Loading}
-\begin{enumerate}
-	\item Object loading support was added to the rendering system to allow for the rendering of complex 3D models.
-	\item We construct our challenge by warping spheres, cylinders, and cubes.
-	\item Used tinyobjloader to load .obj files
-\end{enumerate}
+
+Object loading support was added to the rendering system to allow for the rendering of complex 3D models. We used the library \texttt{tinyobjloader} \tocite to load .obj object files. We constructed our challenge for the user study by warping primitives such as spheres, cylinders, and cubes to create a task for the user to interact with.
 
 \subsection{Lighting}
-\begin{enumerate}
-	\item We are using a simple lighting model (Blinn-Phong) that uses ambient, diffuse, and specular lighting.
-\end{enumerate}
+
+To help with the illusion of depth \tocite \textcolor{red}{shadows help with depth?} we added a simple lighting model to the scene. We used the Blinn-Phong lighting model which uses ambient, diffuse, and specular lighting. Ambient lighting is the light that is present in the scene regardless of the light sources. Diffuse lighting is the light that is reflected off the surface of the object. Specular lighting is the light that is reflected off the surface of the object in a mirror-like way. A comparison of the scene with and without lighting can be seen in Fig~\todo.
+
+%% Add image of lighting on and off here
 
 \subsection{Perspective}
-\begin{enumerate}
-	\item Take eye position from the tracker and render the scene from that perspective.
-\end{enumerate}
+
+As covered extensively in background research, the perspective of the user is crucial to the illusion of 3D. To help with this we used the eye tracking system to render the scene from the perspective of the user. This was done by taking the position of the eye from the eye tracker and using it to render the scene from that perspective as can be seen in Fig~\todo
+
+%% Include images of perspectives from different camera angles. 
