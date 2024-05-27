@@ -1,14 +1,36 @@
 \section{Simulator Evaluation}
-\begin{enumerate}
-	\item Measure Latency (Don't forget to mention the latency of the camera as well (exposure time))
-	\item Measure Accuracy (How often tracker loses track of hand)
-	\item In for example do tasks and see how many times it loses tracking and why.
-	\item Limitations of the simulator
-	\item It works on other machines first run, (different machine different gpu). Verify it works on WSL?
-	\begin {enumerate}
-		\item Occlusion (show a picture of occlusion with fingers behind the palm of the hand)
-		\item Lighting
-		\item Hand size
-	\end{enumerate}
 
+\subsection{Overall System}
+\begin{enumerate}
+	\item It works on other machines first run, (different machine different gpu). Verify it works on WSL?
+\end{enumerate}
+
+\subsection{Tracking System}
+\subsubsection{Together}
+\begin{enumerate}
+	\item Draw a bell curve of latency. Don't forget to factor in the latency built into the camera. 
+	\item Justify the downscaling, show that it's slow with no upscaling and downscaling even more offers negligible speed increases.  
+	\item Mention lighting issues.
+\end{enumerate}
+
+\subsubsection{Head Tracking}
+\begin{enumerate}
+	\item Estimate throughput via logging (unique points). Draw a bell curve like graph of the time between each result from the tracker.
+	\item Measure accuracy by moving head around and seeing how often it loses track at different distances. While facing camera. Test with glasses on?
+	\item Measure the angle of the head where the tracker stops working.  
+\end{enumerate}
+
+\subsubsection{Hand tracking}
+\begin{enumerate}
+	\item Estimate throughput via logging (unique points). Draw a bell curve like graph of the time between each result from the tracker.
+	\item Measure accuracy by moving head around and seeing how often it loses track at different distances. Change hand orientations
+	\item Mention occlusion issue. 
+	\item Wall vs no wall issue. 
+	\item The colour of the screen also affects the hand tracker. 
+\end{enumerate}
+
+\subsection{Renderer}
+\begin{enumerate}
+	\item Reconstruct real life item, compare photos of item from different angles. 
+	\item Get framerate?
 \end{enumerate}
