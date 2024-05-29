@@ -13,20 +13,25 @@
 	\item Mention lighting issues.
 \end{enumerate}
 
-\textcolor{red}{stop calling it latency it's the framerate}
-
-\begin{figureBox}[label={fig:overall-latency}, width=1.0\linewidth]{Overall latency}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/overall-latency.pdf}
+\begin{figureBox}[label={fig:framerate-overall}, width=1.0\linewidth]{Overall Framerate}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/framerate-overall.pdf}
 \end{figureBox}
 
-As can be seen in Figure \ref{fig:overall-framerate}, the latency of the system is quite low. 90.83\% of the time the latency is between 30 and 35ms. There is what at first glance a strange phenomenon of a group of latencies at 16-18ms (4.46\%) and 49-51ms (4.39\%). I believe this is due to the framerate of the renderer, as it lazily converted on request it basically chunked to the nearest 1000/60 = 16.666.
+As can be seen in Figure \ref{fig:framerate-overall}, the framerate of the system is quite low. 90.83\% of the time the framerate is between 30 and 35ms. There is what at first glance a strange phenomenon of a group of latencies at 16-18ms (4.46\%) and 49-51ms (4.39\%). This is due to the framerate of the renderer, as it lazily converted on request it basically chunked to the nearest 1000/60 = 16.666. Even though the tracker is running at 30fps, it is possible to have a latency of 16ms if the tracker fails to the meet the 30fps requirement for a frame buffering the result for the next frame. This means the next capture is already ready by the next frame so it makes it appear like the camera has a higher framerate than 30. \textcolor{red}{rewrite this in a less shit way}
 
-We investigated downscaling the image to increase performance. We only found that downscaling it once was enough to get the performance we needed. Downscaling it further did not offer any significant performance increases and significantly decreased tracking quality. As can be seen in Figure \ref{fig:pydown}, the performance of the system increases noticeably between going from 2048 x 1536 to 1024 x 793 but reducing the resolution further does not provide any speed benefit at all as we are already running at 30fps which is the cameras refresh rate..
+We investigated down scaling the image to increase performance. We only found that down scaling it once was enough to get the performance we needed. Down scaling it further did not offer any significant performance increases and significantly decreased tracking quality. As can be seen in Figure \ref{fig:pydown}, the performance of the system increases noticeably between going from 2048 x 1536 to 1024 x 793 but reducing the resolution further does not provide any speed benefit at all as we are already running at 30fps which is the cameras refresh rate.
 
 \begin{figureBox}[label={fig:pydown}, width=1.0\linewidth]{Comparing Resolutions}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/pydown.pdf}
 \end{figureBox}
 
+As can be seen in Figure \ref{fig:process-times-distributions}, of the three separate threads (captures from the kinect camera, tracking the hand and eye, and rendering with OpenGL) which are running at the same time, the bottleneck is waiting for the kinect camera to return the capture. This means there isn't any benefit to speeding up the tracking algorithm.
+
+\begin{figureBox}[label={fig:process-times-distributions}, width=1.0\linewidth]{Comparing Processing Times}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/process-times-distributions.pdf}
+\end{figureBox}.
+
+\textcolor{red}{Estimate Latency, 12.8 exposure which you should cite, plus workout how the framerate effects it + 15 ms for tracking plus work out how the random chance of being selected during rendering works and compare to it similar systems like oculus quest and maybe fishbowl and vision pro?} 
 
 \subsubsection{Head Tracking}
 \begin{enumerate}
@@ -42,6 +47,7 @@ We investigated downscaling the image to increase performance. We only found tha
 	\item Mention occlusion issue. 
 	\item Wall vs no wall issue. 
 	\item The colour of the screen also affects the hand tracker. 
+	\item Maybe should have added image segmentation model to make the hand tracker better.
 \end{enumerate}
 
 \subsection{Renderer}
