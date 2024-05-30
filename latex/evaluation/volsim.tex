@@ -3,13 +3,12 @@
 \subsection{Overall System}
 \begin{enumerate}
 	\item It works on other machines first run, (different machine different gpu). Verify it works on WSL?
+	\item Get benchmark of the system i.e GPU usage and CPU usage.
 \end{enumerate}
 
 \subsection{Tracking System}
 \subsubsection{Together}
 \begin{enumerate}
-	\item Draw a bell curve of latency. Don't forget to factor in the latency built into the camera. 
-	\item Justify the downscaling, show that it's slow with no upscaling and downscaling even more offers negligible speed increases.  
 	\item Mention lighting issues.
 \end{enumerate}
 
@@ -35,10 +34,42 @@ As can be seen in Figure \ref{fig:process-times-distributions}, of the three sep
 
 \subsubsection{Head Tracking}
 \begin{enumerate}
-	\item Estimate throughput via logging (unique points). Draw a bell curve like graph of the time between each result from the tracker.
 	\item Measure accuracy by moving head around and seeing how often it loses track at different distances. While facing camera. Test with glasses on?
 	\item Measure the angle of the head where the tracker stops working.  
 \end{enumerate}
+
+%TODO
+
+\begin{figureBox}[label={fig:angle-setup}, width=1.0\linewidth]{Angle Setup}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/angle-setup.pdf}
+\end{figureBox}
+
+%TODO
+
+\begin{figureBox}[label={fig:head-angle}, width=0.7\linewidth]{Angle of failure for headtracking}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/user-angles.pdf}
+\end{figureBox}
+
+%TODO
+
+\begin{figureBox}[label={fig:incorrect-head-track}, width=0.7\linewidth]{Incorrect Head Tracking}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/incorrectTrackedFace.png}
+\end{figureBox}
+
+%TODO
+
+\begin{figureBox}[label={fig:distance-setup}, width=0.7\linewidth]{Setup for distance testing}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/distance_setup.jpg}
+\end{figureBox}
+
+%TODO
+
+\begin{figureBox}[label={fig:track-distance}, width=1.0\linewidth]{Tracking success rate at different distances}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/tracking-success-rate.pdf}
+\end{figureBox}
+
+\textcolor{red}{mention thing ed talked about how it's probably just due to the training data of the model resulting in the real quick drop off, don't forget this is measured from the front of the chair so add and extra 50cm is there and it's to the tripod base not the camera so probably an extra 15cm}
+%TODO
 
 \subsubsection{Hand tracking}
 \begin{enumerate}
@@ -51,16 +82,20 @@ As can be seen in Figure \ref{fig:process-times-distributions}, of the three sep
 \end{enumerate}
 
 \subsection{Renderer}
+\textcolor{red}{TODO}
 \begin{enumerate}
-	\item Reconstruct real life item, compare photos of item from different angles. 
+	\item Talk about and give an image of the rendering system displaying a complex scene.
 	\item Get framerate?
 \end{enumerate}
+
+We wanted to evaluate how accurate our rendering system. As our rendering system propose is to create the illusion of 3D objects in the real world, we wanted to see how well it could recreate a real object. We chose a cube as it is a simple object that is easy to recreate. We created a physical cube out of lego and created a virtual cube in our simulator both with the same dimensions of 13.5cm x 13.5cm x 12cm as can be seen in Fig~\ref{fig:real-vs-rendered}.
 
 \begin{figureBox}[label={fig:real-vs-rendered}, width=1.0\linewidth]{A real and rendered cube}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/real-vs-rendered.pdf}
 \end{figureBox}
 
+Because the physical cube is hollow this allowed us to easily to compare the two cubes by superimposing them. We tested a variety of different perspectives and verified that the two cubes were indeed the same size and shape and completely overlapped. Some examples can be seen in Fig~\ref{fig:super-imposed}, it is worth noticing that the images might be slightly off as the system was tracking my eye and not the camera lense which was both below and about 10cm in front of my eye. This shows that our rendering system is accurate and can be used to create the illusion of 3D objects in the real world. 
 
-\begin{figureBox}[label={fig:real-vs-rendered}, width=1.0\linewidth]{Superimposed real and rendered cube}
+\begin{figureBox}[label={fig:super-imposed}, width=1.0\linewidth]{Superimposed real and rendered cube}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/super-imposed.pdf}
 \end{figureBox}
