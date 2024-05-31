@@ -6,11 +6,7 @@
 	\item Get benchmark of the system i.e GPU usage and CPU usage.
 \end{enumerate}
 
-\subsection{Tracking System}
-\subsubsection{Together}
-\begin{enumerate}
-	\item Mention lighting issues.
-\end{enumerate}
+\subsection{Tracking System: Frame Rate, Latency and Timings}
 
 \begin{figureBox}[label={fig:framerate-overall}, width=1.0\linewidth]{Overall Framerate}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/framerate-overall.pdf}
@@ -24,7 +20,7 @@ We investigated down scaling the image to increase performance. We only found th
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/pydown.pdf}
 \end{figureBox}
 
-As can be seen in Figure \ref{fig:process-times-distributions}, of the three separate threads (captures from the kinect camera, tracking the hand and eye, and rendering with OpenGL) which are running at the same time, the bottleneck is waiting for the kinect camera to return the capture. This means there isn't any benefit to speeding up the tracking algorithm.
+As can be seen in Figure \ref{fig:process-times-distributions}, of the three separate threads (captures from the Kinect camera, tracking the hand and eye, and rendering with OpenGL) which are running at the same time, the bottleneck is waiting for the inect camera to return the capture. This means there isn't any benefit to speeding up the tracking algorithm.
 
 \begin{figureBox}[label={fig:process-times-distributions}, width=1.0\linewidth]{Comparing Processing Times}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/process-times-distributions.pdf}
@@ -32,44 +28,60 @@ As can be seen in Figure \ref{fig:process-times-distributions}, of the three sep
 
 \textcolor{red}{Estimate Latency, 12.8 exposure which you should cite, plus workout how the framerate effects it + 15 ms for tracking plus work out how the random chance of being selected during rendering works and compare to it similar systems like oculus quest and maybe fishbowl and vision pro?} 
 
+
+\subsection{Tracking System: Accuracy}
+
+We measured the effective tracking range of our system. The method we used for this was to sit in a chair and slowly wave your hand and move you your head side to side over a period of 30 seconds as can be seen in Fig~\ref{fig:distance-setup}. We took a variety of samples at different distances measuring the percentage of captures that were successfully able to detect a face or hand. The resolution of the colour camera was 1024 x 793. 
+
+\textcolor{red}{Fix the issue with bad figure numbering for this below}
+\begin{invisBox}  
+	\pictureBox[label={fig:distance-setup}]{Setup for distance testing}{
+	  \adjustbox{height=5cm, keepaspectratio}{
+		\includegraphics{./evaluation/figures/distance_setup.jpg}
+	  }
+	}
+	\hfill
+	\pictureBox[label={fig:track-distance}]{Tracking success rate at different distances}{
+	\adjustbox{height=5.0cm, keepaspectratio}{
+	  \includegraphics{./evaluation/figures/tracking-success-rate.pdf}
+	  }
+	}
+\end{invisBox}
+
+As can be seen in our results for Fig~\ref{fig:track-distance} the success rate for MediaPipes hand tracking model rapidly deteriorates after about 1 meter to the point of being completely unable. We suspect this is probably due to the data it was trained on and the fact it was primarily designed as a model to track hands from a mobile phone camera \tocite. \\
+
+Dlib's headtracking model was better deteriorating at about 1.5 meters for suspected similar reasons to MediaPipes. We took these results into consideration while designing our user study positioning the camera so the users hand would be in the range of \textcolor{red}{FIND OUT STUDY DISTANCE RANGE}
+
 \subsubsection{Head Tracking}
 \begin{enumerate}
-	\item Measure accuracy by moving head around and seeing how often it loses track at different distances. While facing camera. Test with glasses on?
-	\item Measure the angle of the head where the tracker stops working.  
+	\item Test with glasses on?
 \end{enumerate}
 
-%TODO
+One of the important aspects of the system is the head tracking. We wanted to evaluate how well the head tracking system worked. One important aspect of the head tracking system is the angle of the head at which it fails to detect a face. We create a fairly redumentary setup as can be seen in Fig~\ref{fig:angle-setup} to measure the angle of the head at which the head tracking system fails. We used a swivel chair to rotate the user's body and head (we asked the participants to keep their body still and rigid). We measured the location of the midpoint of their feet when the tracking finished. Using GCSE trigonometry we were able to calculate the angle of the head at which the tracking failed. 
 
 \begin{figureBox}[label={fig:angle-setup}, width=1.0\linewidth]{Angle Setup}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/angle-setup.pdf}
 \end{figureBox}
 
-%TODO
+We tested this with 5 different people and the results can be seen in Fig~\ref{fig:head-angle}. The technique was not particularly precise so the results should be taken with a grain of salt. The angle at which the head tracking failed was typically between $120^{\circ} - 150^{\circ}$. This might result might see strange as at that angle the participant is very much facing away from the camera however the way the face tracking model works is it first detects a face and then maps a landmark to the face. \\ 
 
-\begin{figureBox}[label={fig:head-angle}, width=0.7\linewidth]{Angle of failure for headtracking}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/user-angles.pdf}
-\end{figureBox}
 
-%TODO
+\textcolor{red}{Fix the issue with bad figure numbering for this below}
+\begin{invisBox}  
+	\pictureBox[label={fig:head-angle}]{Angle of failure for headtracking}{
+	  \adjustbox{height=6cm, keepaspectratio}{
+		\includegraphics{./evaluation/figures/user-angles.pdf}
+	  }
+	}
+	\hfill
+	\pictureBox[label={fig:incorrect-head-track}]{Incorrect Head Tracking}{
+	\adjustbox{height=6.5cm, keepaspectratio}{
+	  \includegraphics{./evaluation/figures/incorrectTrackedFace.png}
+	  }
+	}
+\end{invisBox}
 
-\begin{figureBox}[label={fig:incorrect-head-track}, width=0.7\linewidth]{Incorrect Head Tracking}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/incorrectTrackedFace.png}
-\end{figureBox}
-
-%TODO
-
-\begin{figureBox}[label={fig:distance-setup}, width=0.7\linewidth]{Setup for distance testing}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/distance_setup.jpg}
-\end{figureBox}
-
-%TODO
-
-\begin{figureBox}[label={fig:track-distance}, width=1.0\linewidth]{Tracking success rate at different distances}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/tracking-success-rate.pdf}
-\end{figureBox}
-
-\textcolor{red}{mention thing ed talked about how it's probably just due to the training data of the model resulting in the real quick drop off, don't forget this is measured from the front of the chair so add and extra 50cm is there and it's to the tripod base not the camera so probably an extra 15cm}
-%TODO
+As can be seen in Fig~\ref{fig:incorrect-head-track} the face tracking model can still detect a face even when the face is not visible as it is detecting the side of this participants head. Acadotally the model seems to fail when it can only see hair. We would be interested to test this on a bald participant so see if it always detects a head no matter the rotation. Although this might seem like a problem at first glance it isn't. If the tracker cannot see the face then the face can't see the display either, so it doesn't matter if the display is rendered incorrectly. It also has the added benefit of tracking the eyes in an approximate position to where they would be if the face was visible, so as the user turns their head and the face comes into view the display does not need to correct much and the user will not notice the correction.
 
 \subsubsection{Hand tracking}
 \begin{enumerate}
