@@ -130,9 +130,9 @@ The purpose of this design choice is to make sure there is always a threading ru
 
 Another method we use to increase the performance of our tracking system is to use GPU acceleration. Both Dlib and MediaPipe support GPU acceleration. We only used GPU acceleration in Dlib as we found that it significantly increased the performance of our tracking system. \textcolor{red}{get actual stats for dlib gpu stats}. We did not use GPU acceleration in MediaPipe as the CPU speed was already sufficient and the purported speedup of 12.27ms with GPU acceleration vs 17.12ms \textcolor{red}{to cite https://ai.google.dev/edge/mediapipe/solutions/vision/hand\_landmarker} with cpu only didn't seem worth the effort of enabling CUDA in mediapipe after it already provided difficult to use (See build systems for more information) . We did not test the performance of MediaPipe with GPU acceleration as we did not have the time.  \\
 
-As you can see in Fig~\ref{fig:system-des} we only used GPU acceleration for 3 parts of our tracking system. We down scale our colour images using OpenCV's GPU accelerated pyramid down function as this is a highly parallel task and benefits from the acceleration. We also run the dlib cnn for detecting the face on the GPU. Lastly we run our rendering system on the GPU.
+As you can see in Fig~\ref{fig:system-des} we only used GPU acceleration for 3 parts of our tracking system. We downscale our colour images using OpenCV's GPU accelerated pyramid down function as this is a highly parallel task and benefits from the acceleration. We also run the dlib cnn for detecting the face on the GPU. Lastly we run our rendering system on the GPU.
 \begin{figureBox}[label={fig:system-des}, width=0.8\linewidth]{Overall Tracking System Design}
-    \includegraphics[width = 0.8\linewidth]{./implementation/figures/system.pdf}
+    \includegraphics[width = 0.8\linewidth]{./implementation/figures/tracking-system.pdf}
 \end{figureBox}
 
 \begin{enumerate}[itemsep=-0.25em]
@@ -143,9 +143,13 @@ As you can see in Fig~\ref{fig:system-des} we only used GPU acceleration for 3 p
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Camera Positioning}
+
+To set up the tracking system to be calibrated correctly such that the user can see the correct perspective with need to know the relative position of the camera to the screen, the orientation of the camera and the dimensions of the screen. We use a calibration system to set up the camera. The calibration system works as follows:
+
+
 \begin{enumerate}[itemsep=-0.25em]
 	\item Camera is measured in 3D space and orientation is recorded.
 	\item Screen is measured in 3D space. 
 	\item Camera starts off orientedby 30 degrees down????? need to double check (this is false)
-	\item Iterative process of guessing where screen is adjusting (calibration include picture for this?)
+	\item Iterative process of guessing where screen is adjusting (calibration mode include picture for this?)
 \end{enumerate}

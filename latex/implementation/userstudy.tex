@@ -44,65 +44,70 @@ The participants have a timeout of 1 minute to complete the task. If they do not
     \includegraphics[width = 0.8\linewidth]{./implementation/figures/tasks.pdf}
 \end{figureBox}
 
-\subsection{Evaluation Metrics}
-The evaluation metrics we used to evaluate the system were primarily the time taken to complete the task and the number of subtasks completed. We also recorded the eye and hand positions of the participants throughout the task.
-
-
 \subsection{Participants}
 We invited participant to take part in the study via email and text using a standardized script. On arrival the participants were asked to fill out a consent form and a questionnaire about themselves to find out information that might affect the results, such as their age, handedness and previous experience with VR/AR. \\   
 
-They were next given a brief overview of the system and allowed to run through two demo tasks in different configurations to get used to the system. When they were comfortable with the system they were entered into our system and were automatically assigned a random order of the four conditions that can be seen in Fig~\ref{fig:study-conditions}. 
+They were next given a brief overview of the system and allowed to run through two demo tasks in each of the 4 different configurations to get used to the system. They were advised to keep their non-dominant hand on their lap, and place their dominant hand on the monitor face down at the beginning of each task to aid with tracking. They were allowed to do this up to three times.\\
+
+When they were comfortable with the system they were entered into our system and were automatically assigned a random order of the four conditions that can be seen in Fig~\ref{fig:study-conditions}. 
 
 \begin{figureBox}[label={fig:study-conditions}, width=0.8\linewidth]{Study Conditions}
     \includegraphics[width = 0.8\linewidth]{./implementation/figures/study-conditions.pdf}
 \end{figureBox}
 
-Each condition consisted of the 5, 1 minute tasks that the participants had to complete in order. The participants were allowed to take breaks between conditions. After each condition they were asked to fill out a survey about the condition. At the end of the study they were asked to fill out a survey about the system as a whole. The study was run in the Huxley building in Room 218 at Imperial College London.
+Each condition consisted of the 5, 1 minute tasks that the participants had to complete in order. They were given an audio cue when the task was about to start and when it had finished. The participants were allowed to take breaks between conditions. After each condition they were asked to fill out a survey about the condition. At the end of the study they were asked to fill out a survey about the system as a whole. 
 
-\begin{enumerate}
-	\item Mention all positions are fixed and measured, maybe mention the distance between things?
-\end{enumerate}
+\subsection{Setup}
+
+The study was run on the groundfloor of the Huxley building in Room 218 at Imperial College London. As we knew we would be conducting the study over multiple days, we made care to set up the system in such a way it would be difficult to tamper with. As can be seen in Fig~\ref{fig:front-view-study} we put our camera on a tripod and marked the positions of the legs on the floor. We also surrounded the camera with a barrier of tables to prevent it from being knocked over. \\
 
 \textcolor{red}{Fix the issue with bad figure numbering for this below}
 \begin{invisBox}  
-	\pictureBox[label={fig:head-angle}]{Study Setup: Front View}{
+	\pictureBox[label={fig:front-view-study}]{Study: Front View}{
 	  \adjustbox{height=5cm, keepaspectratio}{
 		\includegraphics{./implementation/figures/front-view.jpg}
 	  }
 	}
 	\hfill
-	\pictureBox[label={fig:incorrect-head-track}]{Study Setup: Side View}{
+	\pictureBox[label={fig:side-view-study}]{Study: Side View}{
 	\adjustbox{height=5cm, keepaspectratio}{
 	  \includegraphics{./implementation/figures/side-view.jpg}
 	  }
 	}
 \end{invisBox}
 
+The displays we used for the study were $24''$ $1920 \times 1200$ $\texttt{LG IPS LED 24EB23}$ computer monitors that we had taken off the stands and places horizontally on table. They were places with a gap of 25cm between the bottom of far monitor and top of the close monitor as can be seen in Fig~\ref{fig:side-view-study}. The camera was placed such that the head of the user would be approximately (it would vary with participant height) 1 meter away. The relative position of the interaction zone (on the far display) meant that the user would be interacting with scene at a range of distances from 30-70cm from the camera. Both of these distances were chosen to be in the observed tracking range of out system that we go more into detail about in our evaluation. \\
+
+We setup two monitors on the other side of the camera to allow the study runner to control the system and monitor the participants as can be seen in Fig~\ref{fig:control-view}. We chose to use two large monitors to block the view of the study runner from the participant to prevent any bias. \\
+
+
+
 \textcolor{red}{Fix the issue with bad figure numbering for this below}
 \begin{invisBox}  
-	\pictureBox[label={fig:head-angle}]{Study Setup: Control View}{
+	\pictureBox[label={fig:control-view-study}]{Study: Control View}{
 	  \adjustbox{height=5cm, keepaspectratio}{
 		\includegraphics{./implementation/figures/control-view.jpg}
 	  }
 	}
 	\hfill
-	\pictureBox[label={fig:incorrect-head-track}]{Study Setup: Calibration Device}{
+	\pictureBox[label={fig:calibration-device-study}]{Study: Calibration Device}{
 	\adjustbox{height=5cm, keepaspectratio}{
 	  \includegraphics{./implementation/figures/calibration-device.jpg}
 	  }
 	}
 \end{invisBox}
 
+we also created a calibration device that can be seen in Fig~\ref{fig:calibration-device-study} to re-align the displays. This was a simple device made from Lego Technic \tocite that allowed us to easily re-align the displays if they were knocked out of place by the participants during the study.
+
+\subsection{Evaluation Metrics and Collected Data}
+The evaluation metrics we used to evaluate the system were primarily the time taken to complete the task and the number of subtasks completed. We took a time stamp at the beginning of each task and at the end of each subtask. \\
+
+We also logged through the task the position of the participants eye, and hand coupled with time stamps to allow us to analyse the data in more detail. This allowed us to visually plot the paths participants took to complete the study which can be seen in the evaluation section. \\
+
+\textcolor{red}{picture of consent form}
+
 \subsection{Study Implementation}
 
-The study was run from a python based CLI using the Click library. The simulator was compiled as a shared library and called from the python CLI using a C-FFI. The results and logs were received from python in json format and stored in a mongoDB database. We then used this data to generate the results.
+The study was run from a python based CLI using the Click library. The simulator was compiled as a shared library and called from the python CLI using a C-FFI (foreign function interface). The results and logs were received from python in json format and stored in a mongoDB database.
 
-\textcolor{red}{if have time include code CLI snippet}
-
-\subsection{Study Results}
-\begin{enumerate}
-	\item Use ANOVA test?
-	\item ????
-\end{enumerate}
-
-\textcolor{red}{Do this once I've completed the study}
+\textcolor{red}{if have time include code CLI snippet, draw basic diagram with mongodb?}
