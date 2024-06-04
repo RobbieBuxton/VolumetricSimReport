@@ -87,18 +87,39 @@ As can be seen in Fig~\ref{fig:tracker-overview} the basic flow of the tracking 
 While it might seem strange at first as can be seen in the Tracking Frame in Fig~\ref{fig:tracker-overview} we actually keep a separate instance for the left eye and the thumb and index tips. This is because there is no guarantee that the tracker will be able to detect both the face and hands at the same time. For example if the user is holding their hand in front of their face the tracker will only be able to detect the hand. If this happens our system will just reuse the last known position which is a good approximation of faces position. 
 
 \subsection{Tracking Models}
-\begin{enumerate}
-	\item Dlib and MediaPipe are used to track the face and hands respectively.
-	\item Dlib is used to track the face. 5 point model with a cnn. cite correctly.
-	\item MediaPipe is used to track the hands. 21 point model with a cnn. cite correctly.
-	\item mention running on downscaled images to increase performance.
-	\item mention switching to tracking middle finger and index and more stable when camera looking down.
-	\item Mention model only finds position of surface of finger so we offset to get the approximate point inside.
-\end{enumerate}
+\subsubsection{Dlib}
+% tocite one: \texttt{https://arxiv.org/abs/1502.00046} 
+% tocite two: \texttt{https://blog.dlib.net/2016/10/easily-create-high-quality-object.html}
 
-\textcolor{red}{Add Image of face being tracked and head being tracked.}
+% tocite three: \texttt{https://ieeexplore.ieee.org/document/6909637}
+% tocite four: \texttt{https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/}
+We use Dlib to track the eye using a two stage process. In the first stage we use a Max-Margin Object Detection model \tocite \tocite  using a convolutional neural network (CNN) \tocite. Instead of training our own model we used a pertrained model provided by dlib \tocite called \texttt{mmod\_human\_face\_detector}. The initial face detection was a bottlekneck for us, we chose to run our CNN on a GPU using CUDA accelerated functions. \\
+ 
+Once we have detected our face we run the second stage of our facial landmark detection model. We chose to use a 5 landmark pose estimator called \texttt{ shape\_predictor\_5\_face\_landmark} using dlibs implimentation of a method preposed in "One millisecond Face Alignment with an Ensemble of Regression Trees" \tocite{https://ieeexplore.ieee.org/document/6909637} trained on the iBUG 300-W face landmark dataset \tocite. This pose estimator ran fast enough on a CPU that we didn't bother GPU accelerating it. \\
 
+An example of the result of running the dlib two models can be seen in Fig~\ref{fig:head-tracker} \\
+\textcolor{red}{Fix the issue with bad figure numbering for this below}
+\begin{invisBox}  
+	\pictureBox[label={fig:Face-tracker}]{Dlib Face Tracker}{
+	  \adjustbox{height=5.75cm, keepaspectratio}{
+		\includegraphics{./implementation/figures/Face-tracker.png}
+	  }
+	}
+	\hfill
+	\pictureBox[label={ig:hand-tracker}]{MediaPipe Hand Tracker}{
+	\adjustbox{height=5.75cm, keepaspectratio}{
+	  \includegraphics{./implementation/figures/hand-tracker.png}
+	  }
+	}
+\end{invisBox}
 
+% tocite one: \texttt{https://arxiv.org/abs/2006.10214}
+We use MediaPipe to track the position of two fingers on the users hand, also using a two step process. MediaPipe uses a two stage model to track the hands \tocite. The first stage is a palm detection model that detects the position of the hand in the image. The second stage is a hand landmark model that detects the position of 21 points on the hand. MediaPipe provides a nice interface to for pushing our images in the form of a stream and abstracts away most detection logic for you unlike dlib. \\
+
+We chose to track the position of the index and the middle finger as we found that this was more stable than tracking the thumb and index finger. Because we depth sample from the surface of the hand we chose to offset the positions by constant amount of make it feel like the point was inside the hand. An example of the result of running the MediaPipe two models can be seen in Fig~\ref{fig:hand-tracker} \\
+
+\subsubsection*{Downscaling}
+To make sure our tracking system runs at a high enough framerate we downscale the images we get from the camera. We found that we could downscale the images by a factor of 2 and still get accurate tracking results. This significantly increased the performance of our tracking system. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
