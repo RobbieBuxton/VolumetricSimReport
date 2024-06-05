@@ -1,0 +1,24 @@
+\section{Conclusions}
+\begin{enumerate}
+	\item We have developed a novel system for visualising 3D data in a 2D space.
+	\item We were able to validate it with a user study.
+	\begin{enumerate}
+		\item Write about results form user study.
+	\end{enumerate}
+	\item We are unaware of any other system that can do this with hand tracking. 
+	\item We have built a system that is easy to use and intuitive and portable.
+\end{enumerate}
+
+\section{Future Work}
+\begin{itemize}
+    \item \textbf{Adapt to be compliant with OpenXR:} OpenXR is an open standard for virtual reality and augmented reality. It is supported by all the major players in the industry including Microsoft, Valve, Oculus, Google, and many more. It would be a good idea to adapt the project to be compliant with this standard, so it can load into any OpenXR compatible application. I am currently not sure how difficult this is or if it is even feasible.
+
+    \item \textbf{Anaglyph 3D:} Anaglyph 3D is a method of displaying 3D images using filters typically red and green color filters and does not require special hardware. The 3D effect currently requires 1 eye to be closed so adding 3D support would make it a more immersive experience. I predict this task will take a day or two as I just need to duplicate the perspective per eye.
+
+    \item \textbf{Realtime light detection:} Taking inspiration from what I have learned from advanced graphics this term, it might be interesting to add another camera, a fish eye lens and use that to generate a real-time light map. This would allow the virtual scene to be lit by real-world lighting. I have already talked to Prof Abhijeet Ghosh about this idea, and he thinks it is feasible. However, this is going in a slightly different direction with the project. I predict this task will take a week or two.
+
+    \item \textbf{Improve compatibility:} Currently the project only works on Nvidia GPUs. It would be good to improve compatibility to work on AMD GPUs and Intel GPUs and also run without a GPU (albeit slowly). It would also be good to support different depth cameras other than the Kinect (Like Intels Intellisense) as this has been discontinued by Microsoft. This would require a lot of refactorings and would probably take a week or two.
+    
+	%tocite https://www.microsoft.com/en-us/research/publication/accurate-robust-and-flexible-real-time-hand-tracking/
+	\item \textbf{Switch hand tracking model:} By a fairly significant margin, the hand tracking was the weakest part of the project. It would be good to switch to a more robust hand tracking model. I think it would be good to switch to a model that tracks using the depth image rather than the RGB image. This would probably be a fairly large undertaking as there is unlikely to be an off the shelf model that does this. I think implementing this paper may be promising \tocite. I predict this task will take a month or two.
+\end{itemize}

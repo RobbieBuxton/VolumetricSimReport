@@ -2,9 +2,9 @@
 
 \subsection{Overall System}
 \begin{enumerate}
-	\item It works on other machines first run, (different machine different gpu). Verify it works on WSL?
 	\item Get benchmark of the system i.e GPU usage and CPU usage.
 \end{enumerate}
+
 
 \subsection{Tracking System: Frame Rate, Latency and Timings}
 
@@ -110,4 +110,11 @@ Because the physical cube is hollow this allowed us to easily to compare the two
 
 \begin{figureBox}[label={fig:super-imposed}, width=1.0\linewidth]{Superimposed real and rendered cube}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/super-imposed.pdf}
+\end{figureBox}
+
+\subsection{Portability}
+One of the key aspects of the system is that it is portable and should be runnable from a fresh linux machine from scratch with a single command. We developed the system on a Linux Machine (NixOS) using an Intel i5 9600k, with a Nvida 2070 Super GPU. We tested the system on a different linux machine (NixOS) with an Intel i7 4770k and a Nvidia 1080 as can be seen in Fig~\ref{fig:other-machine}. We were able to run the system on this machine with no issues first try. We also tested the system on a Windows machine using WSL2 \todo. 
+
+\begin{figureBox}[label={fig:other-machine}, width=0.7\linewidth]{Running on a different machine}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/other-device.jpeg}
 \end{figureBox}
