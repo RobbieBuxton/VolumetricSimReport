@@ -70,9 +70,9 @@ The purpose of the tracking system in brief strokes is to convert the Captures p
 
 There were a number of different approaches we could have taken but in the end we decided to use a system that tracked the position of the users face and hands separately in 2D which we then converted into 3D. The main other approach we could have taken was to track the face and hands in 3D directly. In the end the main reason we decided against this approach was because although the rendering system was a key part of this project it was not the main focus. The main focus was the user study and the tracking system was just a means to an end. The ecosystem for tracking in 2D is much more mature (thanks in part to mobile phones) than in 3D and we were able to leverage a lot of existing work (Such as the previously described libraries Dlib, MediaPipe, and OpenCV). Another reason was that we were concerned about the performance of tracking in 3D. We were worried that tracking in 3D would be too slow to be able to track the users face and hands in real-time, however is suspect this probably would have been fine. There are a number of downsides that arise from tracking in 2D. For example, as we will talk about a bit more in the evaluation section, it is difficult to find the accurate positions of objects in 3D space that are occluded for example fingers behind other fingers. Because fingers are fairly small objects we also have to sample a vague area where we think it is and pick the closet point as if you only sample the predicted point you can miss the finger.\\
 
-\textcolor{red}{update image to have two tracking frames and track hand and eye separately and show what happens in tracking fails}
+\textcolor{red}{Mention what happens when tracking fails (i.e only replace replace images in the frame if successful)}
 
-\begin{figureBox}[label={fig:tracker-overview}, width=0.8\linewidth]{Tracker overview}
+\begin{figureBox}[label={fig:tracker-overview}, width=1.0\linewidth]{Tracker overview}
     \includegraphics[width = 1.0\linewidth]{./implementation/figures/tracker.pdf}
 \end{figureBox}
 
@@ -133,7 +133,7 @@ To make sure our tracking system runs at a high enough framerate we downscale th
 \end{enumerate}
 
 \begin{figureBox}[label={fig:mult-threaded-des}, width=0.8\linewidth]{Multi-threaded design}
-    \includegraphics[width = 0.8\linewidth]{./implementation/figures/multi-thread-design.pdf}
+    \includegraphics[width = 1.0\linewidth]{./implementation/figures/multi-thread-design.pdf}
 \end{figureBox}
 
 One of the more challenging aspects of this project was to make our tracking system run fast enough that it felt smooth. To achieve this we had to make use of multi-threaded design as can be seen in Fig~\ref{fig:mult-threaded-des}. We used a separate thread for tracking, capturing, and rendering. This is a slightly wasteful use of resources as we effectively waste a thread waiting for captures however as the whole simulation is surprisingly light on resources this was not a problem it was worth it for the framerate gain it provided. \\
@@ -152,8 +152,8 @@ The purpose of this design choice is to make sure there is always a threading ru
 Another method we use to increase the performance of our tracking system is to use GPU acceleration. Both Dlib and MediaPipe support GPU acceleration. We only used GPU acceleration in Dlib as we found that it significantly increased the performance of our tracking system. \textcolor{red}{get actual stats for dlib gpu stats}. We did not use GPU acceleration in MediaPipe as the CPU speed was already sufficient and the purported speedup of 12.27ms with GPU acceleration vs 17.12ms \textcolor{red}{to cite https://ai.google.dev/edge/mediapipe/solutions/vision/hand\_landmarker} with cpu only didn't seem worth the effort of enabling CUDA in mediapipe after it already provided difficult to use (See build systems for more information) . We did not test the performance of MediaPipe with GPU acceleration as we did not have the time.  \\
 
 As you can see in Fig~\ref{fig:system-des} we only used GPU acceleration for 3 parts of our tracking system. We downscale our colour images using OpenCV's GPU accelerated pyramid down function as this is a highly parallel task and benefits from the acceleration. We also run the dlib cnn for detecting the face on the GPU. Lastly we run our rendering system on the GPU.
-\begin{figureBox}[label={fig:system-des}, width=0.8\linewidth]{Overall Tracking System Design}
-    \includegraphics[width = 0.8\linewidth]{./implementation/figures/tracking-system.pdf}
+\begin{figureBox}[label={fig:system-des}, width=1.0\linewidth]{Overall Tracking System Design}
+    \includegraphics[width = 1.0w\linewidth]{./implementation/figures/tracking-system.pdf}
 \end{figureBox}
 
 \begin{enumerate}[itemsep=-0.25em]
@@ -167,10 +167,15 @@ As you can see in Fig~\ref{fig:system-des} we only used GPU acceleration for 3 p
 
 To set up the tracking system to be calibrated correctly such that the user can see the correct perspective with need to know the relative position of the camera to the screen, the orientation of the camera and the dimensions of the screen. We use a calibration system to set up the camera. The calibration system works as follows:
 
-
 \begin{enumerate}[itemsep=-0.25em]
-	\item Camera is measured in 3D space and orientation is recorded.
-	\item Screen is measured in 3D space. 
-	\item Camera starts off orientedby 30 degrees down????? need to double check (this is false)
-	\item Iterative process of guessing where screen is adjusting (calibration mode include picture for this?)
+	\item Camera is measured in 3D space and orientation is recorded. Screen is measured in 3D space. 
+	\item Relative positions are given to the system 
+	\item Predicted position of the screen in rendered in 3D.
+	\item Iteratively adjust the position of the screen until they line up. 
 \end{enumerate}
+
+An example of a correct and incorrect calibration can be seen in Fig~\ref{fig:calibration}
+
+\begin{figureBox}[label={fig:calibration}, width=0.8\linewidth]{Display Calibration}
+    \includegraphics[width = 1.0\linewidth]{./implementation/figures/calibration.pdf}
+\end{figureBox}

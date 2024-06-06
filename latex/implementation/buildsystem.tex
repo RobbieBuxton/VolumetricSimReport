@@ -1,8 +1,8 @@
 \section{Overall System}
 
-\todo
+Our system comprises two main components, the simulator and the user study cli. We use the study cli written in python to orchestrate running simulations by calling the simulator shared library \texttt{libvolsim.so} written in c++. Once the simulator has run it returns it's logs to the user study cli (in JSON form) which then stores the results in a mongodb database. The user study cli can then be used to analyse the results.
 
-\begin{figureBox}[label={fig:System layout}, width=1.0\linewidth]{System layout}
+\begin{figureBox}[label={fig:System layout}, width=1.0\linewidth]{Two examples of using our system}
     \includegraphics[width = 1.0\linewidth]{./implementation/figures/overall-system.pdf}
 \end{figureBox}
 
