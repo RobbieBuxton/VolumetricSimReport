@@ -24,7 +24,7 @@ As can be seen in Figure \ref{fig:process-times-distributions}, of the three sep
 
 \begin{figureBox}[label={fig:process-times-distributions}, width=1.0\linewidth]{Comparing Processing Times}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/process-times-distributions.pdf}
-\end{figureBox}.
+\end{figureBox}
 
 \textcolor{red}{Estimate Latency, 12.8 exposure which you should cite, plus workout how the framerate effects it + 15 ms for tracking plus work out how the random chance of being selected during rendering works and compare to it similar systems like oculus quest and maybe fishbowl and vision pro?} 
 
@@ -84,14 +84,22 @@ We tested this with 5 different people and the results can be seen in Fig~\ref{f
 As can be seen in Fig~\ref{fig:incorrect-head-track} the face tracking model can still detect a face even when the face is not visible as it is detecting the side of this participants head. Acadotally the model seems to fail when it can only see hair. We would be interested to test this on a bald participant so see if it always detects a head no matter the rotation. Although this might seem like a problem at first glance it isn't. If the tracker cannot see the face then the face can't see the display either, so it doesn't matter if the display is rendered incorrectly. It also has the added benefit of tracking the eyes in an approximate position to where they would be if the face was visible, so as the user turns their head and the face comes into view the display does not need to correct much and the user will not notice the correction.
 
 \subsubsection{Hand tracking}
-\begin{enumerate}
-	\item Estimate throughput via logging (unique points). Draw a bell curve like graph of the time between each result from the tracker.
-	\item Measure accuracy by moving head around and seeing how often it loses track at different distances. Change hand orientations
-	\item Mention occlusion issue. 
-	\item Wall vs no wall issue. 
-	\item The colour of the screen also affects the hand tracker. 
-	\item Maybe should have added image segmentation model to make the hand tracker better.
-\end{enumerate}
+
+We found the hand tracker model was significantly less reliable than the head tracking model as can be seen in Fig~\ref{fig:failrate}. During our user study the hand tracking model failed for some users up to  10\% of the time, usually when it was first trying to find their hand (we didn't record this time in our final results). We found it was very particular with the conditions it would work under. It required a well-lit room and a plain background and required us to remove all objects out of the scene. We found people wearing t-shirts with intricate patterns would massively reduce the success rate so we had a plain spare jumper to give users to wear if we noticed this being an issue. \\
+
+We think we might have been able to fix this issue by using a segmentation model to segment the hand from the background first before trying to track it however we did not have time to experiment with this solution and we were worried it might significantly negatively impact the latency performance of the system.
+
+\begin{figureBox}[label={fig:failrate}, width=0.8\linewidth]{Failrates during user study}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/failrate.pdf}
+\end{figureBox}
+
+One of the big issues with using a depth sampling method is that it cannot deal with occlusion. Even though Mediapipe is capable of predicting the position of points of the hand when it can't see them we can't sample their 3D positions accurately. This is a big issue as the hand is often occluded by itself as can be seen in Fig~\ref{fig:occlusion}. Here the fingers are occluded by the back of the palm meaning when we try and sample the depth we instead sample the depth of the palm in front. This also at first thought sounds like it might be an issue for glasses wearers, however, we found that the depth sample (it uses an IR method) was able to pass through glass. \\ 
+
+\begin{figureBox}[label={fig:occlusion}, width=1.0\linewidth]{Occlusion Sampling}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/occulusionsampling.png}
+\end{figureBox}
+
+There are methods for getting around this such as sampling points you know are not occluded and then using the depth of the hand to infer the depth of the occluded points. This is a fairly complex problem and we did not have time to implement it in a way that was both accurate and fast as mediapipes estimated depth is not that good. We think the best solution would just be to switch to a point cloud based tracking model. \textcolor{red}{maybe find a paper to cite about hand occlusion}
 
 \subsection{Renderer}
 \textcolor{red}{TODO}

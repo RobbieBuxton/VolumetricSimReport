@@ -153,7 +153,7 @@ Another method we use to increase the performance of our tracking system is to u
 
 As you can see in Fig~\ref{fig:system-des} we only used GPU acceleration for 3 parts of our tracking system. We downscale our colour images using OpenCV's GPU accelerated pyramid down function as this is a highly parallel task and benefits from the acceleration. We also run the dlib cnn for detecting the face on the GPU. Lastly we run our rendering system on the GPU.
 \begin{figureBox}[label={fig:system-des}, width=1.0\linewidth]{Overall Tracking System Design}
-    \includegraphics[width = 1.0w\linewidth]{./implementation/figures/tracking-system.pdf}
+    \includegraphics[width = 1.0\linewidth]{./implementation/figures/tracking-system.pdf}
 \end{figureBox}
 
 \begin{enumerate}[itemsep=-0.25em]
