@@ -1,7 +1,9 @@
 \section{User Study Evaluation}
-We ran the study between \textcolor{red}{begin and end date} in Huxley 218 on the Imperial College London South Kensington Campus. In the end we managed to collect \textcolor{red}{16?} participants.
+We ran the study between \textcolor{red}{begin and end date} in Huxley 218 on the Imperial College London South Kensington Campus. In the end we managed to collect 16 participants, 14 of which agreed to be photographed as can be seen in Fig~\ref{fig:users}.
 
-\textcolor{red}{INSERT DIAGRAM HERE OF COLLAGE OF PEOPLE TAKING THE STUDY}
+\begin{figureBox}[label={fig:users}, width=1.0\linewidth]{Participants}
+    \includegraphics[width = 1.0\linewidth]{./evaluation/figures/users.pdf}
+\end{figureBox}
 
 \subsection{Participants}
  We found the easiest way to get participants was to ask acquaintance who were already on campus to take part. \\
@@ -21,7 +23,7 @@ This had the downside of our participant population not being a particularly rep
 	  \includegraphics{./evaluation/figures/survery/glasses-distribution.pdf}
 	  }
 	}
-	\\
+	\\[0.3cm]
 	\pictureBox[label={fig:head-angle}]{Used VR/AR}{
 	  \adjustbox{height=7.75cm, keepaspectratio}{
 		\includegraphics{./evaluation/figures/survery/vr-ar-distribution.pdf}
@@ -98,11 +100,14 @@ As can be seen from Table~\ref{tab:ttest} the t-test we ran suggests the offset 
 \end{table}
 Interestingly the data seems to suggest that offset interaction does not have a significant effect on the time taken to complete the segment. This is surprising as we expected the offset to have a significant effect on the time taken to complete the segment. One people reason might be the downside of the offset might be accounted for by the fact the participants hands no longer occlude their view of the scene. \\
 
-One study we would like to run in the future is to see what happens if we offset the interaction zone instead of the view, this would control for the apparent factor that 3D is less useful far away.  
+One study we would like to run in the future is to see what happens if we offset the interaction zone instead of the view, this would control for the apparent factor that 3D is less useful far away. \\
 
-\begin{enumerate}
-	\item For each task graph the distance of the points to it, see if people spend more time trying to be exactly precise.
-	\item Look at overall head movement, see if people are moving their head more in TRACKER vs TRACKER\_OFFSET
-\end{enumerate}
+Another interesting observation we made was that in offset conditions users were significantly worse at precisely completing the point at the end. This can be seen in Fig~\ref{fig:distance-distribution} where the conditions TRACKER\_OFFSET and STATIC\_OFFSET have a much larger peak just before the distance of zero (the point where participants are trying to precisely select the end of the segment). \\
+
+It is worth noting the that appear are almost certainly a result of the time when users have realised they have completed a segment as they appear at the same distances as the lengths of the segments (2cm x 1, 3cm x 8, 6cm x 12, 8cm x 10, 12cm x 3, 16cm x 1).
+
+\begin{figureBox}[label={fig:distance-distribution}, width=1.0\linewidth]{Distribution of Sampled Points Distances by Segment End}
+    \includegraphics[width = 1.0\linewidth]{./evaluation/figures/survery/distance-distribution.pdf}
+\end{figureBox}
 
 \textcolor{red}{Add more graphs in the appendix and talk about them here, put the task side by side with the results}
