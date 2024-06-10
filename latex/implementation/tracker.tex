@@ -98,7 +98,6 @@ We use Dlib to track the eye using a two stage process. In the first stage we us
 Once we have detected our face we run the second stage of our facial landmark detection model. We chose to use a 5 landmark pose estimator called \texttt{ shape\_predictor\_5\_face\_landmark} using dlibs implimentation of a method preposed in "One millisecond Face Alignment with an Ensemble of Regression Trees" \tocite{https://ieeexplore.ieee.org/document/6909637} trained on the iBUG 300-W face landmark dataset \tocite. This pose estimator ran fast enough on a CPU that we didn't bother GPU accelerating it. \\
 
 An example of the result of running the dlib two models can be seen in Fig~\ref{fig:head-tracker} \\
-\textcolor{red}{Fix the issue with bad figure numbering for this below}
 \begin{invisBox}  
 	\pictureBox[label={fig:Face-tracker}]{Dlib Face Tracker}{
 	  \adjustbox{height=5.75cm, keepaspectratio}{

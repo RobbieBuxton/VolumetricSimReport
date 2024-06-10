@@ -1,4 +1,4 @@
-[~/VolumetricSim]$ nix develop .#userstudy
+[VolumetricSim]$ nix develop .#userstudy
 Type 'study' to start the user study application.
 [VolumetricSim]$ study --help
 

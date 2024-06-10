@@ -1,1 +1,1 @@
-[~/VolumetricSim]$ nix develop .#userstudy
+[VolumetricSim]$ nix develop .#start-mongodb

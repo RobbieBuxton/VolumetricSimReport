@@ -47,8 +47,10 @@ literate=
   fontsize=\footnotesize,
   frame=none}
 
+ % Define a global counter for figures
+\newcounter{globalFigureCounter}
 
-\newtcbinputlisting[auto counter,number within=section,list inside=mypyg]{\codeBoxFile}[4][]{%
+\newtcbinputlisting[use counter=globalFigureCounter, number within=section,list inside=mypyg]{\codeBoxFile}[4][]{%
   center,
   listing engine=minted,
   listing only,
@@ -67,23 +69,8 @@ literate=
   #1}
 
 %Boxes
-\newtcolorbox[auto counter,number within=section]{figureBox}[2][]
-{
-  center,
-  enhanced jigsaw,
-  breakable,
-  colframe = Apricot!25,
-  colback  = Apricot!10,
-  coltitle = Apricot!20!black,
-  drop fuzzy shadow,
-  title    = {{\color{Black} \textbf{Figure \thetcbcounter:}} {\small #2}},
-  before skip = 20pt,
-  after skip = 20pt,
-  before upper={\centering \color{Gray!20!black}},
-  #1,
-}
 
-\newtcbox[auto counter,number within=section]{\pictureBox}[2][]
+\newtcbox[use counter=globalFigureCounter, number within=section]{\pictureBox}[2][]
 {
   enhanced jigsaw,
   nobeforeafter,
@@ -97,6 +84,23 @@ literate=
   top=0pt,
   bottom=0pt,
   title    = {{\color{Black} \textbf{Figure \thetcbcounter:}} {\small #2}},
+  #1,
+}
+
+
+\newtcolorbox[use counter=globalFigureCounter, number within=section]{figureBox}[2][]
+{
+  center,
+  enhanced jigsaw,
+  breakable,
+  colframe = Apricot!25,
+  colback  = Apricot!10,
+  coltitle = Apricot!20!black,
+  drop fuzzy shadow,
+  title    = {{\color{Black} \textbf{Figure \thetcbcounter:}} {\small #2}},
+  before skip = 20pt,
+  after skip = 20pt,
+  before upper={\centering \color{Gray!20!black}},
   #1,
 }
 
