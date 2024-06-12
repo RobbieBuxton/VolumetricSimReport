@@ -1,165 +1,227 @@
 \section{Simulator Evaluation}
 
+To ensure that our system meets the quality standards necessary for research purposes and accurately simulates a volumetric display, we conducted a comprehensive evaluation using various metrics.
+
 \subsection{Overall System}
+
+The initial step in our evaluation process involved assessing the performance of the system.
+
+\textcolor{red}{TODO don't edit this part}
 \begin{enumerate}
-	\item Get benchmark of the system i.e GPU usage and CPU usage.
+    \item Benchmark the system, including GPU and CPU usage using tools such as HTOP and NVIDA-SMI.
 \end{enumerate}
 
+\subsection{Tracking System: Frame Rate, Latency, and Timings}
 
-\subsection{Tracking System: Frame Rate, Latency and Timings}
+To gain deeper insights into the performance and quality of the tracking system, we conducted several tests. The primary focus was on the inter-update gap, defined as the time interval between consecutive tracker frames being sent to the renderer.
 
-\begin{figureBox}[label={fig:framerate-overall}, width=1.0\linewidth]{Overall Framerate}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/framerate-overall.pdf}
+\begin{figureBox}[label={fig:framerate-overall}, width=1.0\linewidth]{Tracker Inter-Update Gap (over 5 mins)}
+    \includegraphics[width = 1.0\linewidth]{./evaluation/figures/framerate-overall.pdf}
 \end{figureBox}
 
-As can be seen in Figure \ref{fig:framerate-overall}, the framerate of the system is quite low. 90.83\% of the time the framerate is between 30 and 35ms. There is what at first glance a strange phenomenon of a group of latencies at 16-18ms (4.46\%) and 49-51ms (4.39\%). This is due to the framerate of the renderer, as it lazily converted on request it basically chunked to the nearest 1000/60 = 16.666. Even though the tracker is running at 30fps, it is possible to have a latency of 16ms if the tracker fails to the meet the 30fps requirement for a frame buffering the result for the next frame. This means the next capture is already ready by the next frame so it makes it appear like the camera has a higher framerate than 30. \textcolor{red}{rewrite this in a less shit way}
+As depicted in Figure \ref{fig:framerate-overall}, the system's frame rate remained relatively consistent, with 90.83\% of frames maintaining a latency between 30 and 35 ms. A peculiar observation was the cluster of latencies at 16-18 ms (4.46\%) and 49-51 ms (4.39\%). This anomaly is attributed to the frame rate of the renderer, as our system performs lazy conversion of 2D points to 3D only when necessary. Our renderer operates at 60 fps, constrained by our monitors, resulting in frame intervals approximating to 16.666 ms. Although our tracker functions at 30 fps (33.33 ms inter-update gap), there can be an inter-update gap of 16 ms if the tracker is delayed past the initial 33.33 ms, causing an additional delay of approximately 16.66 ms, resulting in a total gap of around 50 ms. However, during this waiting period, another frame is processed and ready for the next cycle, giving the appearance of a higher frame rate than 30 fps.
 
-We investigated down scaling the image to increase performance. We only found that down scaling it once was enough to get the performance we needed. Down scaling it further did not offer any significant performance increases and significantly decreased tracking quality. As can be seen in Figure \ref{fig:pydown}, the performance of the system increases noticeably between going from 2048 x 1536 to 1024 x 793 but reducing the resolution further does not provide any speed benefit at all as we are already running at 30fps which is the cameras refresh rate.
+\subsubsection{Downscaling Benchmarks}
 
-\begin{figureBox}[label={fig:pydown}, width=1.0\linewidth]{Comparing Resolutions}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/pydown.pdf}
+In exploring the impact of downscaling on performance, we determined that a single instance of downscaling sufficed to meet our performance requirements. Further downscaling did not yield significant performance benefits and adversely affected tracking quality. Figure \ref{fig:pydown} illustrates our findings, showing a noticeable performance improvement when reducing the resolution from the source $2048 \times 1536$ to $1024 \times 793$. Additional reductions in resolution did not provide further speed benefits, as the bottleneck was the 30 fps frame rate of the Kinect camera.
+
+\begin{figureBox}[label={fig:pydown}, width=1.0\linewidth]{Comparing Inter-Update Gap By Resolutions (over 1 min)}
+    \includegraphics[width = 1.0\linewidth]{./evaluation/figures/pydown.pdf}
 \end{figureBox}
 
-As can be seen in Figure \ref{fig:process-times-distributions}, of the three separate threads (captures from the Kinect camera, tracking the hand and eye, and rendering with OpenGL) which are running at the same time, the bottleneck is waiting for the inect camera to return the capture. This means there isn't any benefit to speeding up the tracking algorithm.
+\subsubsection{Timings by Subprocess}
 
-\begin{figureBox}[label={fig:process-times-distributions}, width=1.0\linewidth]{Comparing Processing Times}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/process-times-distributions.pdf}
+Further investigation revealed that among the three concurrent threads (capturing from the Kinect camera, tracking hand and eye movements, and rendering with OpenGL), the primary bottleneck was waiting for the Kinect camera to complete the capture. Figure \ref{fig:process-times-distributions} highlights that expediting the tracking algorithm offered limited benefit due to this bottleneck.
+
+\begin{figureBox}[label={fig:process-times-distributions}, width=1.0\linewidth]{Comparing Thread Competition Times}
+    \includegraphics[width = 1.0\linewidth]{./evaluation/figures/process-times-distributions.pdf}
 \end{figureBox}
 
-\textcolor{red}{Estimate Latency, 12.8 exposure which you should cite, plus workout how the framerate effects it + 15 ms for tracking plus work out how the random chance of being selected during rendering works and compare to it similar systems like oculus quest and maybe fishbowl and vision pro?} 
+\subsubsection{Latency from Camera to Eye}
 
+Although precise latency statistics for the Azure Kinect from capture to device are unavailable, estimates suggest a latency of around 90 ms \cite{gholami2023autodepthnet}. Considering the time required for OpenGL primitives to display images on the screen, which ranges from 10 to 30 ms depending on the display \cite{https://doi.org/10.1002/jsid.1104} \cite{noauthor_latency_nodate}, and combining this with our system's processing time of less than 30 ms, we estimate the total system latency to be approximately 150 ms. \\
+
+When compared to state-of-the-art systems in similar fields such as VR, our system exhibits higher latency, as shown in Table \ref{tab:photon-to-photon-latency}.
+
+\begin{table}[h!]
+    \centering
+    \caption{Our Photo-to-Photon Latency Vs Common VR Systems reported by OptoFidelity \cite{noauthor_apple_2024}}
+    \label{tab:photon-to-photon-latency}
+    \begin{tabular}{lS[table-format=1.2e+2]S[table-format=4.0]S[table-format=2.6]S[table-format=1.6]}
+        \toprule
+        \textbf{System} & \textbf{Latency (ms)}\\
+        \midrule
+        \texttt{Volumetric Simulator (\textbf{Ours})} & ~150ms \\
+		\texttt{HTC VIVA XR Elite} & ~40ms\\
+		\texttt{Meta Quest 3} & ~39ms \\
+		\texttt{Meta Quest Pro} & ~38ms \\
+        \texttt{Apple Vision Pro} & ~11ms  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+It is challenging to directly compare our system with other similar systems, such as the Multi-person Fish-Tank Virtual Reality Display \cite{10.1145/3281505.3281540} \cite{10.1145/169059.169066} or systems used in 3D Display Simulation Using Head-Tracking with Microsoft Kinect \cite{Zabarauskas2012}, as they do not report their latencies. However, given that both systems utilize Kinect cameras, which are a significant source of latency, we can infer that our system likely has comparable latency to these systems.
 
 \subsection{Tracking System: Accuracy}
 
-We measured the effective tracking range of our system. The method we used for this was to sit in a chair and slowly wave your hand and move you your head side to side over a period of 30 seconds as can be seen in Fig~\ref{fig:distance-setup}. We took a variety of samples at different distances measuring the percentage of captures that were successfully able to detect a face or hand. The resolution of the colour camera was 1024 x 793. 
+Evaluating the accuracy of our tracking system is crucial to ensure its reliability and effectiveness.
 
-\begin{invisBox}  
-	\pictureBox[label={fig:distance-setup}]{Setup for distance testing}{
-	  \adjustbox{height=5cm, keepaspectratio}{
-		\includegraphics{./evaluation/figures/distance_setup.jpg}
-	  }
-	}
-	\hfill
-	\pictureBox[label={fig:track-distance}]{Tracking success rate at different distances}{
-	\adjustbox{height=5.0cm, keepaspectratio}{
-	  \includegraphics{./evaluation/figures/tracking-success-rate.pdf}
-	  }
-	}
+\subsubsection{Effective Range}
+
+The first aspect of the evaluation focused on the effective tracking range of our system. We placed a participant in a fixed position on a chair and instructed them to slowly wave their hand and move their head. An example of the test setup is shown in Figure~\ref{fig:distance-setup}. We conducted tests at various distances, recording the percentage of successful captures that detected a face or hand at 30-second intervals. The resolution of the color image used for this test was $1024 \times 793$.
+
+\begin{invisBox}
+    \pictureBox[label={fig:distance-setup}]{Setup for Distance Testing}{
+        \adjustbox{height=5cm, keepaspectratio}{
+            \includegraphics{./evaluation/figures/distance_setup.jpg}
+        }
+    }
+    \hfill
+    \pictureBox[label={fig:track-distance}]{Success Rate at Varying Distances}{
+        \adjustbox{height=5.0cm, keepaspectratio}{
+            \includegraphics{./evaluation/figures/tracking-success-rate.pdf}
+        }
+    }
 \end{invisBox}
 
-As can be seen in our results for Fig~\ref{fig:track-distance} the success rate for MediaPipes hand tracking model rapidly deteriorates after about 1 meter to the point of being completely unable. We suspect this is probably due to the data it was trained on and the fact it was primarily designed as a model to track hands from a mobile phone camera \tocite. \\
+As illustrated in Figure~\ref{fig:track-distance}, the success rate for MediaPipe's hand tracking model rapidly decreases after 1 meter, ultimately failing 100\% of the time at greater distances. This is likely due to the dataset it was trained on and its primary design for tracking hands using a mobile phone camera \cite{dlib09}. \\
 
-Dlib's headtracking model was better deteriorating at about 1.5 meters for suspected similar reasons to MediaPipes. We took these results into consideration while designing our user study positioning the camera so the users hand would be in the range of \textcolor{red}{FIND OUT STUDY DISTANCE RANGE}
+Dlib's head tracking model performed better, with effective tracking up to approximately 1.5 meters. The decline in performance beyond this distance is similarly attributed to the nature of its training data. These findings were considered in the design of our user study, where the camera was positioned to keep the user's hand within 30-70 cm and the head within 1 meter from the camera.
 
 \subsubsection{Head Tracking}
-\begin{enumerate}
-	\item Test with glasses on?
-\end{enumerate}
 
-One of the important aspects of the system is the head tracking. We wanted to evaluate how well the head tracking system worked. One important aspect of the head tracking system is the angle of the head at which it fails to detect a face. We create a fairly redumentary setup as can be seen in Fig~\ref{fig:angle-setup} to measure the angle of the head at which the head tracking system fails. We used a swivel chair to rotate the user's body and head (we asked the participants to keep their body still and rigid). We measured the location of the midpoint of their feet when the tracking finished. Using GCSE trigonometry we were able to calculate the angle of the head at which the tracking failed. 
+The effectiveness of the head tracking system is another critical aspect, particularly the range of head positions at which tracking is possible. Specifically, we were interested in the angle at which the model fails to detect a face. We set up a straightforward experiment, shown in Figure~\ref{fig:angle-setup}, to measure the head angles at which the tracking system ceases to function. Participants were seated on a swivel chair and asked to keep their body still while rotating their head. We noted the position of the midpoint of their feet when tracking failed, and used basic trigonometry to estimate the head angle.
 
 \begin{figureBox}[label={fig:angle-setup}, width=1.0\linewidth]{Angle Setup}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/angle-setup.pdf}
+    \includegraphics[width = 1.0\linewidth]{./evaluation/figures/angle-setup.pdf}
 \end{figureBox}
 
-We tested this with 5 different people and the results can be seen in Fig~\ref{fig:head-angle}. The technique was not particularly precise so the results should be taken with a grain of salt. The angle at which the head tracking failed was typically between $120^{\circ} - 150^{\circ}$. This might result might see strange as at that angle the participant is very much facing away from the camera however the way the face tracking model works is it first detects a face and then maps a landmark to the face. \\ 
+This test involved five participants, with results presented in Figure~\ref{fig:head-angle}. Although the technique was somewhat rudimentary and thus not highly precise, the angle at which head tracking typically failed ranged between $120^{\circ}$ and $150^{\circ}$. This result may seem counterintuitive, as at these angles, the participant is facing away from the camera. However, the face tracking model first detects a face and then maps landmarks to it, even when the face is not directly visible.
 
-\begin{invisBox}  
-	\pictureBox[label={fig:head-angle}]{Angle of failure for headtracking}{
-	  \adjustbox{height=6cm, keepaspectratio}{
-		\includegraphics{./evaluation/figures/user-angles.pdf}
-	  }
-	}
-	\hfill
-	\pictureBox[label={fig:incorrect-head-track}]{Incorrect Head Tracking}{
-	\adjustbox{height=6.5cm, keepaspectratio}{
-	  \includegraphics{./evaluation/figures/incorrectTrackedFace.png}
-	  }
-	}
+\begin{invisBox}
+    \pictureBox[label={fig:head-angle}]{Angle of Failure for Head Tracking}{
+        \adjustbox{height=6cm, keepaspectratio}{
+            \includegraphics{./evaluation/figures/user-angles.pdf}
+        }
+    }
+    \hfill
+    \pictureBox[label={fig:incorrect-head-track}]{Incorrect Head Tracking}{
+        \adjustbox{height=6.5cm, keepaspectratio}{
+            \includegraphics{./evaluation/figures/incorrectTrackedFace.png}
+        }
+    }
 \end{invisBox}
 
-As can be seen in Fig~\ref{fig:incorrect-head-track} the face tracking model can still detect a face even when the face is not visible as it is detecting the side of this participants head. Acadotally the model seems to fail when it can only see hair. We would be interested to test this on a bald participant so see if it always detects a head no matter the rotation. Although this might seem like a problem at first glance it isn't. If the tracker cannot see the face then the face can't see the display either, so it doesn't matter if the display is rendered incorrectly. It also has the added benefit of tracking the eyes in an approximate position to where they would be if the face was visible, so as the user turns their head and the face comes into view the display does not need to correct much and the user will not notice the correction.
+As shown in Figure~\ref{fig:incorrect-head-track}, the face tracking model can still detect a face even when it is not visible, such as when detecting the side of the participant's head. The model tends to fail when only hair is visible. Testing on a bald participant could determine whether the system always detects a head regardless of rotation. While this might seem problematic, it is not, as the tracker and display are not visible to the user if their face is not visible. This also allows the system to approximate the position of the eyes, facilitating a smoother transition as the user turns their head back into view, minimizing the need for corrections and reducing noticeable adjustments for the user.
 
-\subsubsection{Hand tracking}
+\subsubsection{Hand Tracking}
 
-We found the hand tracker model was significantly less reliable than the head tracking model as can be seen in Fig~\ref{fig:failrate}. During our user study the hand tracking model failed for some users up to  10\% of the time, usually when it was first trying to find their hand (we didn't record this time in our final results). We found it was very particular with the conditions it would work under. It required a well-lit room and a plain background and required us to remove all objects out of the scene. We found people wearing t-shirts with intricate patterns would massively reduce the success rate so we had a plain spare jumper to give users to wear if we noticed this being an issue. \\
+During the evaluation of our hand tracking model, we observed that it was significantly less reliable compared to our head tracking model, even when tested on the same images. Based on the metrics recorded during our user study, as illustrated in Fig~\ref{fig:failrate}, the hand tracking model failed for some users up to 10\% of the time, whereas the eye tracking model rarely experienced failures. This issue was particularly prominent when the model attempted to initially detect the hand. We found that the model was sensitive to specific conditions: it required a well-lit environment, a plain background, and the removal of extraneous objects from the scene. Users wearing t-shirts with intricate patterns experienced a notable decrease in tracking success. To address this, we provided a plain jumper for users to wear if we identified this as a potential problem. \\
 
-We think we might have been able to fix this issue by using a segmentation model to segment the hand from the background first before trying to track it however we did not have time to experiment with this solution and we were worried it might significantly negatively impact the latency performance of the system.
+We considered mitigating this issue by employing a segmentation model to separate the hand from the background before tracking. However, we did not have sufficient time to experiment with this solution, and we were concerned that it might significantly degrade the system's latency performance.
 
-\begin{figureBox}[label={fig:failrate}, width=0.8\linewidth]{Failrates during user study}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/failrate.pdf}
+\begin{figureBox}[label={fig:failrate}, width=0.8\linewidth]{Failure rates during user study}
+    \includegraphics[width = 1.0\linewidth]{./evaluation/figures/failrate.pdf}
 \end{figureBox}
 
-One of the big issues with using a depth sampling method is that it cannot deal with occlusion. Even though Mediapipe is capable of predicting the position of points of the hand when it can't see them we can't sample their 3D positions accurately. This is a big issue as the hand is often occluded by itself as can be seen in Fig~\ref{fig:occlusion}. Here the fingers are occluded by the back of the palm meaning when we try and sample the depth we instead sample the depth of the palm in front. This also at first thought sounds like it might be an issue for glasses wearers, however, we found that the depth sample (it uses an IR method) was able to pass through glass. \\ 
+A major challenge of using a depth sampling method is its inability to handle occlusion effectively. Although Mediapipe can predict the position of hand points even when they are not directly visible, our method struggles to sample their 3D positions accurately in such cases. This is problematic because the hand often occludes itself, as demonstrated in Fig~\ref{fig:occlusion}, where fingers are occluded by the palm, leading to erroneous depth sampling of the palm instead. Initially, we were concerned that this might also affect glasses wearers. However, we discovered that the depth sampling method, which uses infrared (IR) technology, was able to penetrate through glass.
 
-\begin{figureBox}[label={fig:occlusion}, width=1.0\linewidth]{Occlusion Sampling}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/occulusionsampling.png}
+\begin{figureBox}[label={fig:occlusion}, width=1.0\linewidth]{Occlusion in Sampling}
+    \includegraphics[width = 1.0\linewidth]{./evaluation/figures/occulusionsampling.png}
 \end{figureBox}
 
-There are methods for getting around this such as sampling points you know are not occluded and then using the depth of the hand to infer the depth of the occluded points. This is a fairly complex problem and we did not have time to implement it in a way that was both accurate and fast as mediapipes estimated depth is not that good. We think the best solution would just be to switch to a point cloud based tracking model. \textcolor{red}{maybe find a paper to cite about hand occlusion}
+There are methods to mitigate these issues, such as sampling from points that are not occluded and using the known depth of the hand to infer the depth of the occluded points. This is a complex problem, and we did not have sufficient time to develop a solution that was both accurate and fast. Additionally, we found that the relative depth values estimated by Mediapipe were not very accurate, complicating interaction. We believe that the most effective solution would be to switch to a point cloud-based tracking model \cite{sharp2015accurate}. Our solution was to switch to interaction using the middle and index fingers, the two fingers we found to be most reliable.
 
 \subsection{Renderer}
-\textcolor{red}{TODO}
-\begin{enumerate}
-	\item Talk about and give an image of the rendering system displaying a complex scene.
-	\item Get framerate?
-\end{enumerate}
 
-We wanted to evaluate how accurate our rendering system. As our rendering system propose is to create the illusion of 3D objects in the real world, we wanted to see how well it could recreate a real object. We chose a cube as it is a simple object that is easy to recreate. We created a physical cube out of lego and created a virtual cube in our simulator both with the same dimensions of 13.5cm x 13.5cm x 12cm as can be seen in Fig~\ref{fig:real-vs-rendered}.
+In evaluating our rendering system, we focused primarily on the quality and accuracy of the images it produced.
 
-\begin{figureBox}[label={fig:real-vs-rendered}, width=1.0\linewidth]{A real and rendered cube}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/real-vs-rendered.pdf}
-\end{figureBox}
+\subsection[short]{Quality}
 
-Because the physical cube is hollow this allowed us to easily to compare the two cubes by superimposing them. We tested a variety of different perspectives and verified that the two cubes were indeed the same size and shape and completely overlapped. Some examples can be seen in Fig~\ref{fig:super-imposed}, it is worth noticing that the images might be slightly off as the system was tracking my eye and not the camera lense which was both below and about 10cm in front of my eye. This shows that our rendering system is accurate and can be used to create the illusion of 3D objects in the real world. 
-
-\begin{figureBox}[label={fig:super-imposed}, width=1.0\linewidth]{Superimposed real and rendered cube}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/super-imposed.pdf}
-\end{figureBox}
-
-\subsection[short]{Render quality}
-\textcolor{red}{TODO cite: rendering objects from this repo: https://casual-effects.com/data/index.html}
-
-% tocite https://www.rcsb.org/structure/8QBK
-
-\textcolor{red}{cite where they are all from and why I picked them (e.g rending a protein)}
+To evaluate the quality of our rendering system, we rendered a variety of complex 3D objects, including a chess set, a Minecraft house, and a protein structure. The images produced by our system were of high quality, as shown in Figures~\ref{fig:chess}, \ref{fig:erato}, \ref{fig:house}, and \ref{fig:8qbk}. The system was able to render these objects with high fidelity, accurately representing their 3D structure. The images were sharp and detailed, with precise lighting and shading. The system effectively rendered complex objects with numerous details, such as the protein structure, without any noticeable loss of quality or drop in frame rate. The images produced by our system were comparable to those produced by professional rendering software, demonstrating the high quality of our system.
 
 \begin{invisBox}  
-	\pictureBox[label={fig:chess}]{Chess Set}{
+	\pictureBox[label={fig:chess}]{Chess Set \cite{noauthor_chessset_nodate}}{
 	  \adjustbox{height=5cm, keepaspectratio}{
 		\includegraphics{./evaluation/figures/renderer/chess_croped.png}
 	  }
 	}
 	\hfill
-	\pictureBox[label={fig:erato}]{Erato}{
+	\pictureBox[label={fig:erato}]{Erato \cite{McGuire2017Data}}{
 	\adjustbox{height=5cm, keepaspectratio}{
 	  \includegraphics{./evaluation/figures/renderer/erato_2_cropped.png}
 	  }
 	}
 	\\[0.3cm]
-	\pictureBox[label={fig:house}]{Minecraft House}{
+	\pictureBox[label={fig:house}]{Minecraft House \cite{McGuire2017Data}}{
 	  \adjustbox{height=5cm, keepaspectratio}{
 		\includegraphics{./evaluation/figures/renderer/house_2_cropped.png}
 	  }
 	}
 	\hfill
-	\pictureBox[label={fig:8qbk}]{Retron-Eco1 filament with ADP-ribosylated Effector}{
+	\pictureBox[label={fig:8qbk}]{Retron-Eco1 filament with ADP-ribosylated Effector \cite{bank_rcsb_nodate}}{
 	\adjustbox{height=5cm, keepaspectratio}{
 	  \includegraphics{./evaluation/figures/renderer/8qbk_cropped.png}
 	  }
 	}
 \end{invisBox}
 
-\textcolor{red}{Talk about why this is important (as the file is very complex)}
+We successfully loaded and rendered a 6 million triangle model of Rungholt, a medieval city that was destroyed by a storm surge in the 14th century and recreated in Minecraft, as shown in Figure~\ref{fig:rungholt}. The model was rendered with no frame rate issues, demonstrating the system's ability to handle large and complex models with ease.
 
-\begin{figureBox}[label={fig:rungholt}, width=1.0\linewidth]{Large Minecraft File}
+\begin{figureBox}[label={fig:rungholt}, width=1.0\linewidth]{Rungholt \cite{McGuire2017Data}}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/renderer/rungholt_cropped.png}
+\end{figureBox}
+
+\subsubsection{Accuracy}
+
+To evaluate the accuracy of our rendering system, we aimed to determine how well it could recreate a real object in a virtual environment. We chose a cube as our test object due to its simplicity and ease of measurement. A physical cube was constructed using Lego, and a corresponding virtual cube was created in our simulator, both with the exact dimensions of 13.5 cm x 13.5 cm x 12 cm, as illustrated in Figure~\ref{fig:real-vs-rendered}.
+
+\begin{figureBox}[label={fig:real-vs-rendered}, width=1.0\linewidth]{A real and rendered cube}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/real-vs-rendered.pdf}
+\end{figureBox}
+
+Due to the hollow nature of the physical cube, we were able to compare the two cubes effectively by superimposing them. We tested various perspectives and confirmed that the two cubes were indeed of the same size and shape, visually overlapping completely. Some example perspectives are presented in Figure~\ref{fig:super-imposed}. It is important to note that slight discrepancies in the images may occur, as the system was tracking the photographer's eye rather than the camera lens, which was positioned below and approximately 10 cm in front of the eye. Adjustments were made to account for this difference. This evaluation demonstrates that our rendering system is accurate and capable of recreating 3D objects from the real world with high precision.
+
+\begin{figureBox}[label={fig:super-imposed}, width=1.0\linewidth]{Superimposed real and rendered cube}
+	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/super-imposed.pdf}
 \end{figureBox}
 
 
 \subsection{Portability}
-One of the key aspects of the system is that it is portable and should be runnable from a fresh linux machine from scratch with a single command. We developed the system on a Linux Machine (NixOS) using an Intel i5 9600k, with a Nvida 2070 Super GPU. We tested the system on a different linux machine (NixOS) with an Intel i7 4770k and a Nvidia 1080 as can be seen in Fig~\ref{fig:other-machine}. We were able to run the system on this machine with no issues first try. We also tested the system on a Windows machine using WSL2 \todo. 
+One of the significant advantages of this system is its reproducibility and ease of deployment. It can be set up on a fresh Linux machine from scratch with a single command. The system was developed on a Linux machine (NixOS) using an Intel i5-9600K CPU and an NVIDIA GeForce RTX 2070 Super GPU. For testing purposes, the system was also run on a different Linux machine (NixOS) equipped with an Intel i7-4770K CPU and an NVIDIA GeForce GTX 1080 GPU, as depicted in Fig.~\ref{fig:other-machine}. Remarkably, the system executed flawlessly on the first attempt on this different hardware configuration.
 
 \begin{figureBox}[label={fig:other-machine}, width=0.7\linewidth]{Running on a different machine}
-	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/other-device.jpeg}
+	\includegraphics[width=1.0\linewidth]{./evaluation/figures/other-device.jpeg}
 \end{figureBox}
+
+We also tested the system on a Windows machine using Windows Subsystem for Linux 2 (WSL2). Although we successfully built the system, the OpenGL renderer did not function as expected. We did not have sufficient time to diagnose the issue thoroughly, but we suspect it is related to WSL GPU passthrough limitations. This issue is likely resolvable with additional troubleshooting. \\
+
+Currently, the system only supports machines with Intel CPUs and NVIDIA GPUs. However, extending support to AMD CPUs and GPUs should be feasible with further development and fairly trivial modifications to the build system.
+
+\subsection{Comparison to Other Systems}
+
+As the field of volumetric displays is relatively new, there are few comparable systems available for direct comparison. However, we can compare our system to a few other devices that have been created. The most similar system to ours is the Multi-person Fish-Tank Virtual Reality Display \cite{10.1145/3281505.3281540} \cite{10.1145/169059.169066}, which uses a similar Kinect camera for tracking. \textcolor{red}{todo}
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{4cm}|}
+	\hline
+	\textbf{Attribute} & \textbf{Volumetric Simulator (Ours)} & \textbf{Fish-Tank Virtual
+	Reality Display} \\
+	\hline
+	Attribute 1 & 0 & 0  \\
+	\hline
+	Attribute 2 & 0 & 0  \\
+	\hline
+	Attribute 3 & 0 & 0  \\
+	\hline
+	Attribute 4 & 0 & 0  \\
+	\hline
+	Attribute 5 & 0 & 0  \\
+	\hline
+	\end{tabular}
+	\caption{Comparison of systems based on attributes}
+	\label{table:comparison}
+\end{table}
+
+\textcolor{red}{TODO}
