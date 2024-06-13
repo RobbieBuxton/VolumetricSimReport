@@ -116,13 +116,23 @@ As shown in Figure~\ref{fig:incorrect-head-track}, the face tracking model can s
 
 \subsubsection{Hand Tracking}
 
-During the evaluation of our hand tracking model, we observed that it was significantly less reliable compared to our head tracking model, even when tested on the same images. Based on the metrics recorded during our user study, as illustrated in Fig~\ref{fig:failrate}, the hand tracking model failed for some users up to 10\% of the time, whereas the eye tracking model rarely experienced failures. This issue was particularly prominent when the model attempted to initially detect the hand. We found that the model was sensitive to specific conditions: it required a well-lit environment, a plain background, and the removal of extraneous objects from the scene. Users wearing t-shirts with intricate patterns experienced a notable decrease in tracking success. To address this, we provided a plain jumper for users to wear if we identified this as a potential problem. \\
+During the evaluation of our hand tracking model, we observed that it was significantly less reliable compared to our head tracking model, even when tested on the same images. Based on the metrics recorded during our user study, as illustrated in Fig~\ref{fig:failrate}, the hand tracking model failed for some users up to 10\% of the time, whereas the eye tracking model rarely experienced failures. When participants were surveyed about this during our user study they echoed our observations as can be seen in Fig~\ref{fig:reliable} with a noticeable drop in the rating of hand tracking reliability. This issue was particularly prominent when the model attempted to initially detect the hand. We found that the model was sensitive to specific conditions: it required a well-lit environment, a plain background, and the removal of extraneous objects from the scene. Users wearing t-shirts with intricate patterns experienced a notable decrease in tracking success. To address this, we provided a plain jumper for users to wear if we identified this as a potential problem. \\
 
 We considered mitigating this issue by employing a segmentation model to separate the hand from the background before tracking. However, we did not have sufficient time to experiment with this solution, and we were concerned that it might significantly degrade the system's latency performance.
 
-\begin{figureBox}[label={fig:failrate}, width=0.8\linewidth]{Failure rates during user study}
-    \includegraphics[width = 1.0\linewidth]{./evaluation/figures/failrate.pdf}
-\end{figureBox}
+\begin{invisBox}
+    \pictureBox[label={fig:failrate}]{Failure rates during user study}{
+        \adjustbox{height=5cm, keepaspectratio}{
+            \includegraphics{./evaluation/figures/failrate.pdf}
+        }
+    }
+    \hfill
+    \pictureBox[label={fig:reliable}]{Accuracy and Reliability of Hand and Eye Tracking Survey}{
+        \adjustbox{height=4.5cm, keepaspectratio}{
+            \includegraphics{./evaluation/figures/survery/reliable-accurate.pdf}
+        }
+    }
+\end{invisBox}
 
 A major challenge of using a depth sampling method is its inability to handle occlusion effectively. Although Mediapipe can predict the position of hand points even when they are not directly visible, our method struggles to sample their 3D positions accurately in such cases. This is problematic because the hand often occludes itself, as demonstrated in Fig~\ref{fig:occlusion}, where fingers are occluded by the palm, leading to erroneous depth sampling of the palm instead. Initially, we were concerned that this might also affect glasses wearers. However, we discovered that the depth sampling method, which uses infrared (IR) technology, was able to penetrate through glass.
 
@@ -136,7 +146,7 @@ There are methods to mitigate these issues, such as sampling from points that ar
 
 In evaluating our rendering system, we focused primarily on the quality and accuracy of the images it produced.
 
-\subsection[short]{Quality}
+\subsection{Quality}
 
 To evaluate the quality of our rendering system, we rendered a variety of complex 3D objects, including a chess set, a Minecraft house, and a protein structure. The images produced by our system were of high quality, as shown in Figures~\ref{fig:chess}, \ref{fig:erato}, \ref{fig:house}, and \ref{fig:8qbk}. The system was able to render these objects with high fidelity, accurately representing their 3D structure. The images were sharp and detailed, with precise lighting and shading. The system effectively rendered complex objects with numerous details, such as the protein structure, without any noticeable loss of quality or drop in frame rate. The images produced by our system were comparable to those produced by professional rendering software, demonstrating the high quality of our system.
 
