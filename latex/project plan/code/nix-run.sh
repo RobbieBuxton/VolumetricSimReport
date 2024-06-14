@@ -1,1 +1,0 @@
-[shell:~]$ sudo nix run github:RobbieBuxton/VolumetricSim

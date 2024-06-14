@@ -1,36 +1,57 @@
-\section{Conclusions}
+\section{Future Work}
+
+We have identified several areas for future work that could enhance the capabilities and usability of our volumetric display simulator and further explore the potential of volumetric displays in interactive 3D applications.
+
+\subsection{Anaglyph 3D}
+Anaglyph 3D \cite{Dhaou2019} is a technique for displaying 3D images using color-filtered glasses, typically employing red and green filters. Unlike polarized 3D \cite{article-3D}, it does not require additional complex hardware. Currently, the 3D effect necessitates closing one eye. Integrating 3D support into the system could enhance the immersive experience by eliminating this limitation.
+
+\subsection{Multi-User Support}
+Another potential area for future exploration is multi-user support. Our current tracking system is limited to a single user. Extending it to support multiple users would be a logical progression and relatively straightforward. By utilizing color filter glasses or shutter glasses, it is feasible to render different perspectives to multiple users simultaneously, as suggested in the study "Two Kinds of Novel Multi-user Immersive Display Systems" \cite{Two-Kinds}.
+
+\subsection{Real-Time Light Detection}
+Adding an additional camera with a fisheye lens to generate a real-time light map could be a valuable enhancement. This feature would enable the virtual scene to be illuminated by real-world lighting conditions. It would be insightful to investigate whether this addition impacts performance in any significant way, especially concerning the tasks evaluated in our user study.
+
+\subsection{Generalize CPU/GPU Camera Compatibility}
+The current project is compatible only with Nvidia GPUs. Expanding compatibility to include AMD GPUs, Intel GPUs, and even CPU-only environments (with expected slower performance) would be beneficial. Furthermore, supporting different depth cameras beyond the Kinect, such as Intel RealSense Depth Cameras \cite{keselman2017intel}, is crucial, particularly since the Kinect has been discontinued by Microsoft. Achieving this will require substantial code generalization. Switching cameras to a lower latency system would also be beneficial.
+
+\subsection{Switch Hand Tracking Model}
+The hand tracking component of the project is notably the weakest aspect. Transitioning to a more robust hand tracking model is highly recommended. Specifically, adopting a model that utilizes depth images rather than RGB images could significantly improve performance. This would likely be a major undertaking, as off-the-shelf models for this purpose are scarce. Implementing the approach described in the paper "Accurate, Robust, and Flexible Real-Time Hand Tracking" \cite{sharp2015accurate} appears promising.
+
+\subsection{Further User Study}
+As indicated in the evaluation section, while the user study provided conclusive results, further investigation is warranted. We are interested in exploring various offset positions to examine the drop-off rate in greater detail. Additionally, adjusting the position of the interaction zone, as opposed to the display position, could yield valuable insights.
+
+\subsection{Porting to Windows and Mac}
+Although we have demonstrated that the project can be built with a single command on Linux, extending support to Windows (including WSL) and Mac would be advantageous. We have successfully compiled the project on Windows, but further investigation is required to address WSL-specific issues. We have yet to attempt building it on Mac. This is expected to be more challenging, as porting all GPU-accelerated functionality to Apple Metal \cite{noauthor_httpsdeveloperapplecommetalmetal-shading-language-specificationpdf_nodate} may pose significant difficulties, despite Nix's native compatibility with Mac.
+
+\section{Conclusions and Contributions}
+
+Our project makes two novel contributions to the field of volumetric displays.
+
+\subsubsection{Volumetric Display Simulator}
+The Volumetric Display Simulator stands as a novel contribution to interactive 3D display technology, providing a robust foundation for future advancements in volumetric simulation user interaction studies. The project not only met its technical objectives but also opened avenues for further research and development in this emerging field.
+
 \begin{enumerate}
-	\item We have developed a novel system for visualising 3D data in a 2D space.
-	\item We were able to validate it with a user study.
-	\begin{enumerate}
-		\item Write about results form user study.
-	\end{enumerate}
-	\item We are unaware of any other system that can do this with hand tracking. 
-	\item We have built a system that is easy to use and intuitive and portable.
+    \item \textbf{Cost-Effective:} The system was designed to operate on a standard desktop computer with standard monitors and utilizes Microsoft's widely used Azure Kinect Camera, now rebranded as the Orbbec Femto Bolt \cite{noauthor_microsofts_nodate}, priced at only \$400 USD \cite{noauthor_femto_nodate}. In contrast, true volumetric displays typically range from over \$10,000 \cite{noauthor_products_nodate} for commercially available devices to being exclusively used in specific research labs. Other existing simulators, such as the Multi-person Fish-Tank Virtual Reality Display from the University of Saskatchewan \cite{10.1145/3281505.3281540}, require custom hardware and multiple projectors, making them less accessible and significantly more expensive. We believe our system's affordability and accessibility will encourage more researchers to explore volumetric display technology.
+
+    \item \textbf{Reproducible:} The system was developed using Nix, a package manager that facilitates the easy reproduction of the software environment. This means the system can be run on any computer with Nix installed using a single command. This not only simplifies execution but also enhances the ease of sharing and reproducing results, promoting greater collaboration and innovation.
+
+    \item \textbf{Simple and Lightweight:} The system was intentionally designed to be as simple as possible by leveraging well-established libraries. The simulator comprises approximately 2,000 lines of C++ code, making it straightforward to understand and modify. The use of Nix to manage the environment ensures that the system can be deployed with a single command, further enhancing its accessibility and usability.
 \end{enumerate}
 
-\section{Future Work}
+\subsubsection{Offset Interaction User Study}
+
+This user study successfully validated the effectiveness of our volumetric display system, demonstrating its potential to enhance task performance and user interaction in various research and practical applications. The findings indicate that using a 3D tracking mode significantly improves task completion speed and accuracy compared to a traditional 2D static display. Additionally, direct hand interaction with the volumetric display yielded superior results compared to teleoperation, particularly in 3D scenarios. These outcomes underscore the importance of depth perception and natural interaction in maximizing the usability and performance of volumetric displays. \\
+
+The study's results also highlight the limitations imposed by offset conditions, which diminish the benefits of 3D interaction due to reduced motion parallax. This insight suggests that, for optimal performance, volumetric displays should be used directly in front of the user, aligning with their natural line of sight and minimizing any positional offsets that could impede task accuracy and speed. \\
+
+This research makes several key contributions to the field of human-computer interaction and volumetric display technology:
+
 \begin{itemize}
-    \item \textbf{Adapt to be compliant with OpenXR:} OpenXR is an open standard for virtual reality and augmented reality. It is supported by all the major players in the industry including Microsoft, Valve, Oculus, Google, and many more. It would be a good idea to adapt the project to be compliant with this standard, so it can load into any OpenXR compatible application. I am currently not sure how difficult this is or if it is even feasible.
+    \item \textbf{Empirical Validation:} The study provides empirical evidence that 3D volumetric displays, when used with direct hand interaction and without offset, significantly enhance task performance. This contributes to the body of knowledge regarding the practical benefits of volumetric displays over traditional 2D interfaces.
 
-    \item \textbf{Anaglyph 3D:} Anaglyph 3D is a method of displaying 3D images using filters typically red and green color filters and does not require special hardware. The 3D effect currently requires 1 eye to be closed so adding 3D support would make it a more immersive experience. I predict this task will take a day or two as I just need to duplicate the perspective per eye.
+    \item \textbf{Insight into Motion Parallax:} The findings reaffirm the critical role of motion parallax in 3D display interactions. By showing that the benefits of 3D tracking are diminished with positional offsets, the study offers valuable insights into the design and application of volumetric displays, suggesting that maintaining a consistent perspective is crucial for effective use.
 
-    \item \textbf{Realtime light detection:} Taking inspiration from what I have learned from advanced graphics this term, it might be interesting to add another camera, a fish eye lens and use that to generate a real-time light map. This would allow the virtual scene to be lit by real-world lighting. I have already talked to Prof Abhijeet Ghosh about this idea, and he thinks it is feasible. However, this is going in a slightly different direction with the project. I predict this task will take a week or two.
+    \item \textbf{User Preference Analysis:} The strong user preference for 3D tracking conditions underscores the importance of user-centered design in developing interactive systems. This preference suggests that users value intuitive and natural interaction modes, which should be a priority in future interface designs.
 
-    \item \textbf{Improve compatibility:} Currently the project only works on Nvidia GPUs. It would be good to improve compatibility to work on AMD GPUs and Intel GPUs and also run without a GPU (albeit slowly). It would also be good to support different depth cameras other than the Kinect (Like Intels Intellisense) as this has been discontinued by Microsoft. This would require a lot of refactorings and would probably take a week or two.
-    
-	%tocite https://www.microsoft.com/en-us/research/publication/accurate-robust-and-flexible-real-time-hand-tracking/
-	\item \textbf{Switch hand tracking model:} By a fairly significant margin, the hand tracking was the weakest part of the project. It would be good to switch to a more robust hand tracking model. I think it would be good to switch to a model that tracks using the depth image rather than the RGB image. This would probably be a fairly large undertaking as there is unlikely to be an off the shelf model that does this. I think implementing this paper may be promising \tocite. I predict this task will take a month or two.
-	
-	\item \textbf{Publish User Study}: \textcolor{red}{ask nicole about this}
-	
-	\item \textbf{Further User Study}: \textcolor{red}{Ran the experiment again this time moving the offset zone not the display}
-\end{itemize}
-
-\section{Contributions}
-\section{Novel Contributions}
-Once this project is complete we expect to have made the following novel contributions:
-\begin{itemize}
-    \item A \textbf{volumetric display simulator} that is Multi-platform, Lightweight, Cheap, and Reproducible.
-    \item A \textbf{user experiment} that compares the effectiveness of using hand tracking to interact directly with an ethereal/incorporeal volumetric display compared to a via teleoperation with a corporeal/tangible display.
+    \item \textbf{Recommendations for Future Research:} The study identifies several areas for further investigation, including the effects of varying offset distances and the potential impact of offsetting the interaction zone rather than the display itself. These recommendations can guide future research efforts to refine and improve the usability of volumetric displays.
 \end{itemize}

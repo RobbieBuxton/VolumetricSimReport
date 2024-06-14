@@ -39,10 +39,7 @@ Our packages configure the following components:
 	\item \textbf{Tracking Models:} We download and configure Dlib \cite{dlib09} and MediaPipe \cite{lugaresi2019mediapipe}, which are machine learning libraries used for our tracking models. We also automatically download the two required models for Dlib from the internet (verified by hash). Additionally, we download and build OpenCV for image management.
 \end{enumerate}
 
-Once all the dependencies are built, the simulator is compiled in a sandbox environment before being copied into the Nix store as a package containing the shared library \texttt{libvolsim.so} and all files the simulator depends on (tracking models, OBJ files, shaders). This shared library can be accessed from the User Study CLI to run the simulation. An overview of the final package contents is provided in Listing~\ref{list:libvolsim}.
-
-\textcolor{red}{move to appendix}
-\codeBoxFile[label = {list:libvolsim}]{shell}{./implementation/code/libvolsim.sh}{Terminal}
+Once all the dependencies are built, the simulator is compiled in a sandbox environment before being copied into the Nix store as a package containing the shared library \texttt{libvolsim.so} and all files the simulator depends on (tracking models, OBJ files, shaders). This shared library can be accessed from the User Study CLI to run the simulation. An overview of the final package contents is provided in the Appendix.
 
 \subsection{Development Environments}
 
