@@ -25,33 +25,6 @@ Although we have demonstrated that the project can be built with a single comman
 
 \section{Conclusions and Contributions}
 
-Our project makes two novel contributions to the field of volumetric displays.
+The development and evaluation of our Volumetric Display Simulator underscore its potential as a versatile tool for future research in volumetric display technologies. By integrating cost-effective components and reproducible software environments, we have created a system that is both accessible and straightforward, encouraging wider adoption and further development by other researchers. \\
 
-\subsubsection{Volumetric Display Simulator}
-The Volumetric Display Simulator stands as a novel contribution to interactive 3D display technology, providing a robust foundation for future advancements in volumetric simulation user interaction studies. The project not only met its technical objectives but also opened avenues for further research and development in this emerging field.
-
-\begin{enumerate}
-    \item \textbf{Cost-Effective:} The system was designed to operate on a standard desktop computer with standard monitors and utilizes Microsoft's widely used Azure Kinect Camera, now rebranded as the Orbbec Femto Bolt \cite{noauthor_microsofts_nodate}, priced at only \$400 USD \cite{noauthor_femto_nodate}. In contrast, true volumetric displays typically range from over \$10,000 \cite{noauthor_products_nodate} for commercially available devices to being exclusively used in specific research labs. Other existing simulators, such as the Multi-person Fish-Tank Virtual Reality Display from the University of Saskatchewan \cite{10.1145/3281505.3281540}, require custom hardware and multiple projectors, making them less accessible and significantly more expensive. We believe our system's affordability and accessibility will encourage more researchers to explore volumetric display technology.
-
-    \item \textbf{Reproducible:} The system was developed using Nix, a package manager that facilitates the easy reproduction of the software environment. This means the system can be run on any computer with Nix installed using a single command. This not only simplifies execution but also enhances the ease of sharing and reproducing results, promoting greater collaboration and innovation.
-
-    \item \textbf{Simple and Lightweight:} The system was intentionally designed to be as simple as possible by leveraging well-established libraries. The simulator comprises approximately 2,000 lines of C++ code, making it straightforward to understand and modify. The use of Nix to manage the environment ensures that the system can be deployed with a single command, further enhancing its accessibility and usability.
-\end{enumerate}
-
-\subsubsection{Offset Interaction User Study}
-
-This user study successfully validated the effectiveness of our volumetric display system, demonstrating its potential to enhance task performance and user interaction in various research and practical applications. The findings indicate that using a 3D tracking mode significantly improves task completion speed and accuracy compared to a traditional 2D static display. Additionally, direct hand interaction with the volumetric display yielded superior results compared to teleoperation, particularly in 3D scenarios. These outcomes underscore the importance of depth perception and natural interaction in maximizing the usability and performance of volumetric displays. \\
-
-The study's results also highlight the limitations imposed by offset conditions, which diminish the benefits of 3D interaction due to reduced motion parallax. This insight suggests that, for optimal performance, volumetric displays should be used directly in front of the user, aligning with their natural line of sight and minimizing any positional offsets that could impede task accuracy and speed. \\
-
-This research makes several key contributions to the field of human-computer interaction and volumetric display technology:
-
-\begin{itemize}
-    \item \textbf{Empirical Validation:} The study provides empirical evidence that 3D volumetric displays, when used with direct hand interaction and without offset, significantly enhance task performance. This contributes to the body of knowledge regarding the practical benefits of volumetric displays over traditional 2D interfaces.
-
-    \item \textbf{Insight into Motion Parallax:} The findings reaffirm the critical role of motion parallax in 3D display interactions. By showing that the benefits of 3D tracking are diminished with positional offsets, the study offers valuable insights into the design and application of volumetric displays, suggesting that maintaining a consistent perspective is crucial for effective use.
-
-    \item \textbf{User Preference Analysis:} The strong user preference for 3D tracking conditions underscores the importance of user-centered design in developing interactive systems. This preference suggests that users value intuitive and natural interaction modes, which should be a priority in future interface designs.
-
-    \item \textbf{Recommendations for Future Research:} The study identifies several areas for further investigation, including the effects of varying offset distances and the potential impact of offsetting the interaction zone rather than the display itself. These recommendations can guide future research efforts to refine and improve the usability of volumetric displays.
-\end{itemize}
+Our user study demonstrated that the use of head tracking and direct hand interaction significantly enhances task performance in a 3D environment, highlighting the importance of natural interaction modes for effective use of volumetric displays. The findings suggest promising avenues for future research, including the exploration of positional offsets and interaction zone dynamics, which could lead to significant improvements in the usability and functionality of volumetric displays.

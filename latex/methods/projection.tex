@@ -1,5 +1,7 @@
 \section{Perspective Projection}
 
+To create the illusion of a 3D scene behind and in front of a display we must use a perspective projection. This is a method of representing 3D space on a 2D surface that simulates the way the human eye perceives the world. For our project we have followed the methods laid out in "Generalized Perspective Projection" by Robert Kooima \cite{kooima2009generalized} to calculate the required values for the OpenGL function \texttt{frustum} to generate a perspective projection.
+
 \begin{figureBox}[label={fig:ortho-vs-persp}, width=0.8\linewidth]{Orthographic and perspective projections}
     \includegraphics[width = 0.8\linewidth]{./background/figures/projection/ortho-vs-persp.pdf}
 \end{figureBox}
@@ -19,7 +21,7 @@ OpenGL provides the \texttt{frustum} function as seen in Fig~\ref{fig:persp-proj
         0              & 0              & -1               & 0                \\
     \end{bmatrix}
 \] 
-This maps a specified viewing frustum to screen space (with intermediate steps handled by OpenGL) \cite{hearn2004computer}. This viewing frustum is specified by six parameters: $l$, $r$, $b$, $t$, $n$ and $f$ which represent the left, right, bottom, top, near, and far extents of the frustum. These parameters define the sides of the near-clipping plane, highlighted in red, relative to the origin of the coordinate system. These parameters do not represent distances or magnitudes in a traditional sense but rather define the vectors from the center of the near-clipping plane to its edges. \\
+This maps a specified viewing frustum to screen space (with intermediate steps handled by OpenGL). This viewing frustum is specified by six parameters: $l$, $r$, $b$, $t$, $n$ and $f$ which represent the left, right, bottom, top, near, and far extents of the frustum. These parameters define the sides of the near-clipping plane, highlighted in red, relative to the origin of the coordinate system. These parameters do not represent distances or magnitudes in a traditional sense but rather define the vectors from the center of the near-clipping plane to its edges. \\
 
 
 The $l$ and $r$ parameters specify the horizontal boundaries of the frustum on the near-clipping plane, with the left typically being negative and the right positive, defining the extent to which the frustum extends to the left and right of the origin. Similarly, the $b$ and $t$ parameters determine the vertical boundaries, with the bottom often negative and the top positive, expressing the extent of the frustum below and above the origin. \\

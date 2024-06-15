@@ -1,4 +1,7 @@
 \section{Nix/NixOS}
+
+To achieve our goal of making our system reproducible and buildable with a single command (See Implementation \ref{sect:buildsystem}) we have used the Nix package manager. It would not be an understatement to say this would have been impossible without Nix. Nix can be likened to the Python package manager 'pip,' but with significantly enhanced capabilities and applicability that extend beyond just package management to encompass the entire system environment.
+
 \subsection{Introduction to Nix}
 
 \textbf{Nix} \cite{dolstra2004nix} is an open-source, "purely functional package manager” used in Unix-like operating systems to provide a functional and reproducible approach to package management. Started in 2003 as a research project Nix \cite{dolstra2006purely} is widely used in both industry \cite{NixCommunityNixOSWiki} and academia \cite{10.1145/3152493.3152556} \cite{https://doi.org/10.1002/qua.26872} \cite{LHCbNix}, and its associated public package repository \texttt{nixpkgs} \cite{NixPkgs} as of Jan 2024 has over 80,000 unique packages making it the largest up-to-date package repository in the world  \cite{Marakasov_2024}. Out of Nix has also grown \textbf{NixOS} \cite{10.1145/1411204.1411255} a Linux distribution that is conceived and defined as a deterministic and reproducible entity that is declared functionally and is built using the \textbf{Nix} package manager. \\
@@ -66,6 +69,6 @@ Below we have given some examples of how to run and investigate our hello packag
 
 In Fig~\ref{fig:dependency-graph} we can see the package dependency graph of our \texttt{hello} package. We are only dependent on 4 packages \texttt{libunistring}, \texttt{libidn2}, \texttt{xgcc}, \texttt{glibc} all of which Nix have installed and configured separately the rest of the non-nix system (assuming we are not on NixOS). 
 
-\begin{figureBox}[label = {fig:dependency-graph}, width=0.75\linewidth]{Dependency graph}
+\begin{figureBox}[label = {fig:dependency-graph}, width=0.65\linewidth]{Dependency graph}
   \includegraphics[width=0.7\linewidth]{./background/figures/nix/hello-pkg.pdf}
 \end{figureBox}

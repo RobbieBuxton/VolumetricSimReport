@@ -196,6 +196,7 @@ Due to the hollow nature of the physical cube, we were able to compare the two c
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/super-imposed.pdf}
 \end{figureBox}
 
+It is worth noting that like all 3D rendering systems based on a 2D display medium, our system is subject to the limitations of dimensions of the screen. This means any object that extends beyond the screen will be clipped, and the user will not be able to see the entire object at once.
 
 \subsection{Portability}
 One of the significant advantages of this system is its reproducibility and ease of deployment. It can be set up on a fresh Linux machine from scratch with a single command. The system was developed on a Linux machine (NixOS) using an Intel i5-9600K CPU and an NVIDIA GeForce RTX 2070 Super GPU. For testing purposes, the system was also run on a different Linux machine (NixOS) equipped with an Intel i7-4770K CPU and an NVIDIA GeForce GTX 1080 GPU, as depicted in Fig.~\ref{fig:other-machine}. Remarkably, the system executed flawlessly on the first attempt on this different hardware configuration.
@@ -210,28 +211,36 @@ Currently, the system only supports machines with Intel CPUs and NVIDIA GPUs. Ho
 
 \subsection{Comparison to Other Systems}
 
-As the field of volumetric displays is relatively new, there are few comparable systems available for direct comparison. However, we can compare our system to a few other devices that have been created. The most similar system to ours is the Multi-person Fish-Tank Virtual Reality Display \cite{10.1145/3281505.3281540} \cite{10.1145/169059.169066}, which uses a similar Kinect camera for tracking. \textcolor{red}{todo}
+The field of volumetric displays is relatively niche, but there are few comparable systems available if expand our criteria a little. Table~\ref{table:comparison} provides a comparison of our system to other systems based the various attributes. Our system is unique in that as far as we are aware it is the only system that supports single-camera glasses free eye tracking with integrated hand tracking. Our system is still lacking in some areas, such as multi-user support and stereo rendering, but these are areas that could be addressed in future work but would require the introduction of some form of polarized or shutter glasses.
 
 \begin{table}[h!]
-	\centering
-	\begin{tabular}{|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{4cm}|}
-	\hline
-	\textbf{Attribute} & \textbf{Volumetric Simulator (Ours)} & \textbf{Fish-Tank Virtual
-	Reality Display} \\
-	\hline
-	Attribute 1 & 0 & 0  \\
-	\hline
-	Attribute 2 & 0 & 0  \\
-	\hline
-	Attribute 3 & 0 & 0  \\
-	\hline
-	Attribute 4 & 0 & 0  \\
-	\hline
-	Attribute 5 & 0 & 0  \\
-	\hline
-	\end{tabular}
-	\caption{Comparison of systems based on attributes}
-	\label{table:comparison}
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{System} & \textbf{Single Camera} & \textbf{Hand Tracking} & \textbf{Custom Display} & \textbf{Glasses} & \textbf{Stereo} & \textbf{Multi-User}  \\
+        \hline
+        Volumetric Simulator (\textbf{ours}) & \textbf{\textcolor{Green}{True}} & \textbf{\textcolor{Green}{True}} & \textbf{\textbf{\textcolor{Green}{False}}} & \textbf{\textcolor{Green}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}} \\
+        \hline
+        CoGlobe \cite{10.1145/3214907.3214914} \cite{7892376} \cite{10.1145/3290605.3300763} \cite{10.1145/3281505.3281540} & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textbf{\textcolor{red}{True}}} & \textbf{\textcolor{red}{True}} & \textbf{\textcolor{Green}{True}} & \textbf{\textcolor{Green}{True}}\\
+        \hline
+        OrbeVR \cite{10.1145/3084822.3091104} \cite{article-spheree}  & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textbf{\textcolor{red}{True}}} & \textbf{\textcolor{red}{True}} & \textbf{\textcolor{Green}{True}} & \textbf{\textcolor{Green}{True}} \\
+        \hline
+        pCubee \cite{10.1145/1753326.1753535} \cite{article_cubee} & \textbf{\textcolor{orange}{Headtracker}} & \textbf{\textcolor{red}{False}} & \textbf{\textbf{\textcolor{red}{True}}} & \textbf{\textcolor{Green}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}} \\
+        \hline
+        HandheldBall \cite{10.1145/3025453.3025806} & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textbf{\textcolor{red}{True}}} & \textbf{\textcolor{red}{True}} & \textbf{\textcolor{Green}{True}} & \textbf{\textcolor{Green}{True}} \\
+        \hline
+        TeleHuman \cite{10.1145/2207676.2208640} & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textbf{\textcolor{red}{True}}} & \textbf{\textcolor{Green}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}} \\
+        \hline
+        HoloDesk \cite{10.1145/2207676.2208405} &\textbf{\textcolor{red}{False}} & \textbf{\textcolor{Green}{True}} & \textbf{\textbf{\textcolor{red}{True}}} & \textbf{\textcolor{Green}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}} \\
+        \hline 
+        FaceTrack \cite{10.1109/3DUI.2008.4476617} & \textbf{\textcolor{Green}{True}} & \textbf{\textcolor{red}{False}} & \textbf{\textbf{\textcolor{Green}{False}}} & \textbf{\textcolor{Green}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}}  \\
+        \hline
+		3DDisplaySimulation \cite{Zabarauskas2012} & \textbf{\textcolor{Green}{True}} & \textbf{\textcolor{red}{False}} & \textbf{\textbf{\textcolor{Green}{False}}} & \textbf{\textcolor{Green}{False}} & \textbf{\textcolor{red}{False}} & \textbf{\textcolor{red}{False}}  \\
+        \hline
+    \end{tabular}}
+    \caption{Comparison of systems based on attributes}
+    \label{table:comparison}
 \end{table}
 
 \textcolor{red}{TODO}
