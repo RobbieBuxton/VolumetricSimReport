@@ -48,7 +48,6 @@ Next, we introduce the viewer's eye which we will refer to as $p_e$. We can draw
     \includegraphics[width = 0.5\linewidth]{./background/figures/projection/eye-projection.pdf}
 \end{figureBox}
 
-
 To calculate the required values for our \texttt{frustum} OpenGL function we must first find the point where a line drawn perpendicular to the plane of the screen that passes through $p_e$ strikes the screen. We refer to this point as the {\it screen-space-origin}, it is worth noting that this point can lie outside the screen (the rectangle bounded by $p_a$, $p_b$, $p_c$). We can find the distance of the {\it screen-space-origin} from the eye $p_e$ by taking the component of the screen basis vector $s_n$ in either of the vectors $v_b$ and $v_c$. However, as $s_n$ is in the opposite direction we must invert the result. Similarly, we can calculate $t$ by taking the component of $v_c$ in the basis vector $s_u$, $b$ by $v_b$ in $s_u$, $l$ by $v_c$ in $s_r$ and lastly $r$ by $v_b$ in $s_r$. We can compute these as follows:
 \[ d= -(s_n \cdot v_a) \quad l = (v_c \cdot s_r) \quad r = (v_b \cdot s_r) \quad b = (v_b \cdot s_u) \quad t = (v_c \cdot s_u) \]
 

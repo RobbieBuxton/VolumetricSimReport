@@ -45,7 +45,7 @@ We also surveyed our participants regarding factors we anticipated might influen
 	  }
 	}
 \end{invisBox}
-
+\subsection{Results}
 \subsubsection{Results: Timings}
 Upon completing the study with all participants, we collected and analyzed the data, focusing particularly on the time taken to complete each segment of the tasks. Our analysis revealed that both the type of view (STATIC, i.e., 2D, versus TRACKER, i.e., 3D) and the presence of an offset (OFFSET versus NO OFFSET) had a statistically significant impact on the time required to complete the segments. We plotted the average segment completion time against these variables in Fig~\ref{fig:anova-interaction}.
 
@@ -111,11 +111,79 @@ We observed that in both the STATIC OFFSET and TRACKER OFFSET conditions, users 
     \includegraphics[width = 1.0\linewidth]{./evaluation/figures/survery/distance-distribution.pdf}
 \end{figureBox}
 
-We hypothesize that the significantly worse performance in the OFFSET conditions is due to the lack of motion parallax, which would make it more challenging for users to judge the precise distance and depth between their hand and the end of the segment. This difficulty likely resulted in users spending more time at the end of a segment trying to precisely select the final point. Additionally, the display being further away may have made the task appear smaller and more difficult to gauge accurately. \\
-
 In the STATIC condition, users seemed to struggle more consistently with distance throughout the entire task. This difficulty is suggested by the small pronounced peak between 25-30 cm, which we hypothesize was called by users moving their hand in completely incorrect directions. We believe this may be due to the perspective in the STATIC condition being more challenging than in the STATIC OFFSET condition, as users were positioned above and behind the display rather than above, behind, and to the side. Each segment being oriented along the x, y, or z axis may have led to more overlapping segments in the STATIC condition, complicating the user's ability to discern the correct direction. Although this issue was also presumably present in the TRACKER conditions, users could mitigate it by changing their perspective. \\
 
 It is noteworthy that the observed peaks in the distance distributions are likely due to the time it takes for users to realize they have completed a segment and need to start moving towards the next point. We are confident in this interpretation, as the peaks align closely with the lengths of the segments (e.g., 2 cm for one segment, 3 cm for eight segments, 6 cm for twelve segments, 8 cm for ten segments, 12 cm for three segments, and 16 cm for one segment).
+
+If we examine the traces (the path of the user's hand over time, transitioning from green to red) for Task 4, as shown in Fig.~\ref{fig:traces}, we can observe that the OFFSET conditions are notably different from the NOT\_OFFSET conditions. In the OFFSET conditions, users appeared to form more prominent pillars around vertical segments, suggesting they encountered more difficulty completing this segment.
+
+\begin{figureBox}[label={fig:traces}, width=0.8\linewidth]{Traces for Task 3 by Condition}
+    \includegraphics[width=1.0\linewidth]{./evaluation/figures/task_3.pdf}
+\end{figureBox}
+
+To investigate this phenomenon further, we calculated the standard deviation of the points in each segment across each dimension (x, y, z) and plotted these in Fig.~\ref{direction-std}. Interestingly, we observed that in the OFFSET conditions, the standard deviation is significantly lower for the Y and Z dimensions but not for X. This suggests that users spent more time "loitering," attempting to adjust the Y and Z dimensions correctly in the OFFSET conditions.
+
+\begin{figureBox}[label={fig:direction-std}, width=0.8\linewidth]{Standard Deviation by Dimension for All Tasks}
+    \includegraphics[width=1.0\linewidth]{./evaluation/figures/direction-distribution.pdf}
+\end{figureBox}
+
+As shown in Tables~\ref{tab:x-std}, \ref{tab:y-std}, and \ref{tab:z-std}, the ANOVA tests indicate that the OFFSET conditions exhibit a lower standard deviation for the Y and Z dimensions with high significance.
+
+\begin{table}[ht]
+    \centering
+    \tiny
+    \stepcounter{globalFigureCounter}
+    \begin{minipage}{.32\linewidth}
+      \centering
+      \caption{Standard Deviation for X Dimension}
+      \label{tab:x-std}
+      \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        & \textbf{sum\_sq} & \textbf{df} & \textbf{F} & \textbf{p-value} \\
+        \midrule
+        C(View)          & 3.9 & 1 & 2.5711 & 0.1090 \\
+        C(Offset)        & 2.1 & 1 & 1.4017 & 0.2366 \\
+        C(V):C(O) & 0.1 & 1 & 0.1012 & 0.7504 \\
+        Residual         & 3356.8 & 2236 & NaN & NaN \\
+        \bottomrule
+      \end{tabular}
+    \end{minipage}%
+    \hfill
+    \stepcounter{globalFigureCounter}
+    \begin{minipage}{.32\linewidth}
+      \centering
+      \caption{Standard Deviation for Y Dimension}
+      \label{tab:y-std}
+      \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        & \textbf{sum\_sq} & \textbf{df} & \textbf{F} & \textbf{p-value} \\
+        \midrule
+        C(View)          & 24.5 & 1 & 1.8589 & 0.1729 \\
+        C(Offset)        & 306.7 & 1 & 23.3160 & 0.000001 \\
+        C(V):C(O) & 19.4 & 1 & 1.4767 & 0.2244 \\
+        Residual         & 29414.1 & 2236 & NaN & NaN \\
+        \bottomrule
+      \end{tabular}
+    \end{minipage}%
+    \hfill
+    \stepcounter{globalFigureCounter}
+    \begin{minipage}{.32\linewidth}
+      \centering
+      \caption{Standard Deviation for Z Dimension}
+      \label{tab:z-std}
+      \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        & \textbf{sum\_sq} & \textbf{df} & \textbf{F} & \textbf{p-value} \\
+        \midrule
+        C(View)          & 6.4 & 1 & 1.9352 & 0.1643 \\
+        C(Offset)        & 78.5 & 1 & 23.6442 & 0.000001 \\
+        C(V):C(O) & 7.2 & 1 & 2.1701 & 0.1409 \\
+        Residual         & 7431.9 & 2236 & NaN & NaN \\
+        \bottomrule
+      \end{tabular}
+    \end{minipage}%
+\end{table}
+We hypothesize that the significantly worse performance in the OFFSET conditions is due to the lack of motion parallax, which would make it more challenging for users to judge the precise distance and depth between their hand and the end of the segment. This difficulty likely resulted in users spending more time at the end of a segment trying to precisely select the final point. Additionally, the display being further away may have made the task appear smaller and more difficult to gauge accurately. \\
 
 \subsection{Survey Results}
 
