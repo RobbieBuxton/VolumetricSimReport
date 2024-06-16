@@ -7,14 +7,14 @@ Swept volume displays are one prominent category of volumetric displays. They em
 
 \begin{invisBox}
   
-  \pictureBox[label={fig:voxon}]{The VXR4612 3D Volumetric Display, a projector-based persistence of vision display produced by Voxon Photonics. \cite{voxon2}}{
-    \adjustbox{height=4cm, keepaspectratio}{
+  \pictureBox[label={fig:voxon}]{Voxon Photonics' VXR4612, a projector-based persistence of vision volumetric display. \cite{voxon2}}{
+    \adjustbox{height=4.7cm, keepaspectratio}{
       \includegraphics{./background/figures/3d/voxon.jpg}
     }
   }
   \hfill
   \pictureBox[label={fig:brightbox}]{A Volumetric Display / Holographic Signage, an LED-based persistence of vision display produced by Brightvox Inc. \cite{brightvox_2023}}{
-  \adjustbox{height=4.5cm, keepaspectratio}{
+  \adjustbox{height=4.7cm, keepaspectratio}{
     \includegraphics{./background/figures/3d/brightvox.png}
     }
   }
@@ -27,14 +27,14 @@ Static volume displays are another category. They employ a static transparent me
 Acoustic Trapping Displays displays are a relatively new category of volumetric displays. They employ a 3D array of particles that are suspended in air using acoustic levitation. \cite{10.1063/1.5113467} \cite{Hirayama2019} This is achieved by using an array of ultrasonic transducers to create a standing wave that can trap particles in the nodes of the wave. By moving the nodes of the wave through a 3D space and illuminating the particles with light, a 3D image can be created. This technique is still in its infancy and can struggle to provide a convincing persistence of vision effect. Another direction some researchers have taken is to use a photophoretic trap to trap particles in air \cite{Smalley2018}. The advantage of this sort of display is that space that is not being used to display an object is empty and can be passed through. This is in contrast to swept volume displays/most static volume displays where the space not being used to display an object is filled with the display's hardware. An example of one such display can be seen in Fig~\ref{fig:acoustic}.
 
 \begin{invisBox}
-	\pictureBox[label={fig:passive-optical}]{Columbia University's passive optical scattering volumetric display \cite{10.1145/1179849.1179982}}{
-	  \adjustbox{height=5.25cm, keepaspectratio}{
+	\pictureBox[label={fig:passive-optical}]{Columbia University's optical scattering volumetric display \cite{10.1145/1179849.1179982}}{
+	  \adjustbox{height=5.7cm, keepaspectratio}{
 		\includegraphics{./introduction/figures/passive optical scatterers.png}
 	  }
 	}
 	\hfill
 	\pictureBox[label={fig:acoustic}]{Bristol University's acoustic trapping volumetric display \cite{10.1063/1.5113467}}{
-	\adjustbox{height=5.75cm, keepaspectratio}{
+	\adjustbox{height=5.7cm, keepaspectratio}{
 	  \includegraphics{./introduction/figures/acoustophoretic display.jpg}
 	  }
 	}
@@ -43,7 +43,7 @@ Acoustic Trapping Displays displays are a relatively new category of volumetric 
 
 Volumetric displays often require custom/cutting-edge hardware (e.g. extremely high refresh rate projectors,  transparent micro LEDs, complex laser systems) which makes them expensive, difficult to manufacture and calibrate and not widely available. For example, the Voxon VX1, one of the few if only commercially available volumetric displays costs, \$11,700 USD \cite{noauthor_products_nodate} per unit. \\
 
-Volumetric displays are also held back by their inherent high bandwidth requirements: To render objects in real-time at equivalent resolutions to current 2D displays while taking a raw voxel stream (as opposed to calculating voxels on hardware from primitive shapes) has an extremely high bandwidth requirement. If we want to render at \texttt{60fps} on a $4096 \times 2160 \times 1080$ voxel display with \texttt{24 bit} color, it would require a bandwidth of $1.37 \times 10^3$ bits per second/13.7 terabits per second which is orders of magnitude higher than what a normal display requires. To achieve that currently would require about 170 state-of-the-art Ultra High Bit Rate (UHBR) (80 gigabit) DisplayPort cables simultaneously. It was predicted in 2021 \cite{LAM2021050011} that due to these limitations and based on the historic trends of bandwidth in commercially available displays, volumetric displays will only become feasible in 2060 at the earliest. There are ways to reduce this bandwidth requirement through compression and other techniques \cite{4487481} but this still provides a major issue. \\
+Volumetric displays are also held back by their inherent high bandwidth requirements: To render objects in real-time at equivalent resolutions to current 2D displays while taking a raw voxel stream (as opposed to calculating voxels on hardware from primitive shapes) has an extremely high bandwidth requirement. If we want to render at \texttt{60fps} on a $4096 \times 2160 \times 1080$ voxel display with \texttt{24 bit} color, it would require a bandwidth of $1.37 \times 10^3$ bits per second/13.7 terabits per second which is orders of magnitude higher than what a normal display requires. To achieve that currently would require about 170 state-of-the-art Ultra High Bit Rate (UHBR) (80 gigabit) DisplayPort cables simultaneously. It was predicted in 2021 \cite{LAM2021050011} that due to these limitations and based on the historic trends of bandwidth in commercially available displays, volumetric displays will only become feasible in 2060 at the earliest. There are ways to reduce this bandwidth requirement through compression and other techniques \cite{4487481} but this still provides a major issue. 
 
 \section{Volumetric Display Simulations}
 Due to the challenges associated with physical volumetric displays, significant research has been conducted into simulating these displays. These simulated displays are often referred to as fish tank virtual reality (FTVR) displays \cite{10.1145/169059.169066}. Although FTVRs were not originally designed to simulate volumetric displays, they have recently been adapted for research in this domain \cite{10.1145/3281505.3281540}, \cite{Zabarauskas2012}. An FTVR setup typically consists of one or more 2D displays (often curved into a concave shape) positioned in front of the user. The viewer's eye movements are tracked in 3D space, and the image on the displays is adjusted accordingly to create the illusion of a 3D image. \\

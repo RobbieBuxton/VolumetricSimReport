@@ -1,33 +1,30 @@
 \section{User Study}
-\subsection{Introduction}
-
-To validate the effectiveness of our system, we conducted a Within-Subjects User Study. The study was designed to demonstrate the system's capability for research applications. We aimed to select a study that would both showcase the system's capabilities and contribute novel insights to the field. We settled on a study to test user performance with volumetric displays under two different conditions as outlined below.
-
-\subsection{Experimental Variables}
+\subsection{Introduction and Experimental Design}
+To validate the effectiveness of our system, we conducted a within-subjects user study. The study was designed to demonstrate the system's capability for research applications. We aimed to select a study that would both showcase the system's capabilities and contribute novel insights to the field. We settled on a study to test user performance with volumetric displays under two different conditions as outlined below. \\
 
 We aimed to test the following two hypotheses:
-\begin{itemize}
+\begin{itemize}[itemsep=-0.3em]
     \item \textbf{H1}: Is there a difference in task performance when interacting with the volumetric display in 3D as opposed to 2D?
     \item \textbf{H2}: Is there a difference in task performance when interacting with the volumetric display directly with hands as opposed to via teleoperation?
 \end{itemize}
 
-To test these hypotheses, we designed a 2x2 within-subjects experiment. Our two independent variables were:
+To test these hypotheses, we designed a within-subjects study with two independent variables:
 \begin{itemize}[itemsep=-0.25em]
-    \item \textbf{Perspective:} \texttt{Static} vs. \texttt{Tracker}. This variable controls whether the system uses a tracking mechanism to create the illusion of a 3D volumetric display (\texttt{Tracker}) or a fixed perspective on a standard monitor (\texttt{Static}), as shown in Fig~\ref{fig:static-vs-tracker}. This tests \textbf{H1}.
+    \item \textbf{Perspective}(H1): \texttt{Static} vs. \texttt{Tracker}. This variable controls whether the system uses a tracking mechanism to create the illusion of a 3D volumetric display (\texttt{Tracker}) or a fixed perspective on a standard monitor (\texttt{Static}), as shown in Fig~\ref{fig:static-vs-tracker}.
 
-    \begin{figureBox}[label={fig:static-vs-tracker}, width=0.8\linewidth]{2D \& 3D}
-        \includegraphics[width=0.8\linewidth]{./implementation/figures/2D-vs-3D.pdf}
+    \begin{figureBox}[label={fig:static-vs-tracker}, width=0.65\linewidth]{2D \& 3D}
+        \includegraphics[width=0.9\linewidth]{./implementation/figures/2D-vs-3D.pdf}
     \end{figureBox}
 
-    \item \textbf{Interaction Offset:} Offset vs. No Offset. This variable controls whether the display is directly in front of the participant or offset by a fixed amount, as shown in Fig~\ref{fig:direct-vs-offset}. This tests \textbf{H2}.
+    \item \textbf{Interaction Offset}(H2): Offset vs. No Offset. This variable controls whether the display is directly in front of the participant or offset by a fixed amount, as shown in Fig~\ref{fig:direct-vs-offset}.
 
-    \begin{figureBox}[label={fig:direct-vs-offset}, width=0.8\linewidth]{Direct \& Offset Interaction}
-        \includegraphics[width=0.8\linewidth]{./implementation/figures/direct-vs-offset.pdf}
+    \begin{figureBox}[label={fig:direct-vs-offset}, width=0.65\linewidth]{Direct \& Offset Interaction}
+        \includegraphics[width=0.9\linewidth]{./implementation/figures/direct-vs-offset.pdf}
     \end{figureBox}
 \end{itemize}
 
 We controlled for the following variables during the study:
-\begin{itemize}
+\begin{itemize}[itemsep=-0.25em]
     \item \textbf{Tasks:} We ensured that the five tasks were identical in each condition.
     \item \textbf{Device Calibration:} The positions of the participant, the tracking camera, and the interaction zone were kept consistent across conditions, as shown in Fig~\ref{fig:test-setup}. When using an offset position, another display was placed where the original display was to maintain consistent tracking.
     \item \textbf{Lighting:} We maintained consistent lighting conditions in the room, as lighting significantly impacts the system's tracking quality.
@@ -48,8 +45,8 @@ To complete a task, participants must trace the path between points using their 
 
 Participants have a time limit of one minute to complete each task. The time at which each point is completed, as well as the position of the hand and eye throughout the task, is recorded. If participants do not complete the task within the time limit, the task is marked as incomplete, and all completed segments are logged. The five different tasks are shown in Fig~\ref{fig:tasks}.
 
-\begin{figureBox}[label={fig:tasks}, width=1.0\linewidth]{The Five Tasks}
-    \includegraphics[width=0.8\linewidth]{./implementation/figures/tasks.pdf}
+\begin{figureBox}[label={fig:tasks}, width=0.8\linewidth]{The Five Tasks}
+    \includegraphics[width=1.0\linewidth]{./implementation/figures/tasks.pdf}
 \end{figureBox}
 
 Participants are also given two demonstration tasks to familiarize themselves with the system, as seen in Fig~\ref{fig:demo-conditions}.
@@ -58,10 +55,9 @@ Participants are also given two demonstration tasks to familiarize themselves wi
     \includegraphics[width=0.65\linewidth]{./implementation/figures/demos.pdf}
 \end{figureBox}
 
-
 \subsection{Participants}
 
-Participants were recruited for the study via email and text message using a standardized script to ensure the process was unbiased. Upon arrival, participants were required to fill out a consent form and complete the first page of a questionnaire. This initial questionnaire collected demographic and personal information that could influence the study results, such as age, handedness, previous experience with VR/AR, and whether they wore glasses (the full questionnaire is provided in the appendix). \\
+Participants were recruited for the study via email and text message using a standardized script to ensure the process was unbiased. Upon arrival, participants were required to fill out a consent form and complete the first page of a questionnaire. This initial questionnaire collected demographic and personal information that could influence the study results, such as age, handedness, previous experience with VR/AR, and whether they wore glasses (the full questionnaire is provided in the Appendix~\ref{app:survey}). \\
 
 Following this, participants received a brief overview of the system and had the opportunity to run through two demo tasks in each of the four different configurations to familiarize themselves with the system. Participants were instructed to keep their non-dominant hand on their lap and place their dominant hand face down on the monitor at the start of each task to facilitate tracking. They were permitted to repeat the demo tasks up to three times if necessary. \\
 
@@ -71,26 +67,26 @@ Once the participants felt comfortable with the system, they were entered into t
 \includegraphics[width = 0.8\linewidth]{./implementation/figures/study-conditions.pdf}
 \end{figureBox}
 
-Each condition comprised five tasks, each lasting one minute, which participants were required to complete sequentially. An audio cue signaled the start and end of each task. Participants were allowed to take breaks between conditions. After completing each condition, they filled out a survey regarding that condition. At the end of the study, they completed a survey about the overall system. Both surveys are included in the appendix.
+Each condition comprised five tasks, each lasting one minute, which participants were required to complete sequentially. An audio cue signaled the start and end of each task. Participants were allowed to take breaks between conditions. After completing each condition, they filled out a survey regarding that condition. At the end of the study, they completed a survey about the overall system. Both surveys are included in the Appendix~\ref{app:survey}.
 \subsection{Setup}
 
 The study was conducted on the ground floor of the Huxley building in Room 218 at Imperial College London's South Kensington Campus. Considering that the study would span multiple days, we took special care to set up the system to minimize the risk of accidental changes to the setup. As depicted in Fig~\ref{fig:front-view-study}, the camera was mounted on a tripod, and the positions of the tripod legs were marked on the floor to maintain consistency. Additionally, we surrounded the camera with a barrier of tables to prevent it from being knocked over.
 
 \begin{invisBox}
 	\pictureBox[label={fig:front-view-study}]{Study: Front View}{
-		\adjustbox{height=5cm, keepaspectratio}{
+		\adjustbox{height=4.5cm, keepaspectratio}{
 			\includegraphics{./implementation/figures/front-view.jpg}
 		}
 	}
 	\hfill
 	\pictureBox[label={fig:side-view-study}]{Study: Side View}{
-		\adjustbox{height=5cm, keepaspectratio}{
+		\adjustbox{height=4.5cm, keepaspectratio}{
 			\includegraphics{./implementation/figures/side-view.jpg}
 		}
 	}
 \end{invisBox}
 
-The displays used for the study were $24''$ $1920 \times 1200$ \texttt{LG IPS LED 24EB23} computer monitors, which were detached from their stands and placed horizontally on a table. There was a 25 cm gap between the bottom of the farther monitor and the top of the closer monitor, as shown in Fig~\ref{fig:side-view-study}. \\
+The displays used for the study were $24''$ $1920 \times 1200$ \texttt{LG IPS LED 24EB23} monitors, which were detached from their stands and placed horizontally on a table. There was a 25cm gap between the bottom of the farther monitor and the top of the closer monitor (See Fig~\ref{fig:side-view-study}). \\
 
 The camera was positioned such that the user’s head was approximately 1 meter away, although this distance varied slightly with participant height. The interaction zone on the far display was set up such that participants interacted with the scene at distances ranging from 30 to 70 cm from the camera. These distances were selected to fall within the optimal tracking range of our system (discussed in more detail in the evaluation section). \\
 
@@ -98,13 +94,13 @@ To facilitate the study and monitor participants effectively, we set up two addi
 
 \begin{invisBox}
 	\pictureBox[label={fig:control-view-study}]{Study: Control View}{
-		\adjustbox{height=5cm, keepaspectratio}{
+		\adjustbox{height=4.5cm, keepaspectratio}{
 			\includegraphics{./implementation/figures/control-view.jpg}
 		}
 	}
 	\hfill
 	\pictureBox[label={fig:calibration-device-study}]{Study: Calibration Device}{
-		\adjustbox{height=5cm, keepaspectratio}{
+		\adjustbox{height=4.5cm, keepaspectratio}{
 			\includegraphics{./implementation/figures/calibration-device.jpg}
 		}
 	}

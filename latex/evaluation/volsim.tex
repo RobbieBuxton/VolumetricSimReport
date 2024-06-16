@@ -11,6 +11,7 @@ Our system is unique in that, to the best of our knowledge, it is the only syste
 Despite these advancements, our system has certain limitations, such as the lack of multi-user support and stereo rendering. These are areas that could be addressed in future work, potentially through the introduction of polarized or shutter glasses.
 
 \begin{table}[h!]
+	\stepcounter{globalFigureCounter}
     \centering
     \resizebox{\textwidth}{!}{
     \begin{tabular}{|c|c|c|c|c|c|c|}
@@ -40,7 +41,7 @@ Despite these advancements, our system has certain limitations, such as the lack
     \label{table:comparison}
 \end{table}
 
-\subsection{Tracking System: Frame Rate, Latency, and Timings}
+\subsection{Tracking System}
 
 To gain deeper insights into the performance and quality of the tracking system, we conducted several tests. The primary focus was on the inter-update gap, defined as the time interval between consecutive tracker frames being sent to the renderer.
 
@@ -54,7 +55,7 @@ As depicted in Figure \ref{fig:framerate-overall}, the system's frame rate remai
 
 In exploring the impact of downscaling on performance, we determined that a single instance of downscaling sufficed to meet our performance requirements. Further downscaling did not yield significant performance benefits and adversely affected tracking quality. Figure \ref{fig:pydown} illustrates our findings, showing a noticeable performance improvement when reducing the resolution from the source $2048 \times 1536$ to $1024 \times 793$. Additional reductions in resolution did not provide further speed benefits, as the bottleneck was the 30 fps frame rate of the Kinect camera.
 
-\begin{figureBox}[label={fig:pydown}, width=1.0\linewidth]{Comparing Inter-Update Gap By Resolutions (over 1 min)}
+\begin{figureBox}[label={fig:pydown}, width=0.8\linewidth]{Comparing Inter-Update Gap By Resolutions (over 1 min)}
     \includegraphics[width = 1.0\linewidth]{./evaluation/figures/pydown.pdf}
 \end{figureBox}
 
@@ -62,7 +63,7 @@ In exploring the impact of downscaling on performance, we determined that a sing
 
 Further investigation revealed that among the three concurrent threads (capturing from the Kinect camera, tracking hand and eye movements, and rendering with OpenGL), the primary bottleneck was waiting for the Kinect camera to complete the capture. Figure \ref{fig:process-times-distributions} highlights that expediting the tracking algorithm offered limited benefit due to this bottleneck.
 
-\begin{figureBox}[label={fig:process-times-distributions}, width=1.0\linewidth]{Comparing Thread Competition Times}
+\begin{figureBox}[label={fig:process-times-distributions}, width=0.8\linewidth]{Comparing Thread Competition Times}
     \includegraphics[width = 1.0\linewidth]{./evaluation/figures/process-times-distributions.pdf}
 \end{figureBox}
 
@@ -73,6 +74,7 @@ Although precise latency statistics for the Azure Kinect from capture to device 
 When compared to state-of-the-art systems in similar fields such as VR, our system exhibits higher latency, as shown in Table \ref{tab:photon-to-photon-latency}.
 
 \begin{table}[h!]
+	\stepcounter{globalFigureCounter}
     \centering
     \caption{Our Photo-to-Photon Latency Vs Common VR Systems reported by OptoFidelity \cite{noauthor_apple_2024}}
     \label{tab:photon-to-photon-latency}
@@ -91,13 +93,7 @@ When compared to state-of-the-art systems in similar fields such as VR, our syst
 
 It is challenging to directly compare our system with other similar systems, such as the Multi-person Fish-Tank Virtual Reality Display \cite{10.1145/3281505.3281540} \cite{10.1145/169059.169066} or systems used in 3D Display Simulation Using Head-Tracking with Microsoft Kinect \cite{Zabarauskas2012}, as they do not report their latencies. However, given that both systems utilize Kinect cameras, which are a significant source of latency, we can infer that our system likely has comparable latency to these systems.
 
-\subsection{Tracking System: Accuracy}
-
-Evaluating the accuracy of our tracking system is crucial to ensure its reliability and effectiveness.
-
 \subsubsection{Effective Range}
-
-The first aspect of the evaluation focused on the effective tracking range of our system. We placed a participant in a fixed position on a chair and instructed them to slowly wave their hand and move their head. An example of the test setup is shown in Figure~\ref{fig:distance-setup}. We conducted tests at various distances, recording the percentage of successful captures that detected a face or hand at 30-second intervals. The resolution of the color image used for this test was $1024 \times 793$.
 
 \begin{invisBox}
     \pictureBox[label={fig:distance-setup}]{Setup for Distance Testing}{
@@ -112,6 +108,9 @@ The first aspect of the evaluation focused on the effective tracking range of ou
         }
     }
 \end{invisBox}
+
+
+For another important aspect of our evaluation we focused on investigating the effective tracking range of our system. We placed a participant in a fixed position on a chair and instructed them to slowly wave their hand and move their head. An example of the test setup is shown in Figure~\ref{fig:distance-setup}. We conducted tests at various distances, recording the percentage of successful captures that detected a face or hand at 30-second intervals. The resolution of the color image used for this test was $1024 \times 793$.
 
 As illustrated in Figure~\ref{fig:track-distance}, the success rate for MediaPipe's hand tracking model rapidly decreases after 1 meter, ultimately failing 100\% of the time at greater distances. This is likely due to the dataset it was trained on and its primary design for tracking hands using a mobile phone camera \cite{dlib09}. \\
 
@@ -207,7 +206,7 @@ To evaluate the quality of our rendering system, we rendered a variety of comple
 
 We successfully loaded and rendered a 6 million triangle model of Rungholt, a medieval city that was destroyed by a storm surge in the 14th century and recreated in Minecraft, as shown in Figure~\ref{fig:rungholt}. The model was rendered with no frame rate issues, demonstrating the system's ability to handle large and complex models with ease.
 
-\begin{figureBox}[label={fig:rungholt}, width=1.0\linewidth]{Rungholt \cite{McGuire2017Data}}
+\begin{figureBox}[label={fig:rungholt}, width=0.8\linewidth]{Rungholt \cite{McGuire2017Data}}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/renderer/rungholt_cropped.png}
 \end{figureBox}
 
@@ -215,13 +214,13 @@ We successfully loaded and rendered a 6 million triangle model of Rungholt, a me
 
 To evaluate the accuracy of our rendering system, we aimed to determine how well it could recreate a real object in a virtual environment. We chose a cube as our test object due to its simplicity and ease of measurement. A physical cube was constructed using Lego, and a corresponding virtual cube was created in our simulator, both with the exact dimensions of 13.5 cm x 13.5 cm x 12 cm, as illustrated in Figure~\ref{fig:real-vs-rendered}.
 
-\begin{figureBox}[label={fig:real-vs-rendered}, width=1.0\linewidth]{A real and rendered cube}
+\begin{figureBox}[label={fig:real-vs-rendered}, width=0.8\linewidth]{A real and rendered cube}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/real-vs-rendered.pdf}
 \end{figureBox}
 
 Due to the hollow nature of the physical cube, we were able to compare the two cubes effectively by superimposing them. We tested various perspectives and confirmed that the two cubes were indeed of the same size and shape, visually overlapping completely. Some example perspectives are presented in Figure~\ref{fig:super-imposed}. It is important to note that slight discrepancies in the images may occur, as the system was tracking the photographer's eye rather than the camera lens, which was positioned below and approximately 10 cm in front of the eye. Adjustments were made to account for this difference. This evaluation demonstrates that our rendering system is accurate and capable of recreating 3D objects from the real world with high precision.
 
-\begin{figureBox}[label={fig:super-imposed}, width=1.0\linewidth]{Superimposed real and rendered cube}
+\begin{figureBox}[label={fig:super-imposed}, width=0.8\linewidth]{Superimposed real and rendered cube}
 	\includegraphics[width = 1.0\linewidth]{./evaluation/figures/super-imposed.pdf}
 \end{figureBox}
 

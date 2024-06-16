@@ -120,13 +120,13 @@ To ensure that our tracking system operates at a sufficient frame rate, we downs
 
 One of the more challenging aspects of this project was making our tracking system performant enough to feel smooth and responsive. To achieve this, we implemented a multi-threaded design, as outlined in Fig~\ref{fig:mult-threaded-des}. We used separate threads for tracking, capturing, and rendering.
 
-\begin{figureBox}[label={fig:mult-threaded-des}, width=0.8\linewidth]{Multi-threaded Design}
+\begin{figureBox}[label={fig:mult-threaded-des}, width=0.75\linewidth]{Multi-threaded Design}
     \includegraphics[width=1.0\linewidth]{./implementation/figures/multi-thread-design.pdf}
 \end{figureBox}
 
 The purpose of this design was to ensure that the tracking thread and models were utilized 100\% of the time, as they are the most computationally intensive components of the system and represent the main bottleneck. While using a multithreaded design does not reduce the system's latency (as discussed further in the evaluation section), it significantly increases the application's throughput and frame rate.
 
-\begin{figureBox}[label={fig:single-vs-multi}, width=0.8\linewidth]{Single vs Multi-threaded Design}
+\begin{figureBox}[label={fig:single-vs-multi}, width=0.75\linewidth]{Single vs Multi-threaded Design}
     \includegraphics[width=0.8\linewidth]{./implementation/figures/single-vs-multi.pdf}
 \end{figureBox}
 
@@ -140,7 +140,7 @@ Another method we utilized to enhance the performance of our tracking system is 
 
 As illustrated in Fig~\ref{fig:system-des}, we only used GPU acceleration for two parts of our tracking system, excluding rendering. We utilized OpenCV's GPU-accelerated pyramid down function to downscale our color images, as this task is highly parallel and benefits significantly from acceleration. Additionally, we executed the Dlib CNN for face detection on the GPU.
 
-\begin{figureBox}[label={fig:system-des}, width=1.0\linewidth]{Overall Tracking System Design}
+\begin{figureBox}[label={fig:system-des}, width=0.95\linewidth]{Overall Tracking System Design}
     \includegraphics[width=1.0\linewidth]{./implementation/figures/tracking-system.pdf}
 \end{figureBox}
 
@@ -148,18 +148,15 @@ As illustrated in Fig~\ref{fig:system-des}, we only used GPU acceleration for tw
 
 \subsection{Camera Positioning}
 
-To ensure that the tracking system is calibrated correctly and that the user sees the correct perspective, it is crucial to know the relative position of the camera to the screen. Misalignment can lead to a distorted or incorrect user experience, where objects may appear to be in the wrong location or orientation relative to the user's point of view. To achieve this, the orientation of the camera and the dimensions of the screen must be accurately determined. We developed a calibration system to expedite the process of determining accurate position and orientation values. The calibration system operates as follows:
-
-\begin{enumerate}[itemsep=-0.25em]
-    \item The camera's position and orientation are measured in 3D space, and the screen's position is also measured in 3D space.
+To ensure that the tracking system is calibrated correctly and that the user sees the correct perspective, it is crucial to know the relative position of the camera to the screen. Misalignment can lead to a distorted and incorrect user experience, where objects will appear to be in the wrong location/orientation relative to the user's point of view. An example of correct and incorrect calibration can be seen in Fig~\ref{fig:calibration}. We developed a calibration system to automate the process of determining accurate position and orientation values. The calibration system operates as follows:
+\begin{enumerate}[itemsep=-0.3em]
+    \item The camera and displays' position and orientation are measured in 3D space.
     \item The relative positions of the camera and screen are input into the system.
     \item The predicted position of the screen is rendered in 3D.
-    \item The position of the screen is iteratively adjusted until the rendered position aligns with the actual position.
+    \item The predicted position of the screen is iteratively adjusted until it aligns with the true position.
 \end{enumerate}
 
-An example of correct and incorrect calibration can be seen in Fig~\ref{fig:calibration}.
-
-\begin{figureBox}[label={fig:calibration}, width=0.8\linewidth]{Display Calibration}
+\begin{figureBox}[label={fig:calibration}, width=0.65\linewidth]{Display Calibration}
     \includegraphics[width=1.0\linewidth]{./implementation/figures/calibration.pdf}
 \end{figureBox}
 

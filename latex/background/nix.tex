@@ -26,7 +26,7 @@ To create a package Nix evaluates a \textbf{derivation} which is a specification
 
 \begin{figureBox}[label = {fig:nix-derivation-loop}, width=0.8\linewidth]{Nix Build Loop}
   { \footnotesize
-  \begin{enumerate}
+  \begin{enumerate} [itemsep=-0.2em]
     \item A hash is computed for the package derivation and, using that hash, a Nix store path is generated, e.g \nixstore[sbldylj3clbkc0aqvjjzfa6slp4zdvlj]{hello-2.12.1}.
     \item  Using the store path, Nix checks if the derivation has already been built. First, checking the configured Nix store e.g {\color{Purple}\texttt{/nix/store/}} to see if the path e.g {\color{RoyalBlue}\texttt{sbldylj3clbkc0aqvjjzfa6slp4zdvlj}}-{\color{Orange}\texttt{hello-2.12.1}} already exists. If it does, it uses that, if it does not it continues to the next step.
     \item Next it checks if the store path exists in a configured binary cache, this is by default \texttt{cache.nixos.org}. If it does it downloads it from the cache and uses that. If it does not it continues to the next step.
@@ -41,9 +41,9 @@ To give an example of what a Nix package might look like. We have created a flak
 
 \codeBoxFile[label = {list:nix-flake}]{nix}{./background/code/hello.nix}{flake.nix}
 
-To dive deeper into what each line does we have given a breakdown below for the \texttt{flake.nix} \\
+To dive deeper into what each line does we have given a breakdown below for the \texttt{flake.nix}
 { \small
-\begin{itemize}
+\begin{itemize}[itemsep=-0.25em]
   \item \textbf{Line 2:} We have specified that we want to build our flake with the stable \textbf{nix channel} \texttt{nixos-23.11}, the most recent channel at the time of writing. This "channel" is just a release branch on the \texttt{nixpkgs} GitHub repository. Channels do receive conservative updates such as bug fixes and security patches but no major updates after the initial release. The first time we build the hello package from our \texttt{flake.nix} a \texttt{flake.lock} is automatically generated that pins us to a specific revision of \texttt{nixos-23.11}. Our built inputs will not change until we relock our flake to either a different revision of \texttt{nixos-23.11} or a new channel entirely. 
 
   \item \textbf{Line 5:} Here we define \texttt{outputs} as a function that accepts, \texttt{self} (the flake) and \texttt{nixpkgs} (the set of packages we just pinned to on line 2). Nix will resolve all inputs, and then call the \texttt{output} function.
@@ -69,6 +69,6 @@ Below we have given some examples of how to run and investigate our hello packag
 
 In Fig~\ref{fig:dependency-graph} we can see the package dependency graph of our \texttt{hello} package. We are only dependent on 4 packages \texttt{libunistring}, \texttt{libidn2}, \texttt{xgcc}, \texttt{glibc} all of which Nix have installed and configured separately the rest of the non-nix system (assuming we are not on NixOS). 
 
-\begin{figureBox}[label = {fig:dependency-graph}, width=0.65\linewidth]{Dependency graph}
+\begin{figureBox}[label = {fig:dependency-graph}, width=0.6\linewidth]{Dependency graph}
   \includegraphics[width=0.7\linewidth]{./background/figures/nix/hello-pkg.pdf}
 \end{figureBox}
