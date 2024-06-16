@@ -2,7 +2,7 @@
 
 % some definitions for the title page
 \newcommand{\reporttitle}{A Virtual Volumetric Screen}
-\newcommand{\reportauthor}{Robert Searby Buxton}
+\newcommand{\reportauthor}{Robert Buxton}
 \newcommand{\supervisor}{Dr Nicole Salomons}
 \newcommand{\reporttype}{MEng Individual Project}
 \newcommand{\degreetype}{Computing MEng}  
@@ -26,7 +26,14 @@
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-    \textcolor{red}{TODO}
+	\textcolor{red}{TODO: edit}
+	This thesis presents the development of a virtual volumetric screen designed to simulate volumetric displays for Human-Computer Interaction (HCI) research. The primary objective is to create a cost-effective, reproducible, and simple system that enables researchers to explore the usability of volumetric displays without requiring access to expensive and specialized hardware. The system employs head and hand tracking to render 3D content on a standard 2D monitor, creating the illusion of depth and allowing natural interaction with virtual objects. \\
+
+	The virtual volumetric screen is implemented using a combination of OpenGL for rendering, MediaPipe and Dlib for tracking, and the Nix package manager for reproducibility. The system's simplicity is demonstrated through its small codebase and reliance on widely available hardware such as the Azure Kinect camera. \\
+	
+	A comprehensive user study was conducted to evaluate the effectiveness of the system. The study compared user performance in tasks requiring spatial interaction under different conditions: 3D versus 2D views and direct hand interaction versus teleoperation. The results showed a significant improvement in task performance when using a 3D view with direct hand interaction, highlighting the importance of intuitive and immersive interaction modes in volumetric display research. \\
+	
+	Future work includes expanding the system's compatibility with different hardware and operating systems, improving hand tracking accuracy, and exploring multi-user support and real-time light detection to further enhance the user experience. The system's potential for broader adoption in HCI research is underscored by its accessibility, simplicity, and the valuable insights gained from the user study. 
 \end{abstract}
 
 % \cleardoublepage

@@ -45,7 +45,26 @@ Volumetric displays often require custom/cutting-edge hardware (e.g. extremely h
 
 Volumetric displays are also held back by their inherent high bandwidth requirements: To render objects in real-time at equivalent resolutions to current 2D displays while taking a raw voxel stream (as opposed to calculating voxels on hardware from primitive shapes) has an extremely high bandwidth requirement. If we want to render at \texttt{60fps} on a $4096 \times 2160 \times 1080$ voxel display with \texttt{24 bit} color, it would require a bandwidth of $1.37 \times 10^3$ bits per second/13.7 terabits per second which is orders of magnitude higher than what a normal display requires. To achieve that currently would require about 170 state-of-the-art Ultra High Bit Rate (UHBR) (80 gigabit) DisplayPort cables simultaneously. It was predicted in 2021 \cite{LAM2021050011} that due to these limitations and based on the historic trends of bandwidth in commercially available displays, volumetric displays will only become feasible in 2060 at the earliest. There are ways to reduce this bandwidth requirement through compression and other techniques \cite{4487481} but this still provides a major issue. \\
 
-\section{Volumetric Screen Simulations}
-Because of these issues, there has been research into simulating volumetric displays. One commonly used method is the so-called fish tank virtual reality (FTVR) display \cite{10.1145/169059.169066} which has been commonly used to simulate volumetric displays, \cite{10.1145/3281505.3281540}, \cite{Zabarauskas2012}. A FTVR comprises a singular or set of 2D displays that are positioned in front of a user. The viewer's eyes are tracked in 3D space and the image on the displays is adjusted accordingly so that there appears to be a 3D image present in front of them. This is a relatively cheap and easy way to simulate a volumetric display, but it has some major drawbacks. The user is limited to a single focal depth and is limited to a single vergence (This can be fixed by wearing glasses to filter different images to each eye providing a stereo view \cite{5701756}). This system is also limited to just a single user at a time unless image filtering is used. \\
+\section{Volumetric Display Simulations}
+Due to the challenges associated with physical volumetric displays, significant research has been conducted into simulating these displays. These simulated displays are often referred to as fish tank virtual reality (FTVR) displays \cite{10.1145/169059.169066}. Although FTVRs were not originally designed to simulate volumetric displays, they have recently been adapted for research in this domain \cite{10.1145/3281505.3281540}, \cite{Zabarauskas2012}. An FTVR setup typically consists of one or more 2D displays (often curved into a concave shape) positioned in front of the user. The viewer's eye movements are tracked in 3D space, and the image on the displays is adjusted accordingly to create the illusion of a 3D image. \\
 
-Another approach that has been taken is to take advantage of virtual reality (VR) headsets. VR headsets are a relatively cheap and easy way to simulate a volumetric display. They are also able to provide a stereo view and can be used by multiple users at once \cite{10.1145/3290605.3300763}.
+Figure~\ref{fig:crystal} and Figure~\ref{fig:mpCubee} illustrate two different approaches to FTVRs. The first, the CRSYSTAL Display \cite{noauthor_crystal_nodate}, employs a semi-transparent sphere illuminated from the inside by multiple projectors. The second, mpCubee \cite{7892378}, utilizes multiple sets of mobile phones to achieve a similar effect.
+
+\begin{invisBox}
+    \pictureBox[label={fig:crystal}]{University of British Columbia's CRSYSTAL Display \cite{noauthor_crystal_nodate}}{
+      \adjustbox{height=7.5cm, keepaspectratio}{
+        \includegraphics{./background/figures/3d/banana.jpg}
+      }
+    }
+    \hfill
+    \pictureBox[label={fig:mpCubee}]{Coburg University's and University of Passau's mpCubee \cite{7892378}}{
+    \adjustbox{height=7.5cm, keepaspectratio}{
+      \includegraphics{./background/figures/3d/cubee.png}
+      }
+    }
+\end{invisBox}
+
+These solutions have several significant drawbacks. The user is constrained to a single focal depth and a single vergence. This limitation can be mitigated by using glasses that filter different images to each eye, providing a stereoscopic view \cite{5701756}. Additionally, these systems are generally limited to a single user at a time unless image filtering techniques are employed. Recreating these devices often requires a substantial collection of specialized tracking hardware and custom-built display components. \\
+
+There have been several attempts to simulate volumetric displays using virtual reality (VR) headsets. VR headsets offer a relatively affordable and straightforward method for simulating volumetric displays and are capable of providing a stereoscopic view \cite{10.1145/3290605.3300763}. Historically, these devices have faced challenges with passthrough latency. However, recent advancements have significantly reduced this issue \cite{10.1145/3290605.3300763}, particularly with the introduction of devices like Apple's Vision Pro \cite{noauthor_apple_vision_nodate}. We believe this area holds considerable promise for future research. \\
+
