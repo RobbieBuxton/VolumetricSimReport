@@ -1,5 +1,7 @@
 \section{Motivations}
-A volumetric display is a type of graphical display device that visually represents objects and scenes natively in 3D. These displays differ from more traditional virtual reality devices in that they are not immersive; rather, they coexist with their surroundings. They can be viewed from any angle without the need for special visual apparatus and can be observed by multiple people simultaneously \cite{1492264}. There is no real consensus on what exactly constitutes a volumetric display, let alone the best way to build one. As we cover in the Background \ref{sect:3d}, there are currently many approaches being explored by both academic and industrial research groups to develop these displays.
+A volumetric display is a type of graphical display device that natively represents objects and scenes natively in 3D. These displays differ from more traditional virtual reality devices in that they are not immersive: rather, they coexist with their surroundings. They can be viewed from any angle without the need for special visual apparatus and can be observed by multiple people simultaneously \cite{1492264}. \\
+
+There is no real consensus on what constitutes a volumetric display or the best way to build one. As we cover in the Background \ref{sect:3d}, currently there are many approaches being explored by both academic and industrial research groups to develop these displays.
 
  
 \begin{invisBox}
@@ -16,15 +18,19 @@ A volumetric display is a type of graphical display device that visually represe
 	}
 \end{invisBox}
 
-Due to their capacity to display objects and scenes to multiple viewers simultaneously, volumetric displays have been applied to a variety of professional and academic fields, including but not limited to medical imaging \cite{Gong2009-vc} (see Fig~\ref{fig:medical-use}), scientific visualization (see Fig.~\ref{fig:graph-use}), computer-aided design \cite{stickland_development_2003}, and military visualization \cite{10.1117/12.785009} \cite{1492264} \cite{noauthor_bae_nodate}. \\
+Due to their capacity to display objects and scenes to multiple viewers simultaneously, volumetric displays have been applied in a variety of professional and academic fields, such as medical imaging \cite{Gong2009-vc} (see Fig~\ref{fig:medical-use}), scientific visualization (see Fig.~\ref{fig:graph-use}), computer-aided design \cite{stickland_development_2003}, and military visualization \cite{10.1117/12.785009} \cite{1492264} \cite{noauthor_bae_nodate}. \\
 
-As volumetric displays become more advanced and accessible, they have the potential to revolutionize the way we interact with digital content, providing benefits over alternative mediums like Virtual Reality (VR) (see Background \ref{sect:3d}). However, the high cost and complexity of these devices have limited their adoption and hindered research into their usability in the past. \\
+As volumetric displays become more advanced and accessible, they have the potential to revolutionize the way we interact with digital content, providing benefits over alternative mediums like Virtual Reality (VR) (see Background \ref{sect:3d}). \\ 
 
-It is currently difficult to conduct human-computer interaction (HCI) research in the field of volumetric displays because these devices are not widely available and are prohibitively expensive, costing upwards of \$11,700 USD \cite{noauthor_products_nodate}. There have been attempts to create devices that simulate volumetric displays to address this issue (see Background \ref{sect:3d}), but these solutions are often complex and expensive to replicate.
+However, as this is an emerging field, the high cost (commercially available devices costing upwards of \$11,700 USD \cite{noauthor_products_nodate}) and complexity of these devices has limited their adoption and hindered human-computer interaction (HCI) research into their usability. \\
+
+There has been recent research and development investigating using new miniLED and microLED \cite{Huang2020} panels to drastically reduce the cost and complexity of volumetric displays but these devices are still in the early prototype stage \cite{brightvox_2023}. \\   
+
+To enable easier HCI research as the field matures there have been attempts to create devices that simulate volumetric displays to address these issues (see Background \ref{sect:3d}), but these solutions are often complex and expensive to replicate.
 
 \section{Contributions}
 
-Our project makes two novel contributions to the field of volumetric displays. Firstly, we built a system for simulating volumetric displays for use in HCI research. Secondly, we utilized our device to conduct a user study that successfully demonstrated the research viability of our system.
+Our project makes two novel contributions to the field of volumetric displays. Firstly, we have built a system for simulating volumetric displays for use in HCI research. Secondly, we used our device to conduct a user study that successfully demonstrated the research viability of our system.
 
 \begin{invisBox}
 	\pictureBox[label={fig:volsim}]{Our simulator rendering Imperial College London in 3D}{
@@ -41,18 +47,18 @@ Our project makes two novel contributions to the field of volumetric displays. F
 \end{invisBox}
 
 \subsubsection{Volumetric Display Simulator}
-We created our Volumetric Display Simulator (see Implementation \ref{sect:overview}) with the intention of forming a strong foundation for conducting future user studies involving volumetric displays. \\
+We designed our Volumetric Display Simulator (see Implementation \ref{sect:overview}) to form a strong foundation for future user studies involving volumetric displays. \\
 
-Our simulator (as seen in Fig~\ref{fig:volsim}) uses head tracking to render the correct perspective for the viewer using the device. This allows the user to change the view while maintaining the illusion of a 3D scene in front of them. We also implemented native hand tracking integration, allowing the user to interact with the scene using their hands, which to our knowledge makes our device the first to support such a feature. \\
+Our simulator (as seen in Fig~\ref{fig:volsim}) uses head tracking to render the correct perspective for the user. The user can change their view while maintaining the illusion of a 3D scene in front of them. We also implemented native hand-tracking integration, allowing the user to interact with the scene using their hands. To our knowledge our device is first to support such a feature. \\
 
-We designed our system in a such a way that it is: 
+We designed our system in a such a way that it: 
 
 \begin{enumerate}
-    \item \textbf{Cost-Effective:} The system was designed to operate on a standard desktop computer with regular monitors using common hardware. It utilizes Microsoft's widely used Azure Kinect Camera for its head and hand tracking. We believe our system's affordability and accessibility will encourage more researchers to explore volumetric display technology.
+    \item \textbf{Cost-Effective:} operates on a standard desktop computer with regular monitors using common hardware. It uses Microsoft's widely available Azure Kinect Camera for its head and hand tracking. We believe our system's affordability and accessibility will encourage more researchers to explore volumetric display technology.
 
-    \item \textbf{Reproducible:} The system was developed using Nix (see Background \ref{sect:nix}), a package manager that facilitates the easy reproduction and compilation of software environments. This means the system can be run on any computer with Nix installed using a single command (see Implementation \ref{sect:buildsystem}). This not only simplifies execution but also enhances the ease of sharing and reproducing results.
+    \item \textbf{Reproducible:} uses Nix (see Background \ref{sect:nix}), a package manager that facilitates the easy reproduction and compilation of software environments. This means the system can be run on any computer with Nix installed using a single command (see Implementation \ref{sect:buildsystem}). This not only simplifies execution but also enhances the ease of sharing and reproducing results.
 
-    \item \textbf{Simple and Lightweight:} The system was intentionally designed to be as simple as possible by leveraging well-established libraries (see Implementation \ref{sect:renderer} and Implementation \ref{sect:tracker}). The simulator comprises only approximately 2,000 lines of C++ code, making it straightforward to understand and modify. We hope that this simplicity will encourage other researchers to build upon our work and develop new features.
+    \item \textbf{Simple and Lightweight:} is simple as possible by leveraging well-established libraries (see Implementation \ref{sect:renderer} and Implementation \ref{sect:tracker}). The simulator comprises only approximately 2,000 lines of C++ code, making it straightforward to understand and modify. We hope that this simplicity will encourage other researchers to build upon our work and develop new features.
 \end{enumerate}
 
 \subsubsection{User Study}

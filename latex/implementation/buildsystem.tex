@@ -28,7 +28,7 @@ Although these may appear to be simple commands, they perform a significant amou
 
 Our packages configure the following components:
 \begin{enumerate}
-	\item \textbf{CUDA:} Since we use the CUDA parallel computing platform \cite{4541126} in our simulator, we need to build the CUDA toolkit. Fortunately, Nix allows for a more fine-grained approach, enabling you to build only the components you need. We utilize the CUDA Deep Neural Network library (cuDNN), CUDA Basic Linear Algebra Subprograms library (cuBLAS), CUDA Random Number Generation library (cuRAND), and CUDA Dense Linear Solver library (cuSOLVER), along with the necessary libraries to interact with them. We override and recompile OpenCV and Dlib to be CUDA-enabled.
+	\item \textbf{CUDA:} Since we use the CUDA parallel computing platform \cite{4541126} in our simulator, we need to build the CUDA toolkit. Fortunately, Nix allows for a more fine-grained approach, enabling you to build only the components you need. We utilise the CUDA Deep Neural Network library (cuDNN), CUDA Basic Linear Algebra Subprograms library (cuBLAS), CUDA Random Number Generation library (cuRAND), and CUDA Dense Linear Solver library (cuSOLVER), along with the necessary libraries to interact with them. We override and recompile OpenCV and Dlib to be CUDA-enabled.
 
 	\item \textbf{MKL:} We use the Intel Math Kernel Library (MKL) \cite{Wang2014} for some of our linear algebra operations, as it is significantly faster than the default BLAS library. We override and recompile OpenCV and Dlib to use the MKL BLAS libraries.
 

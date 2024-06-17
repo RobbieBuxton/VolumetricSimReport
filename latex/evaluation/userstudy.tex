@@ -3,20 +3,20 @@
 We conducted our study as outlined in the Implementation section, aiming to investigate the following hypotheses:
 
 \begin{itemize}[itemsep=-0.3em]
-    \item \textbf{H1}: Is there a difference in task performance when interacting with the volumetric display in 3D as opposed to 2D?
-    \item \textbf{H2}: Is there a difference in task performance when interacting with the volumetric display directly with hands as opposed to via teleoperation?
+    \item \textbf{Hypothesis 1 (H1):} Interacting with the volumetric display in 3D leads to different task performance compared to interacting with it in 2D.
+    \item \textbf{Hypothesis 2 (H2):} Interacting with the volumetric display directly with hands results in different task performance compared to interacting via teleoperation.
 \end{itemize}
 
 \subsection{Participants}
 The study took place between the 1st and 5th of June in Room 218 of the Huxley Building at Imperial College London's South Kensington Campus. We were able to engage 16 participants in our study, 14 of whom consented to be photographed, as shown in Fig~\ref{fig:users}.
 
-\begin{figureBox}[label={fig:users}, width=1.0\linewidth]{Participants}
+\begin{figureBox}[label={fig:users}, width=0.8\linewidth]{Participants}
     \includegraphics[width = 1.0\linewidth]{./evaluation/figures/users.pdf}
 \end{figureBox}
 
 The recruitment of participants was primarily facilitated through existing networks, involving colleagues and acquaintances. Attempts to recruit participants through other channels proved less effective. \\
 
-Consequently, our participant sample was not broadly representative of the wider population. The majority of participants were concentrated around the age of 22, as depicted in Fig~\ref{fig:participant-age}, and the group was predominantly male, as illustrated in Fig~\ref{fig:participant-gender}. \\
+Consequently, our participant sample was not broadly representative of the wider population. The majority of participants were concentrated at the age of 22, as depicted in Fig~\ref{fig:participant-age}, and the group was predominantly male, as illustrated in Fig~\ref{fig:participant-gender}. \\
 
 We also surveyed our participants regarding factors we anticipated might influence the study. Notably, 37\% of the participants wore glasses during the study (Fig~\ref{fig:participant-glasses}), and almost every participant had prior experience with VR (Virtual Reality) or AR (Augmented Reality), as shown in Fig~\ref{fig:participant-vr-us}. Our analysis indicated that these variables did not significantly impact the study results.
 
@@ -45,7 +45,7 @@ We also surveyed our participants regarding factors we anticipated might influen
 	  }
 	}
 \end{invisBox}
-\subsection{Results}
+\subsection{Quantitative Results}
 \subsubsection{Results: Timings}
 Upon completing the study with all participants, we collected and analyzed the data, focusing particularly on the time taken to complete each segment of the tasks. Our analysis revealed that both the type of view (STATIC, i.e., 2D, versus TRACKER, i.e., 3D) and the presence of an offset (OFFSET versus NO OFFSET) had a statistically significant impact on the time required to complete the segments. We plotted the average segment completion time against these variables in Fig~\ref{fig:anova-interaction}.
 
@@ -107,21 +107,21 @@ Another important metric we investigated was the distance of the user's hand fro
 
 We observed that in both the STATIC OFFSET and TRACKER OFFSET conditions, users exhibited significantly worse precision in selecting the point at the end of the segment. These conditions showed a much larger peak just before reaching a distance of zero, which is the target point that participants were trying to precisely select. Interestingly, the STATIC condition had a much smaller peak near completion, closely resembling the TRACKER condition, but was consistently worse than every other condition throughout the task. \\
 
-\begin{figureBox}[label={fig:distance-distribution}, width=1.0\linewidth]{Distribution of Hand Distances from Segment End}
+\begin{figureBox}[label={fig:distance-distribution}, width=0.8\linewidth]{Distribution of Hand Distances from Segment End}
     \includegraphics[width = 1.0\linewidth]{./evaluation/figures/survery/distance-distribution.pdf}
 \end{figureBox}
 
 In the STATIC condition, users seemed to struggle more consistently with distance throughout the entire task. This difficulty is suggested by the small pronounced peak between 25-30 cm, which we hypothesize was called by users moving their hand in completely incorrect directions. We believe this may be due to the perspective in the STATIC condition being more challenging than in the STATIC OFFSET condition, as users were positioned above and behind the display rather than above, behind, and to the side. Each segment being oriented along the x, y, or z axis may have led to more overlapping segments in the STATIC condition, complicating the user's ability to discern the correct direction. Although this issue was also presumably present in the TRACKER conditions, users could mitigate it by changing their perspective. \\
 
-It is noteworthy that the observed peaks in the distance distributions are likely due to the time it takes for users to realize they have completed a segment and need to start moving towards the next point. We are confident in this interpretation, as the peaks align closely with the lengths of the segments (e.g., 2 cm for one segment, 3 cm for eight segments, 6 cm for twelve segments, 8 cm for ten segments, 12 cm for three segments, and 16 cm for one segment).
+It is noteworthy that the observed peaks in the distance distributions are likely due to the time it takes for users to realise they have completed a segment and need to start moving towards the next point. We are confident in this interpretation, as the peaks align closely with the lengths of the segments (e.g., 2 cm for one segment, 3 cm for eight segments, 6 cm for twelve segments, 8 cm for ten segments, 12 cm for three segments, and 16 cm for one segment).
 
-If we examine the traces (the path of the user's hand over time, transitioning from green to red) for Task 4, as shown in Fig.~\ref{fig:traces}, we can observe that the OFFSET conditions are notably different from the NOT\_OFFSET conditions. In the OFFSET conditions, users appeared to form more prominent pillars around vertical segments, suggesting they encountered more difficulty completing this segment.
+We examined the traces (the path of the user's hand over time) for the different Tasks and noticed interesting behaviour. As you can see for Task 4 in Fig.~\ref{fig:traces}, we can observe that the OFFSET conditions are notably different from the NOT\_OFFSET conditions. In the OFFSET conditions, users appeared to form more prominent pillars around vertical segments, suggesting they encountered more difficulty completing this segment.
 
 \begin{figureBox}[label={fig:traces}, width=0.8\linewidth]{Traces for Task 3 by Condition}
     \includegraphics[width=1.0\linewidth]{./evaluation/figures/task_3.pdf}
 \end{figureBox}
 
-To investigate this phenomenon further, we calculated the standard deviation of the points in each segment across each dimension (x, y, z) and plotted these in Fig.~\ref{direction-std}. Interestingly, we observed that in the OFFSET conditions, the standard deviation is significantly lower for the Y and Z dimensions but not for X. This suggests that users spent more time "loitering," attempting to adjust the Y and Z dimensions correctly in the OFFSET conditions.
+To investigate this phenomenon further, we looked at the standard deviation of the points in each segment split across dimensions (x, y, z) and plotted these in Fig.~\ref{direction-std}. Interestingly, we observed that in the OFFSET conditions, the standard deviation is significantly lower for the Y and Z dimensions but not for X. This suggests that users spent more time "loitering," attempting to adjust the Y and Z dimensions correctly in the OFFSET conditions. User also appeared to move in a more robotic fashion with a single direction vector in the OFFSET conditions as opposed to the more natural and varied movements in the NOT\_OFFSET conditions.
 
 \begin{figureBox}[label={fig:direction-std}, width=0.8\linewidth]{Standard Deviation by Dimension for All Tasks}
     \includegraphics[width=1.0\linewidth]{./evaluation/figures/direction-distribution.pdf}
@@ -189,15 +189,11 @@ We hypothesize that the significantly worse performance in the OFFSET conditions
 
 Another source of our evaluation was a survey conducted after the study. The survey aimed to gather feedback on the users' experiences and preferences regarding the different conditions they encountered. Participants were asked to rank the conditions in order of preference, as shown in Fig~\ref{fig:condition-preferences}. \\
 
-\begin{figureBox}[label={fig:condition-preferences}, width=1.0\linewidth]{Study Condition Rankings}
+\begin{figureBox}[label={fig:condition-preferences}, width=0.8\linewidth]{Study Condition Rankings}
     \includegraphics[width = 1.0\linewidth]{./evaluation/figures/survery/preferences.pdf}
 \end{figureBox}
 
-An overwhelming 87\% of participants chose either the TRACKER or TRACKER OFFSET condition as their top preference, indicating a strong preference for conditions that involved tracking. Interestingly, no participants ranked the STATIC condition as their first preference, despite it not being significantly slower than the TRACKER OFFSET condition according to the timing data we recorded. \\
-
-We hypothesize that the strong bias against the STATIC and STATIC OFFSET condition may be due to the perceived naturalness and familiarity of the tracking conditions. Participants may have found these conditions more intuitive, possibly because they provided more visual information, even though this did not necessarily translate into improved task performance. \\
-
-To analyze the preference rankings statistically, we performed a Friedman test. The results, presented in Table~\ref{tab:friedman-test}, show a significant difference in the rankings of the conditions, with a p-value of 0.00162. \\
+To analyse the preference rankings statistically, we performed a Friedman test. The results, presented in Table~\ref{tab:friedman-test}, show a significant difference in the rankings of the conditions, with a p-value of 0.00162.
 
 \begin{table}[h!]
 	\stepcounter{globalFigureCounter}
@@ -213,6 +209,10 @@ To analyze the preference rankings statistically, we performed a Friedman test. 
     \end{tabular}
 \end{table}
 
+An overwhelming 87\% of participants chose either the TRACKER or TRACKER OFFSET condition as their top preference, indicating a strong preference for conditions that involved tracking. Interestingly, no participants ranked the STATIC condition as their first preference, despite it not being significantly slower than the TRACKER OFFSET condition according to the timing data we recorded. \\
+
+We hypothesize that the strong bias against the STATIC and STATIC OFFSET condition may be due to the perceived naturalness and familiarity of the tracking conditions. Participants may have found these conditions more intuitive, possibly because they provided more visual information, even though this did not necessarily translate into improved task performance. \\
+
 These findings underscore the participants' preference for conditions that simulate a more dynamic and interactive experience, which they may have found more engaging or easier to understand.
 
 \subsubsection{Further Analysis}
@@ -222,12 +222,16 @@ To avoid cluttering this section, graphs displaying the results of our study at 
 
 The results of our study provide valuable insights into the impact of display and interaction modalities on task performance and user preference in volumetric environments.
 
-\subsubsection{Hypothesis Testing}
-\begin{itemize}
-	\item \textbf{H1}: There is a significant difference in task performance between 3D (TRACKER mode) and 2D (STATIC mode) interactions. Participants completed tasks faster and with higher precision in the 3D TRACKER condition when the display was directly in front of them, suggesting that 3D views enhance spatial understanding due to better depth cues like motion parallax. The advantage of 3D views diminishes with an offset.\\
-	\item \textbf{H2}: Task performance varies significantly between direct hand interaction and tele-operation but only when the view was in 3D. Direct hand interaction in the 3D TRACKER condition resulted in superior performance, highlighting the effectiveness of natural hand movements in spatial tasks. The OFFSET conditions introduced challenges, suggesting that indirect manipulation impacts task accuracy.
-\end{itemize}
+\subsubsection{Hypotheses}
 
+\textbf{Hypothesis 1 (H1):} Interacting with the volumetric display in 3D leads to different task performance compared to interacting with it in 2D. \\
+
+There is a significant difference in task performance between 3D (TRACKER mode) and 2D (STATIC mode) interactions. Participants completed tasks faster and with higher precision in the 3D TRACKER condition when the display was directly in front of them, suggesting that 3D views enhance spatial understanding due to better depth cues like motion parallax. The advantage of 3D views diminishes with an offset.\\
+
+\textbf{Hypothesis 2 (H2):} Interacting with the volumetric display directly with hands results in different task performance compared to interacting via teleoperation.\\
+
+Task performance varies significantly between direct hand interaction and tele-operation but only when the view was in 3D. Direct hand interaction in the 3D TRACKER condition resulted in superior performance, highlighting the effectiveness of natural hand movements in spatial tasks. The OFFSET conditions introduced challenges, suggesting that indirect manipulation impacts task accuracy.
+ 
 \subsubsection{Precision and Task Complexity}
 OFFSET conditions significantly hindered precision, suggesting that reduced motion parallax makes it difficult to judge distances. The STATIC condition's poorer performance, indicates challenges with depth perception and segment orientation in 2D views. 
 
@@ -237,4 +241,4 @@ There is a strong preference for TRACKER (3D) conditions, highlighting the subje
 \subsubsection{Implications for Future Research and Design}
 Future research should explore more variations of offset conditions and task complexities. In particular the impact of offsetting the interaction zone rather than the display should be investigated.  \\
 
-Designers of Volumetric Display applications and experiences should prioritize direct hand interaction to enhance user experience and task performance. This is a difficulty for volumetric displays as almost always permeable/tangible so this not always achievable. \\
+Designers of Volumetric Display applications and experiences should prioritise direct hand interaction to enhance user experience and task performance. This is a difficulty for volumetric displays as almost always permeable/tangible so this not always achievable. \\

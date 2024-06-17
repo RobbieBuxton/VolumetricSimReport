@@ -3,10 +3,10 @@
 We have identified several areas for future work that could enhance the capabilities and usability of our volumetric display simulator and further explore the potential of volumetric displays in interactive 3D applications.
 
 \subsection{Anaglyph 3D}
-Anaglyph 3D \cite{Dhaou2019} is a technique for displaying 3D images using color-filtered glasses, typically employing red and green filters. Unlike polarized 3D \cite{article-3D}, it does not require additional complex hardware. Currently, the 3D effect necessitates closing one eye. Integrating 3D support into the system could enhance the immersive experience by eliminating this limitation.
+Anaglyph 3D \cite{Dhaou2019} is a technique for displaying 3D images using colour-filtered glasses, typically employing red and green filters. Unlike polarized 3D \cite{article-3D}, it does not require additional complex hardware. Currently, the 3D effect necessitates closing one eye. Integrating 3D support into the system could enhance the immersive experience by eliminating this limitation.
 
 \subsection{Multi-User Support}
-Another potential area for future exploration is multi-user support. Our current tracking system is limited to a single user. Extending it to support multiple users would be a logical progression and relatively straightforward. By utilizing color filter glasses or shutter glasses, it is feasible to render different perspectives to multiple users simultaneously, as suggested in the study "Two Kinds of Novel Multi-user Immersive Display Systems" \cite{Two-Kinds}.
+Another potential area for future exploration is multi-user support. Our current tracking system is limited to a single user. Extending it to support multiple users would be a logical progression and relatively straightforward. By utilizing colour filter glasses or shutter glasses, it is feasible to render different perspectives to multiple users simultaneously, as suggested in the study "Two Kinds of Novel Multi-user Immersive Display Systems" \cite{Two-Kinds}.
 
 \subsection{Real-Time Light Detection}
 Adding an additional camera with a fisheye lens to generate a real-time light map could be a valuable enhancement. This feature would enable the virtual scene to be illuminated by real-world lighting conditions. It would be insightful to investigate whether this addition impacts performance in any significant way, especially concerning the tasks evaluated in our user study.
@@ -15,7 +15,7 @@ Adding an additional camera with a fisheye lens to generate a real-time light ma
 The current project is compatible only with Nvidia GPUs. Expanding compatibility to include AMD GPUs, Intel GPUs, and even CPU-only environments (with expected slower performance) would be beneficial. Furthermore, supporting different depth cameras beyond the Kinect, such as Intel RealSense Depth Cameras \cite{keselman2017intel}, is crucial, particularly since the Kinect has been discontinued by Microsoft. Achieving this will require substantial code generalization. Switching cameras to a lower latency system would also be beneficial.
 
 \subsection{Switch Hand Tracking Model}
-The hand tracking component of the project is notably the weakest aspect. Transitioning to a more robust hand tracking model is highly recommended. Specifically, adopting a model that utilizes depth images rather than RGB images could significantly improve performance. This would likely be a major undertaking, as off-the-shelf models for this purpose are scarce. Implementing the approach described in the paper "Accurate, Robust, and Flexible Real-Time Hand Tracking" \cite{sharp2015accurate} appears promising.
+The hand tracking component of the project is notably the weakest aspect. Transitioning to a more robust hand tracking model is highly recommended. Specifically, adopting a model that utilises depth images rather than RGB images could significantly improve performance. This would likely be a major undertaking, as off-the-shelf models for this purpose are scarce. Implementing the approach described in the paper "Accurate, Robust, and Flexible Real-Time Hand Tracking" \cite{sharp2015accurate} appears promising.
 
 \subsection{Further User Study}
 As indicated in the evaluation section, while the user study provided conclusive results, further investigation is warranted. We are interested in exploring various offset positions to examine the drop-off rate in greater detail. Additionally, adjusting the position of the interaction zone, as opposed to the display position, could yield valuable insights.
@@ -23,7 +23,7 @@ As indicated in the evaluation section, while the user study provided conclusive
 \subsection{Porting to Windows and Mac}
 Although we have demonstrated that the project can be built with a single command on Linux, extending support to Windows (including WSL) and Mac would be advantageous. We have successfully compiled the project on Windows, but further investigation is required to address WSL-specific issues. We have yet to attempt building it on Mac. This is expected to be more challenging, as porting all GPU-accelerated functionality to Apple Metal \cite{noauthor_httpsdeveloperapplecommetalmetal-shading-language-specificationpdf_nodate} may pose significant difficulties, despite Nix's native compatibility with Mac.
 
-\section{Conclusions and Contributions}
+\section{Conclusions}
 
 The development and evaluation of our Volumetric Display Simulator underscore its potential as a versatile tool for future research in volumetric display technologies. By integrating cost-effective components and reproducible software environments, we have created a system that is both accessible and straightforward, encouraging wider adoption and further development by other researchers. \\
 

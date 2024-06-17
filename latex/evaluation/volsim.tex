@@ -91,7 +91,7 @@ When compared to state-of-the-art systems in similar fields such as VR, our syst
     \end{tabular}
 \end{table}
 
-It is challenging to directly compare our system with other similar systems, such as the Multi-person Fish-Tank Virtual Reality Display \cite{10.1145/3281505.3281540} \cite{10.1145/169059.169066} or systems used in 3D Display Simulation Using Head-Tracking with Microsoft Kinect \cite{Zabarauskas2012}, as they do not report their latencies. However, given that both systems utilize Kinect cameras, which are a significant source of latency, we can infer that our system likely has comparable latency to these systems.
+It is challenging to directly compare our system with other similar systems, such as the Multi-person Fish-Tank Virtual Reality Display \cite{10.1145/3281505.3281540} \cite{10.1145/169059.169066} or systems used in 3D Display Simulation Using Head-Tracking with Microsoft Kinect \cite{Zabarauskas2012}, as they do not report their latencies. However, given that both systems utilise Kinect cameras, which are a significant source of latency, we can infer that our system likely has comparable latency to these systems.
 
 \subsubsection{Effective Range}
 
@@ -110,7 +110,7 @@ It is challenging to directly compare our system with other similar systems, suc
 \end{invisBox}
 
 
-For another important aspect of our evaluation we focused on investigating the effective tracking range of our system. We placed a participant in a fixed position on a chair and instructed them to slowly wave their hand and move their head. An example of the test setup is shown in Figure~\ref{fig:distance-setup}. We conducted tests at various distances, recording the percentage of successful captures that detected a face or hand at 30-second intervals. The resolution of the color image used for this test was $1024 \times 793$.
+For another important aspect of our evaluation we focused on investigating the effective tracking range of our system. We placed a participant in a fixed position on a chair and instructed them to slowly wave their hand and move their head. An example of the test setup is shown in Figure~\ref{fig:distance-setup}. We conducted tests at various distances, recording the percentage of successful captures that detected a face or hand at 30-second intervals. The resolution of the colour image used for this test was $1024 \times 793$.
 
 As illustrated in Figure~\ref{fig:track-distance}, the success rate for MediaPipe's hand tracking model rapidly decreases after 1 meter, ultimately failing 100\% of the time at greater distances. This is likely due to the dataset it was trained on and its primary design for tracking hands using a mobile phone camera \cite{dlib09}. \\
 

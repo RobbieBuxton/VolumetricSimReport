@@ -17,11 +17,11 @@ To accurately simulate a volumetric display, it is essential to determine the po
     \includegraphics[width=0.9\linewidth]{./implementation/figures/kinect.pdf}
 \end{figureBox}
 
-For this project, we used a Microsoft Azure Kinect camera (Fig~\ref{fig:kinect}). The Azure Kinect camera is equipped with two sensors: a depth sensor (utilizing an IR camera) and a color camera. \\
+For this project, we used a Microsoft Azure Kinect camera (Fig~\ref{fig:kinect}). The Azure Kinect camera is equipped with two sensors: a depth sensor (utilizing an IR camera) and a colour camera. \\
 
-We configured the camera to capture images at its widest field of view (FoV) of $90^{\circ} \times 74.3^{\circ}$, with an exposure time of 12.8 ms and a framerate of 30 fps. To use this configuration, we compromised on the resolution of the color images, running the RGB camera at $2048 \times 1536$ instead of its maximum resolution of $4096 \times 3072$. Similarly, we used the depth camera at a $2\times2$ binned resolution of $512 \times 512$, instead of its maximum unbinned resolution of $1024 \times 1024$. \\
+We configured the camera to capture images at its widest field of view (FoV) of $90^{\circ} \times 74.3^{\circ}$, with an exposure time of 12.8 ms and a framerate of 30 fps. To use this configuration, we compromised on the resolution of the colour images, running the RGB camera at $2048 \times 1536$ instead of its maximum resolution of $4096 \times 3072$. Similarly, we used the depth camera at a $2\times2$ binned resolution of $512 \times 512$, instead of its maximum unbinned resolution of $1024 \times 1024$. \\
 
-Because we utilized the depth camera in wide FoV mode ($120^{\circ} \times 120^{\circ}$), rather than the narrower FoV mode ($75^{\circ} \times 65^{\circ}$), the maximum operating range of the depth sensor was reduced to 2.88 m, compared to 5.46 m in the narrower FoV mode. This reduction in range was acceptable for our purposes, as the user was expected to be within 1.5 m of the camera.
+Because we utilised the depth camera in wide FoV mode ($120^{\circ} \times 120^{\circ}$), rather than the narrower FoV mode ($75^{\circ} \times 65^{\circ}$), the maximum operating range of the depth sensor was reduced to 2.88 m, compared to 5.46 m in the narrower FoV mode. This reduction in range was acceptable for our purposes, as the user was expected to be within 1.5 m of the camera.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -29,29 +29,29 @@ Because we utilized the depth camera in wide FoV mode ($120^{\circ} \times 120^{
 
 \subsubsection{Azure Kinect SDK (K4A)}
 
-We utilize the Azure Kinect SDK (K4A) \cite{noauthor_microsoftazure-kinect-sensor-sdk_2024} library to retrieve captures from the Kinect and handle the spatial transformations necessary to calculate the positions of points in 3D. \\
+We utilise the Azure Kinect SDK (K4A) \cite{noauthor_microsoftazure-kinect-sensor-sdk_2024} library to retrieve captures from the Kinect and handle the spatial transformations necessary to calculate the positions of points in 3D. \\
 
-When the Kinect camera is polled using the K4A library, it returns a "Capture," which is a struct containing a color image, a depth image, and an IR image. It is important to note that the depth image is in a different coordinate space compared to the color image, as illustrated in Fig~\ref{fig:diff-spaces}. This discrepancy arises because the color image and depth/IR image are captured using physically offset sensors, resulting in a slight variation in perspective. The depth image resides in what is known as "depth space," while the color image resides in "color space." To utilize these two images together, they must be converted to the same coordinate space. \\
+When the Kinect camera is polled using the K4A library, it returns a "Capture," which is a struct containing a colour image, a depth image, and an IR image. It is important to note that the depth image is in a different coordinate space compared to the colour image, as illustrated in Fig~\ref{fig:diff-spaces}. This discrepancy arises because the colour image and depth/IR image are captured using physically offset sensors, resulting in a slight variation in perspective. The depth image resides in what is known as "depth space," while the colour image resides in "colour space." To utilise these two images together, they must be converted to the same coordinate space. \\
 
-\begin{figureBox}[label={fig:diff-spaces}, width=0.8\linewidth]{Different Spaces: Depth and Color Images \cite{noauthor_use_nodate}}
+\begin{figureBox}[label={fig:diff-spaces}, width=0.8\linewidth]{Different Spaces: Depth and Colour Images \cite{noauthor_use_nodate}}
     \includegraphics[width=1.0\linewidth]{./implementation/figures/different spaces.png}
 \end{figureBox}
 
-Using a "calibration" that is generated at the start of the program, K4A allows conversion between the four different "spaces": "Depth 2D," "Depth 3D," "Color 2D," and "Color 3D." There are notable performance implications when using different spaces for various tasks. For instance, converting from "Depth 2D" to "Depth 3D" is significantly faster than converting from "Color 2D" to "Color 3D." \\
+Using a "calibration" that is generated at the start of the program, K4A allows conversion between the four different "spaces": "Depth 2D," "Depth 3D," "Colour 2D," and "Colour 3D." There are notable performance implications when using different spaces for various tasks. For instance, converting from "Depth 2D" to "Depth 3D" is significantly faster than converting from "Colour 2D" to "Colour 3D." \\
 
-An interesting side effect of converting between spaces is that, due to the physical offset and different diffraction characteristics of the IR and color cameras, "depth shadows" \cite{Kersten1997-so} can occur, as visible in the bottom left image in Fig~\ref{fig:diff-spaces}. These depth shadows can complicate tracking thin objects, such as fingers, because they increase the likelihood of encountering invalid depth data. We explored using the IR image for tracking to mitigate these depth shadows; however, we found that tracking models struggled with IR images, leading us to continue using the original color image method.
+An interesting side effect of converting between spaces is that, due to the physical offset and different diffraction characteristics of the IR and colour cameras, "depth shadows" \cite{Kersten1997-so} can occur, as visible in the bottom left image in Fig~\ref{fig:diff-spaces}. These depth shadows can complicate tracking thin objects, such as fingers, because they increase the likelihood of encountering invalid depth data. We explored using the IR image for tracking to mitigate these depth shadows; however, we found that tracking models struggled with IR images, leading us to continue using the original colour image method.
 
 \subsubsection{OpenCV}
 
-We use OpenCV \cite{bradski2008learning} to handle the images obtained from the Azure Kinect SDK. OpenCV is a comprehensive library that provides a wide range of functions for image processing and computer vision. We utilize OpenCV to convert the images from the Azure Kinect SDK into a format that can be efficiently processed by Dlib and MediaPipe. We leverage OpenCV's GPU/CUDA-accelerated functionalities, such as image pyramids for downscaling, to enhance the performance of our tracking system. Additionally, OpenCV is used for debugging purposes to render images to the screen.
+We use OpenCV \cite{bradski2008learning} to handle the images obtained from the Azure Kinect SDK. OpenCV is a comprehensive library that provides a wide range of functions for image processing and computer vision. We utilise OpenCV to convert the images from the Azure Kinect SDK into a format that can be efficiently processed by Dlib and MediaPipe. We leverage OpenCV's GPU/CUDA-accelerated functionalities, such as image pyramids for downscaling, to enhance the performance of our tracking system. Additionally, OpenCV is used for debugging purposes to render images to the screen.
 
 \subsubsection{Dlib}
 
-We use Dlib \cite{dlib09} for tracking the user's face. Dlib is a modern C++ toolkit that includes machine learning algorithms and tools for creating complex software solutions in C++. As discussed in greater detail later in this section, we use Dlib's face tracking model to track the user's eyes. We also utilize Dlib's GPU-accelerated functions to improve the performance of our tracking system.
+We use Dlib \cite{dlib09} for tracking the user's face. Dlib is a modern C++ toolkit that includes machine learning algorithms and tools for creating complex software solutions in C++. As discussed in greater detail later in this section, we use Dlib's face tracking model to track the user's eyes. We also utilise Dlib's GPU-accelerated functions to improve the performance of our tracking system.
 
 \subsubsection{MediaPipe}
 
-We use MediaPipe \cite{lugaresi2019mediapipe} for tracking the user's hands. MediaPipe is a cross-platform framework designed for building multimodal applied machine learning pipelines. We employ MediaPipe's hand tracking model on color images to track the user's hands in real-time. MediaPipe's hand tracking model is a deep learning model capable of accurately tracking hand movements in real-time.
+We use MediaPipe \cite{lugaresi2019mediapipe} for tracking the user's hands. MediaPipe is a cross-platform framework designed for building multimodal applied machine learning pipelines. We employ MediaPipe's hand tracking model on colour images to track the user's hands in real-time. MediaPipe's hand tracking model is a deep learning model capable of accurately tracking hand movements in real-time.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -60,7 +60,7 @@ We use MediaPipe \cite{lugaresi2019mediapipe} for tracking the user's hands. Med
 
 The primary goal of the tracking system is to convert the captures provided by the Kinect camera into 3D points that represent positional information, such as the positions of the user's eyes and fingers. The current system focuses on returning the position of the left eye and the tips of the index and middle fingers on the hand closest to the camera. The system operates smoothly at the same frame rate as the Kinect camera, which is 30 frames per second (fps). \\
 
-Several different approaches were considered for the tracking system design. Ultimately, we chose to use a method that tracks the positions of the user's face and hands separately using 2D color images. These images are then processed and converted into 3D points. \\
+Several different approaches were considered for the tracking system design. Ultimately, we chose to use a method that tracks the positions of the user's face and hands separately using 2D colour images. These images are then processed and converted into 3D points. \\
 
 An alternative approach we considered was to track the face and hands directly in 3D. However, we decided against this method for several reasons. Although the rendering system is an important aspect of this project, it was not our primary focus, and we were concerned that tackling 3D tracking would be too complex given our time constraints. The ecosystem for 2D tracking is more mature, partly due to advancements driven by mobile phone technology, allowing us to leverage existing work, such as the Dlib, MediaPipe, and OpenCV libraries discussed previously. Additionally, we were concerned about the performance of 3D tracking. The increased data volume associated with 3D tracking could potentially slow down the system, making it difficult to achieve real-time tracking of the user's face and hands. \\
 
@@ -74,19 +74,19 @@ As illustrated in Fig~\ref{fig:tracker-overview}, the process flow of the tracki
 
 \begin{enumerate}[itemsep=-0.25em]
     \item \textbf{Retrieve Capture:} The Kinect Camera is polled to receive a capture.
-    \item \textbf{Run Tracking:} Hand and head tracking are performed on the color image.
+    \item \textbf{Run Tracking:} Hand and head tracking are performed on the colour image.
     \item \textbf{Extract Key Features:} The positions of the tracked points are extracted from the hands (middle and index fingertips) and face (left eye).
     \item \textbf{Convert to 3D:} The depth image is sampled to convert the 2D points into 3D points, which are then placed in a "tracking frame" to be sent to the renderer.
 \end{enumerate}
 
 While it might seem unconventional, we maintain separate instances for tracking the left eye and the thumb and index fingertips. This approach is necessary because there is no guarantee that the tracker will detect both the face and hands in a single pass through. For instance, if the user holds their hand in front of their face, the tracker may only detect the hand. Additionally, there is a possibility that either of the tracking models may fail to detect the intended features. In such cases, our system will reuse the last known position and the corresponding capture, which serves as a reasonable approximation for the eye or finger positions. This strategy also helps to reduce the jerkiness effect that can occur with sporadic dropouts. \\
 
-It is important to note that, for performance reasons, we do not calculate the 3D positioning of the points until the renderer requests them. This approach minimizes resource wastage. If we can process a capture faster than the renderer can render a frame, we only calculate the 3D positioning for the most recent capture.
+It is important to note that, for performance reasons, we do not calculate the 3D positioning of the points until the renderer requests them. This approach minimises resource wastage. If we can process a capture faster than the renderer can render a frame, we only calculate the 3D positioning for the most recent capture.
 
 \subsection{Tracking Models}
 
 \subsubsection{Dlib}
-We use Dlib to track the left eye's position through a two-stage process. In the first stage, we utilize a Max-Margin Object Detection model \cite{king2015maxmargin, noauthor_dlib_nodate} implemented with a convolutional neural network (CNN) \cite{DBLP:journals/corr/Schmidhuber14}. Instead of training our own model, we used a pre-trained model provided by Dlib \cite{noauthor_index_nodate}, known as \texttt{mmod\_human\_face\_detector}. Initially, we ran the face detection model on the CPU; however, this created a bottleneck in our tracking pipeline. Therefore, we opted to run our CNN on a GPU using CUDA-accelerated functions to meet our performance requirements. \\
+We use Dlib to track the left eye's position through a two-stage process. In the first stage, we utilise a Max-Margin Object Detection model \cite{king2015maxmargin, noauthor_dlib_nodate} implemented with a convolutional neural network (CNN) \cite{DBLP:journals/corr/Schmidhuber14}. Instead of training our own model, we used a pre-trained model provided by Dlib \cite{noauthor_index_nodate}, known as \texttt{mmod\_human\_face\_detector}. Initially, we ran the face detection model on the CPU; however, this created a bottleneck in our tracking pipeline. Therefore, we opted to run our CNN on a GPU using CUDA-accelerated functions to meet our performance requirements. \\
 
 Once the user's face is detected, we proceed to the second stage of our facial landmark detection model. We chose to use a five-landmark pose estimator called \texttt{shape\_predictor\_5\_face\_landmark}, leveraging Dlib's implementation of a method proposed in "One Millisecond Face Alignment with an Ensemble of Regression Trees" \cite{6909637}, trained on the iBUG 300-W face landmark dataset \cite{6755925}. This pose estimator operates efficiently enough on a CPU, so GPU acceleration was unnecessary. \\
 
@@ -124,7 +124,7 @@ One of the more challenging aspects of this project was making our tracking syst
     \includegraphics[width=1.0\linewidth]{./implementation/figures/multi-thread-design.pdf}
 \end{figureBox}
 
-The purpose of this design was to ensure that the tracking thread and models were utilized 100\% of the time, as they are the most computationally intensive components of the system and represent the main bottleneck. While using a multithreaded design does not reduce the system's latency (as discussed further in the evaluation section), it significantly increases the application's throughput and frame rate.
+The purpose of this design was to ensure that the tracking thread and models were utilised 100\% of the time, as they are the most computationally intensive components of the system and represent the main bottleneck. While using a multithreaded design does not reduce the system's latency (as discussed further in the evaluation section), it significantly increases the application's throughput and frame rate.
 
 \begin{figureBox}[label={fig:single-vs-multi}, width=0.75\linewidth]{Single vs Multi-threaded Design}
     \includegraphics[width=0.8\linewidth]{./implementation/figures/single-vs-multi.pdf}
@@ -136,9 +136,9 @@ Since the Kinect camera operates at 30 fps, we need to process an image every $ 
 
 \subsection{GPU Acceleration}
 
-Another method we utilized to enhance the performance of our tracking system is GPU/CUDA acceleration. Both Dlib and MediaPipe support GPU acceleration. However, we only needed to use GPU acceleration in Dlib because the CPU speed was already sufficient for our tracking pipeline in MediaPipe. The reported speedup of 12.27 ms with GPU acceleration versus 17.12 ms without \cite{noauthor_hand_nodate} did not justify the effort required to enable CUDA in MediaPipe, especially given the complexities involved in building with Nix (see the build systems section for more information). \\
+Another method we utilised to enhance the performance of our tracking system is GPU/CUDA acceleration. Both Dlib and MediaPipe support GPU acceleration. However, we only needed to use GPU acceleration in Dlib because the CPU speed was already sufficient for our tracking pipeline in MediaPipe. The reported speedup of 12.27 ms with GPU acceleration versus 17.12 ms without \cite{noauthor_hand_nodate} did not justify the effort required to enable CUDA in MediaPipe, especially given the complexities involved in building with Nix (see the build systems section for more information). \\
 
-As illustrated in Fig~\ref{fig:system-des}, we only used GPU acceleration for two parts of our tracking system, excluding rendering. We utilized OpenCV's GPU-accelerated pyramid down function to downscale our color images, as this task is highly parallel and benefits significantly from acceleration. Additionally, we executed the Dlib CNN for face detection on the GPU.
+As illustrated in Fig~\ref{fig:system-des}, we only used GPU acceleration for two parts of our tracking system, excluding rendering. We utilised OpenCV's GPU-accelerated pyramid down function to downscale our colour images, as this task is highly parallel and benefits significantly from acceleration. Additionally, we executed the Dlib CNN for face detection on the GPU.
 
 \begin{figureBox}[label={fig:system-des}, width=0.95\linewidth]{Overall Tracking System Design}
     \includegraphics[width=1.0\linewidth]{./implementation/figures/tracking-system.pdf}
